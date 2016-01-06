@@ -1,12 +1,11 @@
-
-package org.usfirst.frc.team2502.robot;
+package com.team2502.robot2016;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team2502.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2502.robot.subsystems.ExampleSubsystem;
+import com.team2502.robot2016.commands.ExampleCommand;
+import com.team2502.robot2016.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the

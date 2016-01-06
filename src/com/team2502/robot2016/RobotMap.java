@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2502.robot;
+package com.team2502.robot2016;
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
