@@ -1,0 +1,75 @@
+<html>
+
+<head>
+
+<link rel="stylesheet" type="text/css" href="gitgraph.css" />
+
+</head>
+
+<body>
+
+
+<canvas id="gitGraph">
+
+
+</canvas>
+
+<script src="gitgraph.js"></script>
+
+<script>
+
+var gg = new GitGraph({
+  template: "metro",
+  // orientation: "horizontal",
+  // mode: "compact"
+});
+
+var master = gg.branch("master");
+master.commit();
+var develop = master.branch("develop");
+develop.commit();
+
+var feature = gg.branch({
+  parentBranch: develop,
+  name: "feature",
+  column: 3          // which column index it should be displayed in
+});
+
+
+feature.commit().commit();
+
+// var issue = develop.branch("issue");
+
+var issue = gg.branch({
+  parentBranch: develop,
+  name: "issue",
+  column: 2             // which column index it should be displayed in
+});
+
+issue.commit();
+develop.commit();
+develop.merge(issue);
+issue.merge(develop);
+issue.delete();
+
+develop.merge(feature);
+
+feature.merge(develop);
+feature.delete();
+develop.commit();
+// master.merge(develop);
+develop.merge(master);
+develop.delete();
+master.commit();
+
+
+
+
+</script>
+
+</body>
+
+
+
+
+</html>
