@@ -18,6 +18,13 @@
 
 <script>
 
+var bugfixCommit = {
+  messageAuthorDisplay:false,
+  messageBranchDisplay:false,
+  messageHashDisplay:false,
+  message:"Bug fix commit(s)"
+};
+
 var gg = new GitGraph({
   template: "metro",
   // orientation: "horizontal",
@@ -25,42 +32,88 @@ var gg = new GitGraph({
 });
 
 var master = gg.branch("master");
-master.commit();
+
+master.commit({message: "master is never modified directly, only through merges from develop",
+				author: "Brady Stoffel",
+				arrowDisplay: true,
+				messageHashDisplay: false});
+
 var develop = master.branch("develop");
-develop.commit();
+develop.commit({message: "Develop is main changes branch",
+				arrowDisplay: true,
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 
 var feature = gg.branch({
   parentBranch: develop,
-  name: "feature",
-  column: 3          // which column index it should be displayed in
+  name: "git-improvement-BradyStoffel",
+  column: 3,
+  color: "#FF0000"             // which column index it should be displayed in
 });
 
 
-feature.commit().commit();
+feature.commit({message: "Any new feature should be in a new branch",
+				arrowDisplay: true,
+				messageHashDisplay: false,
+				dotColor: "#FF0000",
+				messageAuthorDisplay: false
+			});
+  				
+
+
+feature.commit({message: "Give a detailed description of changes",
+				dotColor: "#FF0000", 
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 
 // var issue = develop.branch("issue");
 
 var issue = gg.branch({
   parentBranch: develop,
-  name: "issue",
-  column: 2             // which column index it should be displayed in
+  name: "specific-issue-BradyStoffel",
+  column: 2,
 });
 
-issue.commit();
-develop.commit();
-develop.merge(issue);
-issue.merge(develop);
+issue.commit({message: "A new branch should be created to fix issues",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
+develop.commit({message: "Small misc. change occurred here",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
+develop.merge(issue, {message: "Develop branch must be pulled to include develop branch changes",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
+
+issue.merge(develop, {message: "Merge changes to develop branch and tag with appropriate tags", 
+				tag:"review", 
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 issue.delete();
 
-develop.merge(feature);
+develop.merge(feature, {message: "Develop branch must be pulled to include develop branch changes",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false,
+				dotColor: "#FF0000"
+			});
 
-feature.merge(develop);
+feature.merge(develop, {message: "Merge changes to develop branch and tag with appropriate tags", 
+				tag:"review feature", 
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
+
 feature.delete();
-develop.commit();
+develop.commit({message: "Another small misc. change occurred here",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 // master.merge(develop);
-develop.merge(master);
+develop.merge(master, {message: "Only working production code gets merged to master", 
+				tag:"review production", 
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 develop.delete();
-master.commit();
+master.commit({message: "Shouldn't be a commit here",
+				messageHashDisplay: false,
+				messageAuthorDisplay: false});
 
 
 
