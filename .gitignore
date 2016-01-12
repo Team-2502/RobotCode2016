@@ -15,6 +15,18 @@ hs_err_pid*
 /.settings
 /.git
 
+#Intellij Idea - vandench
+#DO NOT REMOVE
+*.iml
+*.ipr
+*.iws
+/gradle
+/.gradle
+gradlew
+gradlew.bat
+build.gradle
+/build
+
 # =========================
 # Operating System Files
 # =========================
