@@ -11,6 +11,10 @@ public class ShootBallCommand extends Command
     private BallShooterSubsystem ballShooter = Robot.ballShooter;
     private DigitalInput         limitSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
 
+    /**
+     * Lower the bar if it is not already at the lowest possible point.
+     * Lowest Point = limitSwitch.get() == true
+     */
     @Override
     protected void initialize()
     {
@@ -24,6 +28,9 @@ public class ShootBallCommand extends Command
         }
     }
 
+    /**
+     * Shoot the boulder.
+     */
     @Override
     protected void execute()
     {
@@ -36,12 +43,18 @@ public class ShootBallCommand extends Command
         return false;
     }
 
+    /**
+     * Stop the lowering of the bar.
+     */
     @Override
     protected void end()
     {
         ballShooter.stop();
     }
 
+    /**
+     * Emergency stop the lowering of the bar.
+     */
     @Override
     protected void interrupted()
     {

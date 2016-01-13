@@ -18,8 +18,10 @@ public class RobotMap
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 
-    public static final int SHOOTER_TALON          = Integer.MAX_VALUE;
-    public static final int SHOOTER_SOLENOID_LEFT  = Integer.MAX_VALUE;
-    public static final int SHOOTER_SOLENOID_RIGHT = Integer.MAX_VALUE;
-    public static final int SHOOTER_LIMIT_SWITCH   = Integer.MAX_VALUE;
+    /**
+     * If it is set to Integer.MAX_VALUE then the id is unknown.
+     */
+    public static final int SHOOTER_TALON        = Integer.MAX_VALUE;
+    public static final int SHOOTER_SOLENOID     = Integer.MAX_VALUE;
+    public static final int SHOOTER_LIMIT_SWITCH = Integer.MAX_VALUE;
 }
