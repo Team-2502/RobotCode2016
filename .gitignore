@@ -17,9 +17,9 @@ hs_err_pid*
 
 #Intellij Idea - vandench
 #DO NOT REMOVE
-*.iml
-*.ipr
-*.iws
+*.iml*
+*.ipr*
+*.iws*
 /gradle
 /.gradle
 gradlew
