@@ -17,4 +17,9 @@ public class RobotMap
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
+
+    public static final int SHOOTER_TALON          = Integer.MAX_VALUE;
+    public static final int SHOOTER_SOLENOID_LEFT  = Integer.MAX_VALUE;
+    public static final int SHOOTER_SOLENOID_RIGHT = Integer.MAX_VALUE;
+    public static final int SHOOTER_LIMIT_SWITCH   = Integer.MAX_VALUE;
 }
