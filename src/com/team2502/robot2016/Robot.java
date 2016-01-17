@@ -1,7 +1,8 @@
 package com.team2502.robot2016;
 
-import com.team2502.robot2016.commands.ExampleCommand;
+import com.team2502.robot2016.commands.AutonomousCommand;
 import com.team2502.robot2016.subsystems.BallShooterSubsystem;
+import com.team2502.robot2016.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,11 +18,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot
 {
 
-    //    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static final BallShooterSubsystem ballShooter = new BallShooterSubsystem();
+    public static final ExampleSubsystem     exampleSubsystem = new ExampleSubsystem();
+    public static final BallShooterSubsystem ballShooter      = new BallShooterSubsystem();
     public static OI oi;
 
-    Command autonomousCommand;
+    public static Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -32,7 +33,7 @@ public class Robot extends IterativeRobot
     {
         oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        autonomousCommand = new AutonomousCommand();
     }
 
     @Override
@@ -45,7 +46,10 @@ public class Robot extends IterativeRobot
     public void autonomousInit()
     {
         // schedule the autonomous command (example)
-        if(autonomousCommand != null) autonomousCommand.start();
+        if(autonomousCommand != null)
+        {
+            autonomousCommand.start();
+        }
     }
 
     /**
@@ -64,7 +68,10 @@ public class Robot extends IterativeRobot
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if(autonomousCommand != null) autonomousCommand.cancel();
+        if(autonomousCommand != null)
+        {
+            autonomousCommand.cancel();
+        }
     }
 
     /**
