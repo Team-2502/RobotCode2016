@@ -71,7 +71,6 @@ public class DriveTrain extends Subsystem {
     public void driveSix() {
     	simDrive.arcadeDrive(OI.getDriveStick().getY(), OI.getDriveStick().getZ(), true);
     	miniSimDrive.arcadeDrive(OI.getDriveStick().getY(), OI.getDriveStick().getZ(), true);
-    	
     }
 }
 
