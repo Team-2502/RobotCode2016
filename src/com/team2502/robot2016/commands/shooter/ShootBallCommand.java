@@ -1,14 +1,14 @@
-package com.team2502.robot2016.commands;
+package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.subsystems.BallShooterSubsystem;
+import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ShootBallCommand extends Command
 {
-    private BallShooterSubsystem ballShooter = Robot.ballShooter;
+    private Shooter ballShooter = Robot.ballShooter;
     private DigitalInput         limitSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
 
     /**
