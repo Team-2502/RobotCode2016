@@ -1,5 +1,6 @@
 package com.team2502.robot2016.subsystems;
 
+import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.commands.drive.TankDriveSix;
 
@@ -50,6 +51,8 @@ public class DriveTrain extends Subsystem {
 		rightSimOne.setPosition(0);
 		rightSimTwo.setPosition(0);
 		rightMiniSim.setPosition(0);
+		
+//		simDrive.setInvertedMotor(motor, isInverted);
 	}
 	
 	public static DriveTrain getInstance() {
@@ -66,6 +69,8 @@ public class DriveTrain extends Subsystem {
     }
     
     public void driveSix() {
+    	simDrive.arcadeDrive(OI.getDriveStick().getY(), OI.getDriveStick().getZ(), true);
+    	miniSimDrive.arcadeDrive(OI.getDriveStick().getY(), OI.getDriveStick().getZ(), true);
     	
     }
 }
