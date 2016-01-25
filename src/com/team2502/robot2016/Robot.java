@@ -1,7 +1,9 @@
 package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.AutonomousCommand;
-import com.team2502.robot2016.subsystems.ExampleSubsystem;
+
+import com.team2502.robot2016.subsystems.Shooter;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -17,15 +19,18 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Robot extends IterativeRobot
 {
 
-    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+//    public static final ExampleSubsystem     exampleSubsystem = new ExampleSubsystem();
+    public static final DriveTrain driveTrain = DriveTrain.getInstance();
+    public static final Shooter ballShooter = new Shooter();
     public static OI oi;
 
-    Command autonomousCommand;
+    public static Command autonomousCommand;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    @Override
     public void robotInit()
     {
         oi = new OI();
@@ -33,11 +38,13 @@ public class Robot extends IterativeRobot
         autonomousCommand = new AutonomousCommand();
     }
 
+    @Override
     public void disabledPeriodic()
     {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void autonomousInit()
     {
         // schedule the autonomous command (example)
@@ -50,11 +57,13 @@ public class Robot extends IterativeRobot
     /**
      * This function is called periodically during autonomous
      */
+    @Override
     public void autonomousPeriodic()
     {
         Scheduler.getInstance().run();
     }
 
+    @Override
     public void teleopInit()
     {
         // This makes sure that the autonomous stops running when
@@ -71,6 +80,7 @@ public class Robot extends IterativeRobot
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
+    @Override
     public void disabledInit()
     {
 
@@ -79,6 +89,7 @@ public class Robot extends IterativeRobot
     /**
      * This function is called periodically during operator control
      */
+    @Override
     public void teleopPeriodic()
     {
         Scheduler.getInstance().run();
@@ -87,6 +98,7 @@ public class Robot extends IterativeRobot
     /**
      * This function is called periodically during test mode
      */
+    @Override
     public void testPeriodic()
     {
         LiveWindow.run();
