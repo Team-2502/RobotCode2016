@@ -1,6 +1,11 @@
 package com.team2502.robot2016;
 
+import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.subsystems.ActiveIntake;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -38,9 +43,26 @@ public class OI
 	private static Joystick driveStick;
 	private static Joystick shooterStick;
 	
+	private static Button rollerButtonIn;
+	private static Button rollerButtonOut;
+//	private static Button rollerButton;
+
+	
 	public OI() {
 		driveStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
 		shooterStick = new Joystick(RobotMap.LEFT_JOYSTICK);
+		
+		rollerButtonIn = new JoystickButton(shooterStick, 2);
+		rollerButtonOut = new JoystickButton(shooterStick, 3);
+
+		
+		rollerButtonIn.toggleWhenPressed(new SpinActive(ActiveIntake.FORWARD));
+		rollerButtonOut.toggleWhenPressed(new SpinActive(ActiveIntake.BACKWARD));
+		
+//		rollerButtonIn.cancelWhenActive(new SpinActive(0));
+//		rollerButtonOut.cancelWhenActive(new SpinActive(0));
+
+
 	}
 	
 	public static Joystick getDriveStick() {

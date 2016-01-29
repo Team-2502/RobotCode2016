@@ -22,8 +22,15 @@ public class RobotMap
      
      public static final int RIGHT_JOYSTICK = 1;
      public static final int LEFT_JOYSTICK = 2;
-
-
+     
+     public static final int CATAPULT_SOLENOID = 0;
+     
+     public static final int SCISSOR_LIFT_SOLENOID = 1;
+     public static final int SCIRSSOR_LIFT_WINCH = 0;
+     
+     public static final int ACTIVE_ROLLER_BAR = 0;
+     
+    
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;

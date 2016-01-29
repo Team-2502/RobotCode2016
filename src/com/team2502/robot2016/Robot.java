@@ -3,6 +3,7 @@ package com.team2502.robot2016;
 import com.team2502.robot2016.commands.AutonomousCommand;
 
 import com.team2502.robot2016.subsystems.Shooter;
+import com.team2502.robot2016.subsystems.ActiveIntake;
 import com.team2502.robot2016.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,6 +23,8 @@ public class Robot extends IterativeRobot
 //    public static final ExampleSubsystem     exampleSubsystem = new ExampleSubsystem();
     public static final DriveTrain driveTrain = DriveTrain.getInstance();
     public static final Shooter ballShooter = new Shooter();
+    public static final ActiveIntake active = new ActiveIntake();
+    
     public static OI oi;
 
     public static Command autonomousCommand;
