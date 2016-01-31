@@ -28,8 +28,7 @@ public class RobotMap
      public static final int SCISSOR_LIFT_SOLENOID = 1;
      public static final int SCIRSSOR_LIFT_WINCH = 0;
      
-     public static final int ACTIVE_ROLLER_BAR = 0;
-     
+     public static final int ACTIVE_ROLLER_BAR = 0;     
     
     // If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:
@@ -39,9 +38,19 @@ public class RobotMap
     /*
      * If it is set to Integer.MAX_VALUE then the id is unknown.
      */
-    public static final int SHOOTER_TALON        = Integer.MAX_VALUE;
+    public static final int SHOOTER_MOTOR        = Integer.MAX_VALUE;
     public static final int SHOOTER_SOLENOID     = Integer.MAX_VALUE;
     public static final int SHOOTER_LIMIT_SWITCH = Integer.MAX_VALUE;
     
+    
+    
+    // Sensor Input Ports
+    
+    public static final int CLIMBER_DISTANCE_SENSOR = 0;
+    public static final int FRONT_DISTANCE_SENSOR = 4;
+    public static final int SIDE_DISTANCE_SENSOR = 5;
+    public static final int GYRO_SENSOR = 1;
+    public static final int ACCEL_SENSOR = 2;
+    public static final int COLOR_SENSOR = 3;
     
 }

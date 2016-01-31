@@ -1,6 +1,7 @@
 package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.drive.Climber;
 import com.team2502.robot2016.subsystems.ActiveIntake;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,24 +41,35 @@ public class OI
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
-	private static Joystick driveStick;
-	private static Joystick shooterStick;
+	private static Joystick driveLeftStick;
+	private static Joystick driveRightStick;
 	
 	private static Button rollerButtonIn;
 	private static Button rollerButtonOut;
+	
+	private static Button winchUp;
+	private static Button winchDown;
+		
 //	private static Button rollerButton;
 
 	
 	public OI() {
-		driveStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
-		shooterStick = new Joystick(RobotMap.LEFT_JOYSTICK);
+		driveLeftStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
+		driveRightStick = new Joystick(RobotMap.LEFT_JOYSTICK);
 		
-		rollerButtonIn = new JoystickButton(shooterStick, 2);
-		rollerButtonOut = new JoystickButton(shooterStick, 3);
-
+		rollerButtonIn = new JoystickButton(driveRightStick, 2);
+		rollerButtonOut = new JoystickButton(driveRightStick, 3);
 		
+		winchUp = new JoystickButton(driveLeftStick, 2);
+		winchDown = new JoystickButton(driveLeftStick, 3);
+				
 		rollerButtonIn.toggleWhenPressed(new SpinActive(ActiveIntake.FORWARD));
 		rollerButtonOut.toggleWhenPressed(new SpinActive(ActiveIntake.BACKWARD));
+		
+		winchUp.whenPressed(new Climber(Climber.UP, 4));
+		winchDown.whenPressed(new Climber(Climber.DOWN, .3));
+		
+//		towerClimb.whenActive(new Climber(Climber.UP, 4));
 		
 //		rollerButtonIn.cancelWhenActive(new SpinActive(0));
 //		rollerButtonOut.cancelWhenActive(new SpinActive(0));
@@ -65,13 +77,12 @@ public class OI
 
 	}
 	
-	public static Joystick getDriveStick() {
-		return driveStick;
+	public static Joystick getLeftStick() {
+		return driveLeftStick;
 	}
 
-	public static Joystick getLiftStick() {
-		return shooterStick;
+	public static Joystick getRightStick() {
+		return driveRightStick;
 	}
 	
 }
-
