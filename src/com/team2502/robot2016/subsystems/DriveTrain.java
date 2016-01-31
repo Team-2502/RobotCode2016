@@ -17,6 +17,9 @@ public class DriveTrain extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
+	public static final int TICKS_PER_REV = 4 * 1023;
+	public static final int wheelRadius = 8;
+	
 	public enum Motors {
 		LEFT_MOTORS, RIGHT_MOTORS, WINCH_MOTORS
 	}
