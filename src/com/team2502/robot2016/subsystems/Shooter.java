@@ -2,7 +2,6 @@ package com.team2502.robot2016.subsystems;
 
 import com.team2502.robot2016.RobotMap;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,7 +13,6 @@ public class Shooter extends Subsystem
 //    private final CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTER_MOTOR);
     private final Solenoid shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID);
 
-    private DigitalInput limitSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
     
     public void initDefaultCommand() {
 //        setDefaultCommand(new ShootBallCommand());

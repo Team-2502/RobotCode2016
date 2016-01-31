@@ -2,6 +2,7 @@ package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.drive.Climber;
+import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.ActiveIntake;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -49,6 +50,9 @@ public class OI
 	
 	private static Button winchUp;
 	private static Button winchDown;
+	
+	private static Button climbButton;
+	private static Button shootButton;
 		
 //	private static Button rollerButton;
 
@@ -63,11 +67,22 @@ public class OI
 		winchUp = new JoystickButton(driveLeftStick, 2);
 		winchDown = new JoystickButton(driveLeftStick, 3);
 				
+		climbButton = new JoystickButton(driveRightStick, 4);
+		shootButton = new JoystickButton(driveLeftStick, 4);
+
 		rollerButtonIn.toggleWhenPressed(new SpinActive(ActiveIntake.FORWARD));
 		rollerButtonOut.toggleWhenPressed(new SpinActive(ActiveIntake.BACKWARD));
 		
 		winchUp.whenPressed(new Climber(Climber.UP, 4));
 		winchDown.whenPressed(new Climber(Climber.DOWN, .3));
+		
+		//This one for auto climbing
+		climbButton.whenPressed(new Climber(Climber.UP, 4));
+		
+		//This one for hold button to hook and then climb
+//		climbButton.whileHeld(new Climber(Climber.UP, 4.8));
+
+		shootButton.whenPressed(new ShootAndReload());
 		
 //		towerClimb.whenActive(new Climber(Climber.UP, 4));
 		

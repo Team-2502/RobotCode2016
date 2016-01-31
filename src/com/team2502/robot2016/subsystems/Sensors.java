@@ -2,10 +2,10 @@ package com.team2502.robot2016.subsystems;
 
 import com.team2502.robot2016.RobotMap;
 
-import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,17 +17,25 @@ public class Sensors extends Subsystem {
     // here. Call these from Commands.
 	
 	private AnalogTrigger distanceFront;
-	private AnalogInput colorFront;
+//	private AnalogInput colorFront;
 	private AnalogGyro gyro;
-	private AnalogAccelerometer accel;
+//	private AnalogAccelerometer accel;
 	
 	private AnalogTrigger climberHighEnough;
 	
+    private DigitalInput shooterLoadedSwitch;
+    private DigitalInput shooterShotSwitch;
+
+    
 	public Sensors() {
 		climberHighEnough = new AnalogTrigger(RobotMap.CLIMBER_DISTANCE_SENSOR);
 		gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO_SENSOR));
 		
 		distanceFront = new AnalogTrigger(RobotMap.FRONT_DISTANCE_SENSOR);
+		
+		shooterLoadedSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
+	    shooterShotSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
+	    
     	gyro.initGyro();
 	}
 
@@ -62,6 +70,14 @@ public class Sensors extends Subsystem {
     
     public void calibrateSensors() {
     	gyro.calibrate();
+    }
+    
+    public boolean shooterAllTheWayBack() {
+    	return shooterLoadedSwitch.get();
+    }
+    
+    public boolean shooterAllTheWayForward() {
+    	return shooterShotSwitch.get();
     }
 }
 
