@@ -58,8 +58,8 @@ public class OI
 
 	
 	public OI() {
-		driveLeftStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
-		driveRightStick = new Joystick(RobotMap.LEFT_JOYSTICK);
+		driveLeftStick = new Joystick(RobotMap.LEFT_JOYSTICK);
+		driveRightStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
 		
 		rollerButtonIn = new JoystickButton(driveRightStick, 2);
 		rollerButtonOut = new JoystickButton(driveRightStick, 3);
