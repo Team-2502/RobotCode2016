@@ -12,13 +12,13 @@ public class RobotMap
     // following variables to use with your drivetrain subsystem.
 	
 	//Chnage the id numbers
-     public static final int LEFT_MOTOR_SIM_ONE = 1;
-     public static final int LEFT_MOTOR_SIM_TWO = 2;
-     public static final int LEFT_MOTOR_MINI_SIM = 2;
+     public static final int LEFT_MOTOR_SIM_ONE = 6;
+     public static final int LEFT_MOTOR_SIM_TWO = 5;
+     public static final int LEFT_MOTOR_MINI_SIM = 4;
      
-     public static final int RIGHT_MOTOR_SIM_ONE = 2;
+     public static final int RIGHT_MOTOR_SIM_ONE = 3;
      public static final int RIGHT_MOTOR_SIM_TWO = 2;
-     public static final int RIGHT_MOTOR_MINI_SIM = 2;
+     public static final int RIGHT_MOTOR_MINI_SIM = 0;
      
      public static final int RIGHT_JOYSTICK = 1;
      public static final int LEFT_JOYSTICK = 2;
