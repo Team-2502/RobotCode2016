@@ -1,10 +1,12 @@
 package com.team2502.robot2016.subsystems;
 
+
 import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.commands.shooter.ClimberWinch;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Compressor;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -51,6 +53,7 @@ public class Shooter extends Subsystem
     public void launchScissors(boolean state) {
     	climberSolenoid.set(state);
     	climberUp = true;
+
     }
 
     /**
@@ -72,10 +75,4 @@ public class Shooter extends Subsystem
 //        shooterMotor.set(speed);
 //    }
 
-    /**
-     * Stops the talon from lowering bar.
-     */
-//    public void stop() {
-//        shooterMotor.set(0);
-//    }
 }

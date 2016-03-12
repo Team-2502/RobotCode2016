@@ -12,12 +12,14 @@
 
   <!-- By default the system version of WPI is used -->
   <!-- <property name="version" value=""/> -->
+
   <!-- By default the system team number is used -->
   <!-- <property name="team-number" value=""/> -->
 
   <!-- By default the target is set to 10.TE.AM.2 -->
   <!-- <property name="target" value=""/> -->
 <!--<property name="target" value="10.25.2.30"/> -->
+
 
   <!-- Any other property in build.properties can also be overridden. -->
   

@@ -13,7 +13,6 @@ import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.subsystems.ActiveBar;
 import com.team2502.robot2016.subsystems.ActiveIntake;
 import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.ExampleSubsystem;
 import com.team2502.robot2016.subsystems.PIDDriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
 //import com.team2502.robot2016.subsystems.Sensors;
@@ -45,6 +44,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -117,6 +117,7 @@ public class Robot extends IterativeRobot {
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+
     }
 
     /**
@@ -137,6 +138,7 @@ public class Robot extends IterativeRobot {
     	
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();
+
     }
 
     /**
@@ -150,6 +152,7 @@ public class Robot extends IterativeRobot {
     }
     
     
+
     /**
      * This function is called periodically during test mode
      */
@@ -158,3 +161,4 @@ public class Robot extends IterativeRobot {
         LiveWindow.run();
     }
 }
+

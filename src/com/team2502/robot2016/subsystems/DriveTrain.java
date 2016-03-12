@@ -43,6 +43,7 @@ public class DriveTrain extends Subsystem {
 	
 //	private static DriveTrain instance;
 	
+
 	
 	private final RobotDrive simDrive;
 	private final RobotDrive miniSimDrive;
@@ -64,6 +65,7 @@ public class DriveTrain extends Subsystem {
 	int i = 0;
 	
 	public DriveTrain() {
+
 		leftSimOne = new CANTalon(RobotMap.LEFT_MOTOR_SIM_ONE);
 		leftSimTwo = new CANTalon(RobotMap.LEFT_MOTOR_SIM_TWO);
 		leftMiniSim = new CANTalon(RobotMap.LEFT_MOTOR_MINI_SIM);
@@ -73,7 +75,7 @@ public class DriveTrain extends Subsystem {
 		rightSimTwo = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_TWO);
 		rightMiniSim = new CANTalon(RobotMap.RIGHT_MOTOR_MINI_SIM);
 		System.err.println("Right");
-		
+
 		//Will need to make a custom RobotDrive for all 6 motors
 		simDrive = new RobotDrive(leftSimOne, leftSimTwo, rightSimOne, rightSimTwo);
 		miniSimDrive = new RobotDrive(leftMiniSim, rightMiniSim);
@@ -81,6 +83,7 @@ public class DriveTrain extends Subsystem {
 		System.err.println("Drives");
 		
 		System.err.println("Solenoid");
+
 //		accel = new BuiltInAccelerometer();
 
 		leftSimOne.setPosition(0);
@@ -103,7 +106,7 @@ public class DriveTrain extends Subsystem {
 //		System.err.println("Instance");
 //		return instance;
 //	}
-	
+
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -174,5 +177,6 @@ public class DriveTrain extends Subsystem {
     }
     
     
+
 }
 

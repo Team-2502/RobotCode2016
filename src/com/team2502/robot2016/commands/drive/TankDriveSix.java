@@ -16,7 +16,7 @@ public class TankDriveSix extends Command {
 //	private DriveTrain dt = Robot.driveTrain;
 	private PIDDriveTrain dt = Robot.driveTrain;
 
-	
+
     public TankDriveSix() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,6 +35,7 @@ public class TankDriveSix extends Command {
     	SmartDashboard.putBoolean("On Target", dt.onTarget());
     	SmartDashboard.putNumber("Target", dt.getSetpoint());
     	SmartDashboard.putNumber("Get Position", dt.getPosition());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
