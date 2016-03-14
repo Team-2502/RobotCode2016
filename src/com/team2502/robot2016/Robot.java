@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
 import com.team2502.robot2016.commands.autonomous.DriveTowardTower;
+import com.team2502.robot2016.commands.drive.DriveSensorExtra;
 import com.team2502.robot2016.commands.drive.DriveStraight;
+import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.LightOn;
+import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.ActiveBar;
 import com.team2502.robot2016.subsystems.ActiveIntake;
 import com.team2502.robot2016.subsystems.DriveTrain;
@@ -18,6 +21,7 @@ import com.team2502.robot2016.subsystems.PIDDriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
 //import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,7 +63,10 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture("cam0");
         chooser = new SendableChooser();
         
+		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+
         chooser.addDefault("Defense Only - forward time", new DriveTime(3));
+        chooser.addObject("Full Auto", new DriveAndShoot(startPosition));
         chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         chooser.addObject("No Auto", null);
         chooser.addObject("Drive to Tower", new DriveStraight(.9));
@@ -77,6 +84,35 @@ public class Robot extends IterativeRobot {
 		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
 		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
 		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
+		
+		
+		testAutoParts(startPosition);
+		
+		
+    }
+    
+    private void testAutoParts(int startingPosition) {
+    	
+    	double turnAngle = 0;
+    	Sensor sensor = Sensor.Left;
+    	
+    	if (startingPosition == 4) {
+    		
+    	} else if (startingPosition == 2 || startingPosition == 3) {
+    		turnAngle = -90;
+    	} else if (startingPosition == 5) {
+    		turnAngle = 90;
+    		sensor = Sensor.Right;
+    	}
+    	
+    	
+		SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
+		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
+		SmartDashboard.putData("Drive to sensor limit wall", new DriveToSensorValue(.7, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
+		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
+		SmartDashboard.putData("Drive in front of Tower", new DriveToSensorValue(.7, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT));
+		SmartDashboard.putData("Rotate to forward", new RotateToAngle(0));
+		SmartDashboard.putData("Drive to tower", new DriveSensorExtra(.7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT));
 
     }
 	

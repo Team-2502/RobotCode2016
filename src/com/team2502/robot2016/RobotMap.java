@@ -86,8 +86,6 @@ public class RobotMap
 	public static double TOWER_SENSOR_DISTANCE_LIMIT = 1;
 	public static double SENSOR_ZONE_OF_PRECISION = .08;
 
-
-	
 	public static double BALL_VOLT_ACTIVE = 1.65;
 	public static double BALL_VOLT_SHOOTER = 4;
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
