@@ -60,11 +60,18 @@ public class Robot extends IterativeRobot {
 		System.err.println("Start init");
 		oi = new OI();
 		System.err.println("OI");
+		
+		SmartDashboard.putData("Drive Train", driveTrain);
+		SmartDashboard.putData("Shooter", ballShooter);
+		SmartDashboard.putData("Active", active);
+		SmartDashboard.putData("Active Bar", activeBar);
+
+		
 		CameraServer.getInstance().startAutomaticCapture("cam0");
         chooser = new SendableChooser();
         
 		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
-
+		
         chooser.addDefault("Defense Only - forward time", new DriveTime(3));
         chooser.addObject("Full Auto", new DriveAndShoot(startPosition));
         chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
@@ -84,7 +91,6 @@ public class Robot extends IterativeRobot {
 		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
 		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
 		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-		
 		
 		testAutoParts(startPosition);
 		
