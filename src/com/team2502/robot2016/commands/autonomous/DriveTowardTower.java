@@ -1,15 +1,17 @@
-package com.team2502.robot2016.commands.drive;
+package com.team2502.robot2016.commands.autonomous;
 
-import com.team2502.robot2016.commands.shooter.ShootAndReload;
+import com.team2502.robot2016.commands.drive.DriveOverDefense;
+import com.team2502.robot2016.commands.drive.DriveStraight;
+import com.team2502.robot2016.commands.drive.RotateToAngle;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class DriveAndShoot extends CommandGroup {
+public class DriveTowardTower extends CommandGroup {
     
-    public  DriveAndShoot() {
+    public  DriveTowardTower() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,8 +29,10 @@ public class DriveAndShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-//    	addSequential(new DriveStraight(.9));
-    	addSequential(new DriveTowardTower());
-//    	addSequential(new ShootAndReload());
+    	addSequential(new DriveOverDefense(), 1.5);
+//    	addSequential(new DriveTime(.1));
+
+    	addSequential(new RotateToAngle(0));
+    	addSequential(new DriveStraight(.9));
     }
 }

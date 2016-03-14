@@ -32,7 +32,7 @@ public class RotateToAngle extends Command implements PIDOutput {
 	private static final double kD = 0.00;
 	private static final double kF = 0.00;
     
-	private static final double kToleranceDegrees = 2.0f;
+	private static final double kToleranceDegrees = 1.0f;
 
     public RotateToAngle(double angle) {
         // Use requires() here to declare subsystem dependencies
@@ -70,7 +70,7 @@ public class RotateToAngle extends Command implements PIDOutput {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
-    	return turnController.onTarget() || !OI.getRightStick().getRawButton(8);
+    	return turnController.onTarget();
     	
     }
 

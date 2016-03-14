@@ -58,8 +58,7 @@ public class RobotMap
     // Sensor Input Ports
     
 //    public static final int CLIMBER_DISTANCE_SENSOR = 0;
-    public static final int FRONT_DISTANCE_SENSOR = 0;
-    public static double FRONT_DISTANCE_SENSOR_LIMIT = 4.5;
+//    public static double FRONT_DISTANCE_SENSOR_LIMIT = 4.5;
 
 //    public static final int SIDE_DISTANCE_SENSOR = 5;
 //    public static final int GYRO_SENSOR = 1;
@@ -72,12 +71,21 @@ public class RobotMap
 //    public static final int OUTSIDE_LEFT_DISTANCE = 6;
 //    public static final int OUTSIDE_RIGHT_DISTANCE = 6;
     
-//    public static final int LEFT_DISTANCE = 6;
-//    public static final int RIGHT_DISTANCE = 6;
+   
 	public static final int RING_LIGHT = 0;
-	public static final int LEFT_BALL_SENSOR = 2;
-	public static final int RIGHT_BALL_SENSOR = 1;
-	public static final int ULTRASONIC_FRONT_TEST = 3;
+	public static final int LEFT_BALL_SENSOR = 1;
+	public static final int RIGHT_BALL_SENSOR = 0;
+	
+	public static final int FRONT_LONG_DISTANCE = 2;
+	public static final int FRONT_SHORT_DISTANCE = 3;
+	public static final int LEFT_DISTANCE = 4;
+	public static final int RIGHT_DISTANCE = 5;
+	
+	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 4.4;
+	public static double SIDE_DISTANCE_SENSOR_TURN_LIMIT = 3.7;
+	public static double TOWER_SENSOR_DISTANCE_LIMIT = 1;
+	public static double SENSOR_ZONE_OF_PRECISION = .08;
+
 
 	
 	public static double BALL_VOLT_ACTIVE = 1.65;

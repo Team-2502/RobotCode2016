@@ -83,40 +83,41 @@ public class Sensors extends Subsystem {
 	public boolean ringState = false;
 
 	public static AHRS ahrs;
+	
 	private AnalogInput leftBallSensor;
 	private AnalogInput rightBallSensor;
-
-	private AnalogInput frontDistance;
-	private AnalogInput testSensor;
+//
+	private AnalogInput frontLongDistance;
+	private AnalogInput frontShortDistance;
+	private AnalogInput leftDistance;
+	private AnalogInput rightDistance;
+//	private AnalogInput testSensor;
 	
 	public static final double CLOSE_TO_TOWER = 1;
+	
+	public enum Sensor {
+		FrontLong, FrontShort, Left, Right
+	}
 
+	
+	public static double LONG_OUTER_LIMIT_VOLTAGE = 4.5;
+	public static double LONG_INNER_LIMIT_VOLTAGE = .95;
+	
+	public static double SHORT_OUTER_LIMIT_VOLTAGE = 4.8;
+	public static double SHORT_INNER_LIMIT_VOLTAGE = .95;
 
+	public static double BEFORE_TURN_VALUE = 4.5;
+	
 	
 //	private static NetworkTable table;
     
 	public Sensors() {
 		
-		/*
-		climberHighEnough = new AnalogTrigger(RobotMap.CLIMBER_DISTANCE_SENSOR);
-		gyro = new AnalogGyro(new AnalogInput(RobotMap.GYRO_SENSOR));
 		
-		shooterLoadedSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
-	    shooterShotSwitch = new DigitalInput(RobotMap.SHOOTER_LIMIT_SWITCH);
-	    
-	    middleLeftDistance = new AnalogInput(RobotMap.MIDDLE_LEFT_DISTANCE);
-	    middleRightDistance = new AnalogInput(RobotMap.MIDDLE_RIGHT_DISTANCE);
-	    
-	    outsideLeftDistance = new AnalogInput(RobotMap.OUTSIDE_LEFT_DISTANCE);
-	    outsideRightDistance = new AnalogInput(RobotMap.OUTSIDE_RIGHT_DISTANCE);
-	    
-	    outsideRightDistance = new AnalogInput(RobotMap.MIDDLE_LEFT_DISTANCE);
-	    outsideRightDistance = new AnalogInput(RobotMap.MIDDLE_LEFT_DISTANCE);
-
 	    leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
 	    rightDistance = new AnalogInput(RobotMap.RIGHT_DISTANCE);
 
-	  */
+	  
     	
     	 try {
 	            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
@@ -138,15 +139,18 @@ public class Sensors extends Subsystem {
 //     	gyro.initGyro();
 //		table = NetworkTable.getTable("GRIP/GRIPConvex");
 		ringLight = new DigitalOutput(RobotMap.RING_LIGHT);
-//		leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
-		frontDistance = new AnalogInput(RobotMap.FRONT_DISTANCE_SENSOR);
+		
+		frontLongDistance = new AnalogInput(RobotMap.FRONT_LONG_DISTANCE);
+		frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
+		leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
+		rightDistance = new AnalogInput(RobotMap.RIGHT_DISTANCE);
+
+		
 		leftBallSensor = new AnalogInput(RobotMap.LEFT_BALL_SENSOR);
 		rightBallSensor = new AnalogInput(RobotMap.RIGHT_BALL_SENSOR);
 		
-		testSensor = new AnalogInput(RobotMap.ULTRASONIC_FRONT_TEST);
 
 
-//		distanceFront = new AnalogTrigger(RobotMap.FRONT_DISTANCE_SENSOR);
 
 	}
 
@@ -227,12 +231,37 @@ public class Sensors extends Subsystem {
     
     */
     
-    public double getDistanceFront() {
-    	return frontDistance.getVoltage();
+    public double getDistanceFrontLong() {
+    	return frontLongDistance.getVoltage();
     }
     
-    public double getDistanceFrontTest() {
-    	return testSensor.getAverageVoltage();
+    public double getDistanceFrontShort() {
+    	return frontShortDistance.getVoltage();
+    }
+    
+    public double getDistanceLeft() {
+    	return leftDistance.getVoltage();
+    }
+    
+    public double getDistanceRight() {
+    	return rightDistance.getVoltage();
+    }
+    
+    public double getSensorDistance(Sensor sensor) {
+    	switch(sensor) {
+    	case FrontLong:
+    		return frontLongDistance.getVoltage();
+    		break;
+    	case FrontShort:
+    		return frontShortDistance.getVoltage();
+    		break;
+    	case Left:
+    		return leftDistance.getVoltage();
+    		break;
+    	case Right:
+    		return rightDistance.getVoltage();
+    		break;
+    	}
     }
     
     public double getLeftBallSensor() {
@@ -404,13 +433,13 @@ public class Sensors extends Subsystem {
              ahrs.zeroYaw();
          }
          
-         SmartDashboard.putNumber("Ultrasonic Sensor", frontDistance.getVoltage());
+//         SmartDashboard.putNumber("Ultrasonic Sensor", frontDistance.getVoltage());
          /* Display 6-axis Processed Angle Data                                      */
          SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
          SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
          SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-         SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-         SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+//         SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
+//         SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
          
          /* Display tilt-corrected, Magnetometer-based heading (requires             */
          /* magnetometer calibration to be useful)                                   */
@@ -424,7 +453,7 @@ public class Sensors extends Subsystem {
          /* path for upgrading from the Kit-of-Parts gyro to the navx MXP            */
          
          SmartDashboard.putNumber(   "IMU_TotalYaw",         ahrs.getAngle());
-         SmartDashboard.putNumber(   "IMU_YawRateDPS",       ahrs.getRate());
+//         SmartDashboard.putNumber(   "IMU_YawRateDPS",       ahrs.getRate());
 
          /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
          
@@ -439,48 +468,48 @@ public class Sensors extends Subsystem {
          /* of these errors due to single (velocity) integration and especially      */
          /* double (displacement) integration.                                       */
          
-         SmartDashboard.putNumber(   "Velocity_X",           ahrs.getVelocityX());
-         SmartDashboard.putNumber(   "Velocity_Y",           ahrs.getVelocityY());
-         SmartDashboard.putNumber(   "Displacement_X",       ahrs.getDisplacementX());
-         SmartDashboard.putNumber(   "Displacement_Y",       ahrs.getDisplacementY());
+//         SmartDashboard.putNumber(   "Velocity_X",           ahrs.getVelocityX());
+//         SmartDashboard.putNumber(   "Velocity_Y",           ahrs.getVelocityY());
+//         SmartDashboard.putNumber(   "Displacement_X",       ahrs.getDisplacementX());
+//         SmartDashboard.putNumber(   "Displacement_Y",       ahrs.getDisplacementY());
          
          /* Display Raw Gyro/Accelerometer/Magnetometer Values                       */
          /* NOTE:  These values are not normally necessary, but are made available   */
          /* for advanced users.  Before using this data, please consider whether     */
          /* the processed data (see above) will suit your needs.                     */
-         SmartDashboard.putNumber(   "RawGyro_X",            ahrs.getRawGyroX());
-         SmartDashboard.putNumber(   "RawGyro_Y",            ahrs.getRawGyroY());
-         SmartDashboard.putNumber(   "RawGyro_Z",            ahrs.getRawGyroZ());
-         SmartDashboard.putNumber(   "RawAccel_X",           ahrs.getRawAccelX());
-         SmartDashboard.putNumber(   "RawAccel_Y",           ahrs.getRawAccelY());
-         SmartDashboard.putNumber(   "RawAccel_Z",           ahrs.getRawAccelZ());
-         SmartDashboard.putNumber(   "RawMag_X",             ahrs.getRawMagX());
-         SmartDashboard.putNumber(   "RawMag_Y",             ahrs.getRawMagY());
-         SmartDashboard.putNumber(   "RawMag_Z",             ahrs.getRawMagZ());
-         SmartDashboard.putNumber(   "IMU_Temp_C",           ahrs.getTempC());
+//         SmartDashboard.putNumber(   "RawGyro_X",            ahrs.getRawGyroX());
+//         SmartDashboard.putNumber(   "RawGyro_Y",            ahrs.getRawGyroY());
+//         SmartDashboard.putNumber(   "RawGyro_Z",            ahrs.getRawGyroZ());
+//         SmartDashboard.putNumber(   "RawAccel_X",           ahrs.getRawAccelX());
+//         SmartDashboard.putNumber(   "RawAccel_Y",           ahrs.getRawAccelY());
+//         SmartDashboard.putNumber(   "RawAccel_Z",           ahrs.getRawAccelZ());
+//         SmartDashboard.putNumber(   "RawMag_X",             ahrs.getRawMagX());
+//         SmartDashboard.putNumber(   "RawMag_Y",             ahrs.getRawMagY());
+//         SmartDashboard.putNumber(   "RawMag_Z",             ahrs.getRawMagZ());
+//         SmartDashboard.putNumber(   "IMU_Temp_C",           ahrs.getTempC());
          
          /* Omnimount Yaw Axis Information                                           */
          /* For more info, see http://navx-mxp.kauailabs.com/installation/omnimount  */
-         AHRS.BoardYawAxis yaw_axis = ahrs.getBoardYawAxis();
-         SmartDashboard.putString(   "YawAxisDirection",     yaw_axis.up ? "Up" : "Down" );
-         SmartDashboard.putNumber(   "YawAxis",              yaw_axis.board_axis.getValue() );
+//         AHRS.BoardYawAxis yaw_axis = ahrs.getBoardYawAxis();
+//         SmartDashboard.putString(   "YawAxisDirection",     yaw_axis.up ? "Up" : "Down" );
+//         SmartDashboard.putNumber(   "YawAxis",              yaw_axis.board_axis.getValue() );
          
          /* Sensor Board Information                                                 */
-         SmartDashboard.putString(   "FirmwareVersion",      ahrs.getFirmwareVersion());
+//         SmartDashboard.putString(   "FirmwareVersion",      ahrs.getFirmwareVersion());
          
          /* Quaternion Data                                                          */
          /* Quaternions are fascinating, and are the most compact representation of  */
          /* orientation data.  All of the Yaw, Pitch and Roll Values can be derived  */
          /* from the Quaternions.  If interested in motion processing, knowledge of  */
          /* Quaternions is highly recommended.                                       */
-         SmartDashboard.putNumber(   "QuaternionW",          ahrs.getQuaternionW());
-         SmartDashboard.putNumber(   "QuaternionX",          ahrs.getQuaternionX());
-         SmartDashboard.putNumber(   "QuaternionY",          ahrs.getQuaternionY());
-         SmartDashboard.putNumber(   "QuaternionZ",          ahrs.getQuaternionZ());
+//         SmartDashboard.putNumber(   "QuaternionW",          ahrs.getQuaternionW());
+//         SmartDashboard.putNumber(   "QuaternionX",          ahrs.getQuaternionX());
+//         SmartDashboard.putNumber(   "QuaternionY",          ahrs.getQuaternionY());
+//         SmartDashboard.putNumber(   "QuaternionZ",          ahrs.getQuaternionZ());
          
          /* Connectivity Debugging Support                                           */
-         SmartDashboard.putNumber(   "IMU_Byte_Count",       ahrs.getByteCount());
-         SmartDashboard.putNumber(   "IMU_Update_Count",     ahrs.getUpdateCount());
+//         SmartDashboard.putNumber(   "IMU_Byte_Count",       ahrs.getByteCount());
+//         SmartDashboard.putNumber(   "IMU_Update_Count",     ahrs.getUpdateCount());
 //         SmartDashboard.putNumber("Test thing", i);
 //         i++;
     	
@@ -493,14 +522,15 @@ public void updateOtherSensors() {
 	RobotMap.BALL_VOLT_SHOOTER = SmartDashboard.getNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
 	RobotMap.BALL_MIDDLE_VOLT_ACTIVE = SmartDashboard.getNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
 	RobotMap.BALL_NOTHING_VOLT_ACTIVE = SmartDashboard.getNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
-	RobotMap.FRONT_DISTANCE_SENSOR_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_LIMIT);
 
-	SmartDashboard.putNumber("Right Sensor", getRightBallSensor());
-	SmartDashboard.putNumber("Left Ball Sensor", getLeftBallSensor());
-	SmartDashboard.putNumber("Front Sensor", getDistanceFront());
-	SmartDashboard.putNumber("Front Test Sensor", getDistanceFrontTest());
+	RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
+	RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
+	RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
+	RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
 
 	
+	SmartDashboard.putNumber("Right Ball Sensor", getRightBallSensor());
+	SmartDashboard.putNumber("Left Ball Sensor", getLeftBallSensor());
 	
 	SmartDashboard.putBoolean("Ball in Left", getLeftBallSensor() > RobotMap.BALL_VOLT_ACTIVE);
 	SmartDashboard.putBoolean("Ball in Right", getRightBallSensor() > RobotMap.BALL_VOLT_ACTIVE);
@@ -512,6 +542,14 @@ public void updateOtherSensors() {
 	SmartDashboard.putBoolean("Ball in Middle", inMiddle && notBothMiddle);
 	SmartDashboard.putBoolean("Ball Middle Method", ballInActive());
 	SmartDashboard.putBoolean("Ball Shooter", ballInActive());
+
+	
+	
+	SmartDashboard.putNumber("Front Long Sensor", getDistanceFrontLong());
+	SmartDashboard.putNumber("Front Short Sensor", getDistanceFrontShort());
+	SmartDashboard.putNumber("Left Sensor", getDistanceLeft());
+	SmartDashboard.putNumber("Right Sensor", getDistanceRight());
+
 
 
 //	(se.getRightBallSensor() > RobotMap.BALL_VOLT_SHOOTER || se.getLeftBallSensor() > RobotMap.BALL_VOLT_SHOOTER)

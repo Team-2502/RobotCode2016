@@ -1,21 +1,21 @@
-package com.team2502.robot2016.commands.shooter;
+package com.team2502.robot2016.commands.drive;
 
-import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.commands.drive.DriveSpeed;
+import com.team2502.robot2016.commands.autonomous.DriveTime;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class ShootAndReload extends CommandGroup {
+public class DriveSensorExtra extends CommandGroup {
     
-    public  ShootAndReload() {
+    public  DriveSensorExtra(double speed, Sensor sensor, double sensorValue) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
- 
+
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());
@@ -27,8 +27,12 @@ public class ShootAndReload extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new DriveSpeed(.2), (Robot.active.getActiveState()) ? .9 : .3);
-    	addSequential(new ShootBall(), 1);
-    	addSequential(new ReloadShooter());
+    	
+    	//Normal drive to Sensor Value part
+    	addSequential(new DriveToSensorValue(speed, sensor, sensorValue));
+    	
+    	//Instead of ending here, we drive a little bit extra to make sure
+    	addSequential(new DriveTime(.2));
+    	
     }
 }

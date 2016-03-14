@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import com.team2502.robot2016.commands.drive.DriveAndShoot;
+
+import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
+import com.team2502.robot2016.commands.autonomous.DriveTime;
+import com.team2502.robot2016.commands.autonomous.DriveTowardTower;
 import com.team2502.robot2016.commands.drive.DriveStraight;
-import com.team2502.robot2016.commands.drive.DriveTime;
-import com.team2502.robot2016.commands.drive.DriveTowardTower;
 import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.subsystems.ActiveBar;
 import com.team2502.robot2016.subsystems.ActiveIntake;
@@ -71,7 +72,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
 		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
 		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
-		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_LIMIT);
+		
+		RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
+		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
+		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
+		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
 
     }
 	

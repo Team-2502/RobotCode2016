@@ -34,13 +34,15 @@ public class ShootBall extends Command {
     protected void execute() {
     	ai.openPokers();
     	
-//    	if (!ai.getActiveState()) {
-//    		ai.setActiveState(true);
-//    		Timer.delay(.6);
-//    	} else {
+    	if (!ai.getActiveState()) {
+    		ai.setActiveState(true);
+    		Timer.delay(.6);
+    	} else {
     		Timer.delay(.05);
-//    	}
+    	}
 		
+    	
+    	
 		System.err.println("Shot");
     	bs.setSolenoid(true);
     	Timer.delay(1);               // REVIEW NJL

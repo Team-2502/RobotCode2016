@@ -1,48 +1,58 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveTime extends Command {
+public class DriveToSensorValue extends Command {
 
-	private double time;
-	private double startTime;
-//	private DriveTrain dt = Robot.driveTrain;
 	private PIDDriveTrain dt = Robot.driveTrain;
-
+	private Sensors s = Robot.sensors;
+	private Sensor sensor;
+	private double sensorLimit;
+	private double speed = .7;
+	private int counter = 0;
 	
-    public DriveTime(double time) {
+    public DriveToSensorValue(double speed, Sensor sensor, double sensorValue) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	this.time = time;
+    	sensorLimit = sensorValue;
+    	this.speed = speed;
+    	this.sensor = sensor;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.startTime = System.currentTimeMillis();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.runMotors(.7, .7);
+    	dt.runMotors(speed, speed);
+    	
+    	if (Math.abs(s.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION) {
+    		counter++;
+    	} else {
+    		counter = 0;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return System.currentTimeMillis() - startTime > time * 1000;
+        return counter > 15;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	dt.stopDrive();
-//    	new RotateToAngle(-20);
+    	Sensors.BEFORE_TURN_VALUE = s.getSensorDistance(sensor);
     }
 
     // Called when another command which requires one or more of the same
