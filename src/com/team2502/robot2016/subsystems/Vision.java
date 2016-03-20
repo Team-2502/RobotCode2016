@@ -15,6 +15,7 @@ public class Vision extends Subsystem {
 	 */
 	public static final SerialPort serialPort = new SerialPort(9600, Port.kOnboard, 8, Parity.kNone, StopBits.kOne);
 	
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new VisionControl());

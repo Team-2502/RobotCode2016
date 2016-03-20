@@ -46,6 +46,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	private boolean change = false;
 	private double initialReading;
 	private double extraTime = 0;
+	private double realSpeed = 0;
 	
 
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue) {
@@ -89,8 +90,9 @@ public class DriveStraight extends Command implements PIDOutput {
     protected void execute() {
     	
     	
-    	dt.driveStraight(speed, rotateToAngleRate);
-    	
+    	dt.driveStraight(realSpeed, rotateToAngleRate);
+    	realSpeed += .08;
+    	if (realSpeed > speed) realSpeed = speed;
     	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
 
     	if (change) {

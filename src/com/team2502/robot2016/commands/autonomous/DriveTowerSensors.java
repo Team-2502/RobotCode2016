@@ -47,7 +47,7 @@ public class DriveTowerSensors extends CommandGroup {
     	
     	
     	//Drive to Green tape area - about
-    	addSequential(new DriveTime(3.5));
+    	addSequential(new DriveTime(4));
     	//Straighten out to face the back wall - to within 1 degree.
     	//2 second limit so that if not within 1 degree, it would be good enough
     	addSequential(new RotateToAngle(0), 2);

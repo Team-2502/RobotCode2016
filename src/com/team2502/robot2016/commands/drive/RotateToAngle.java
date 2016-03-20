@@ -32,7 +32,7 @@ public class RotateToAngle extends Command implements PIDOutput {
 	private static final double kD = 0.00;
 	private static final double kF = 0.00;
     
-	private static final double kToleranceDegrees = 2.0f;
+	private static final double kToleranceDegrees = 1.0f;
 	
 	private double startTime;
 
@@ -65,7 +65,13 @@ public class RotateToAngle extends Command implements PIDOutput {
     	turnController.setPID(kP, kI, kD);
     	System.out.println("Rotate to Angle: " + rotateToAngleRate);
     	
-    	double newSpeed = (Math.abs(rotateToAngleRate) + motorLimit)* Math.signum(rotateToAngleRate);
+    	double newSpeed = rotateToAngleRate;
+    	
+    	
+    	newSpeed = .7 * Math.signum(rotateToAngleRate);
+    	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);
+    	
+//    	newSpeed = (Math.abs(newSpeed) + motorLimit)* Math.signum(newSpeed);
     	
     	dt.runMotors(newSpeed, -newSpeed);
     	

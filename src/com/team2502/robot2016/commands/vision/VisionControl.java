@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class VisionControl extends Command {
 	
-	private Subsystem dt = Robot.vision;
+//	private Subsystem dt = Robot.vision;
 	
 	public VisionControl()
 	{
-		requires(Robot.vision);
+//		requires(Robot.vision);
 	}
 	
 	@Override
@@ -22,7 +22,7 @@ public class VisionControl extends Command {
 
 	@Override
 	protected void execute() {
-		int value = Robot.serialPort.getBytesReceived();
+//		int value = Robot.serialPort.getBytesReceived();
 		
 	}
 

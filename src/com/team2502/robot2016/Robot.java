@@ -40,14 +40,14 @@ public class Robot extends IterativeRobot {
 	public static final Shooter ballShooter = new Shooter();
 	public static final ActiveIntake active = new ActiveIntake();
 	public static final ActiveBar activeBar = new ActiveBar();
-	public static final Subsystem vision = new Vision();
+//	public static final Subsystem vision = new Vision();
 
 	public static final Sensors sensors = new Sensors();
 
 	/**
 	 *  For communication between RaspberryPi (Vision) and RoboRio
 	 */
-	public static final SerialPort serialPort = new SerialPort(9600, Port.kOnboard, 8, Parity.kNone, StopBits.kOne);
+//	public static final SerialPort serialPort = new SerialPort(9600, Port.kOnboard, 8, Parity.kNone, StopBits.kOne);
 	
 //	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
@@ -130,7 +130,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive to sensor limit wall", new DriveToSensorValue(.7, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
 		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
 		SmartDashboard.putData("Drive in front of Tower", new DriveToSensorValue(.63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true));
-		SmartDashboard.putData("Rotate to forward", new RotateToAngle(-3));
+		SmartDashboard.putData("Rotate to forward", new RotateToAngle(0));
 		SmartDashboard.putData("Flip Active", new ToggleActive());
 		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5));
 

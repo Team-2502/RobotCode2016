@@ -16,7 +16,7 @@ public class ShootBall extends Command {
     
     public ShootBall() {
     	requires(Robot.ballShooter);
-    	requires(Robot.active);
+//    	requires(Robot.active);
 //    	requires(Robot.sensors);
     }
     
@@ -34,12 +34,12 @@ public class ShootBall extends Command {
     protected void execute() {
     	ai.openPokers();
     	
-    	if (!ai.getActiveState()) {
-    		ai.setActiveState(true);
-    		Timer.delay(1.4);
-    	} else {
+//    	if (!ai.getActiveState()) {
+//    		ai.setActiveState(true);
+//    		Timer.delay(1.4);
+//    	} else {
     		Timer.delay(.05);
-    	}
+//    	}
 		
     	
     	
