@@ -38,7 +38,7 @@ public class ShootBall extends Command {
 //    		ai.setActiveState(true);
 //    		Timer.delay(1.4);
 //    	} else {
-    		Timer.delay(.05);
+    		Timer.delay(.1);
 //    	}
 		
     	

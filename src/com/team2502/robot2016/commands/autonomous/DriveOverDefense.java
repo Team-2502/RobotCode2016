@@ -1,9 +1,8 @@
 package com.team2502.robot2016.commands.autonomous;
 
+import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.DriveStraight;
-import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
@@ -13,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveTowerSensors extends CommandGroup {
+public class DriveOverDefense extends CommandGroup {
     
-    public  DriveTowerSensors(int startingPosition) {
+    public  DriveOverDefense() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -32,24 +31,14 @@ public class DriveTowerSensors extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	double turnAngle = 0;
-    	Sensor sensor = Sensor.Left;
-    	
-    	if (startingPosition == 4) {
-    		turnAngle = -10;
-    		sensor = Sensor.FrontLong;
-    	} else if (startingPosition == 2 || startingPosition == 3) {
-    		turnAngle = 90;
-    	} else if (startingPosition == 5) {
-    		turnAngle = -90;
-    		sensor = Sensor.Right;
-    	}
-    	
-    	
-    	addSequential(new DriveOverDefense());
-    	addSequential(new DriveAfterDefense(startingPosition));
-    	
+    	Robot.sensors.zeroGyro();
+    	//Drive to Green tape area - about
+//    	addSequential(new DriveTime(SmartDashboard.getNumber("Auto Time Beginning", 2.3)));
+    	//Straighten out to face the back wall - to within 1 degree.
+    	//2 second limit so that if not within 1 degree, it would be good enough
+//    	addSequential(new RotateToAngle(0), 2);
+    	addSequential(new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4), 6);
+
     	
     }
 }

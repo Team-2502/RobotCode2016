@@ -10,6 +10,7 @@ import com.team2502.robot2016.subsystems.Sensors.Sensor;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -47,6 +48,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	private double initialReading;
 	private double extraTime = 0;
 	private double realSpeed = 0;
+	private double minTime = 0;
 	
 
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue) {
@@ -75,6 +77,12 @@ public class DriveStraight extends Command implements PIDOutput {
     	this(angle, speed, sensor, sensorValue);
     	this.extraTime = extraTime;
     }
+    
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime) {
+    	this(angle, speed, sensor, sensorValue);
+    	this.extraTime = extraTime;
+    	this.minTime = minTime;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -89,9 +97,21 @@ public class DriveStraight extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	
-    	dt.driveStraight(realSpeed, rotateToAngleRate);
+//    	if ((s.getRoll() > 5.5 && s.getSensorDistance(sensor) < SmartDashboard.getNumber("Outer Short Value", .8))
+//    			|| Math.abs(s.getAngle() - angle) > 10) {
+//    		double newSpeed = rotateToAngleRate;
+//        	newSpeed = .7 * Math.signum(rotateToAngleRate);
+//        	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);
+////        	newSpeed = (Math.abs(newSpeed) + motorLimit)* Math.signum(newSpeed);
+//        	dt.runMotors(newSpeed, -newSpeed);
+//        	System.out.println("Rotate Straight");
+//    	} else {
+    		dt.driveStraight(realSpeed, rotateToAngleRate);
+    		System.out.println("Normal Straight");
+
+//    	}
     	realSpeed += .08;
+    	
     	if (realSpeed > speed) realSpeed = speed;
     	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
 
@@ -107,13 +127,14 @@ public class DriveStraight extends Command implements PIDOutput {
 	    		counter = 0;
 	    	}
     	}
-
+    	
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
-    	return counter > 1;
+    	return (counter > 2 && System.currentTimeMillis() - startTime > minTime * 1000);
     	
     }
 

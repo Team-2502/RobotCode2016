@@ -433,6 +433,10 @@ public class Sensors extends Subsystem {
     	return ahrs.getVelocityY();
     }
     
+    public void zeroGyro() {
+    	ahrs.zeroYaw();
+    }
+    
  public void updateData() {
     	
 //    	System.err.println("Updating?");
@@ -447,8 +451,8 @@ public class Sensors extends Subsystem {
          SmartDashboard.putBoolean(  "IMU_Connected",        ahrs.isConnected());
          SmartDashboard.putBoolean(  "IMU_IsCalibrating",    ahrs.isCalibrating());
          SmartDashboard.putNumber(   "IMU_Yaw",              ahrs.getYaw());
-//         SmartDashboard.putNumber(   "IMU_Pitch",            ahrs.getPitch());
-//         SmartDashboard.putNumber(   "IMU_Roll",             ahrs.getRoll());
+         SmartDashboard.putNumber(   "Pitch",            ahrs.getPitch());
+         SmartDashboard.putNumber(   "Roll",             ahrs.getRoll());
          
          /* Display tilt-corrected, Magnetometer-based heading (requires             */
          /* magnetometer calibration to be useful)                                   */

@@ -28,6 +28,6 @@ public class DriveAndShoot extends CommandGroup {
         // arm.
     	
     	addSequential(new DriveTowerSensors(startingPosition));
-    	addSequential(new ShootAndReload());
+//    	addSequential(new ShootAndReload());
     }
 }
