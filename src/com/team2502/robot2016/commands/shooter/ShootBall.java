@@ -25,7 +25,7 @@ public class ShootBall extends Command {
      * Lowest Point = limitSwitch.get() == true
      */
     protected void initialize() {
-    	
+    	Robot.driveTrain.brakeMode(true);
     }
 
     /**
@@ -36,7 +36,7 @@ public class ShootBall extends Command {
     	
     	if (!ai.getActiveState()) {
     		ai.setActiveState(true);
-    		Timer.delay(.6);
+    		Timer.delay(1.4);
     	} else {
     		Timer.delay(.05);
     	}
@@ -60,6 +60,8 @@ public class ShootBall extends Command {
      */
     protected void end() {
     	ai.closerPokers();
+    	Robot.driveTrain.brakeMode(false);
+
     }
 
     /**

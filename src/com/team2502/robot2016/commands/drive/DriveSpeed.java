@@ -1,7 +1,7 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveSpeed extends Command {
 
-	private PIDDriveTrain dt = Robot.driveTrain;
+	private DriveTrain dt = Robot.driveTrain;
 	private double speed;
 	
     public DriveSpeed(double speed) {

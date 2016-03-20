@@ -3,7 +3,7 @@ package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TankDriveSix extends Command {
 
 //	private DriveTrain dt = Robot.driveTrain;
-	private PIDDriveTrain dt = Robot.driveTrain;
+	private DriveTrain dt = Robot.driveTrain;
 
 
     public TankDriveSix() {
@@ -31,11 +31,7 @@ public class TankDriveSix extends Command {
     protected void execute() {
     	dt.driveSix();
     	
-    	SmartDashboard.putNumber("Angle Rate", dt.rotateToAngleRate);
-    	SmartDashboard.putBoolean("On Target", dt.onTarget());
-    	SmartDashboard.putNumber("Target", dt.getSetpoint());
-    	SmartDashboard.putNumber("Get Position", dt.getPosition());
-
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

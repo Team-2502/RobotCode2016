@@ -1,7 +1,8 @@
 package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.commands.drive.DriveSensorExtra;
+import com.team2502.robot2016.commands.active.ToggleActive;
+import com.team2502.robot2016.commands.drive.DriveStraight;
 import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
@@ -35,17 +36,18 @@ public class DriveTowerSensors extends CommandGroup {
     	Sensor sensor = Sensor.Left;
     	
     	if (startingPosition == 4) {
-    		
+    		turnAngle = -10;
+    		sensor = Sensor.FrontLong;
     	} else if (startingPosition == 2 || startingPosition == 3) {
-    		turnAngle = -90;
-    	} else if (startingPosition == 5) {
     		turnAngle = 90;
+    	} else if (startingPosition == 5) {
+    		turnAngle = -90;
     		sensor = Sensor.Right;
     	}
     	
     	
     	//Drive to Green tape area - about
-    	addSequential(new DriveTime(3));
+    	addSequential(new DriveTime(3.5));
     	//Straighten out to face the back wall - to within 1 degree.
     	//2 second limit so that if not within 1 degree, it would be good enough
     	addSequential(new RotateToAngle(0), 2);
@@ -56,12 +58,13 @@ public class DriveTowerSensors extends CommandGroup {
     	addSequential(new RotateToAngle(turnAngle), 2);
     	
     	//Once turned, read side sensor until on front of tower
-    	addSequential(new DriveToSensorValue(.7, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT));
+    	addSequential(new DriveToSensorValue(.7, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true));
     	//Once in front of tower, turn back to straight
-    	addSequential(new RotateToAngle(0));
+    	addSequential(new RotateToAngle(0), 2);
     	
+    	addParallel(new ToggleActive());
     	//Once facing right way, drive until against tower
-    	addSequential(new DriveSensorExtra(.7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT));
+    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5));
     	
     	
     	

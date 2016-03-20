@@ -76,15 +76,17 @@ public class RobotMap
 	public static final int LEFT_BALL_SENSOR = 1;
 	public static final int RIGHT_BALL_SENSOR = 0;
 	
-	public static final int FRONT_LONG_DISTANCE = 2;
-	public static final int FRONT_SHORT_DISTANCE = 3;
-	public static final int LEFT_DISTANCE = 4;
-	public static final int RIGHT_DISTANCE = 5;
+	public static final int FRONT_LONG_DISTANCE = 0;
+	public static final int FRONT_SHORT_DISTANCE = 1;
+	public static final int LEFT_DISTANCE = 2;
+	public static final int RIGHT_DISTANCE = 3;
 	
-	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 4.4;
-	public static double SIDE_DISTANCE_SENSOR_TURN_LIMIT = 3.7;
-	public static double TOWER_SENSOR_DISTANCE_LIMIT = 1;
+	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 3.6;
+	public static double SIDE_DISTANCE_SENSOR_TURN_LIMIT = .5;
+	public static double TOWER_SENSOR_DISTANCE_LIMIT = 2;
 	public static double SENSOR_ZONE_OF_PRECISION = .08;
+	public static double TOWER_EXTRA_TIME = .5;
+
 
 	public static double BALL_VOLT_ACTIVE = 1.65;
 	public static double BALL_VOLT_SHOOTER = 4;

@@ -2,7 +2,7 @@ package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RotateToAngle extends Command implements PIDOutput {
 	
-	private PIDDriveTrain dt = Robot.driveTrain;
+	private DriveTrain dt = Robot.driveTrain;
 	private double angle;
 	
 	private PIDController turnController;
@@ -27,18 +27,19 @@ public class RotateToAngle extends Command implements PIDOutput {
     /* controllers by displaying a form where you can enter new P, I,  */
     /* and D constants and test the mechanism.                         */
     
-	private static final double kP = 0.2;
+	private static double kP = 0.02;
 	private static final double kI = 0.00;
 	private static final double kD = 0.00;
 	private static final double kF = 0.00;
     
-	private static final double kToleranceDegrees = 1.0f;
+	private static final double kToleranceDegrees = 2.0f;
+	
+	private double startTime;
 
     public RotateToAngle(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	dt.enable();
     	this.angle = angle;
     	
     	turnController = new PIDController(kP, kI, kD, kF, Sensors.ahrs, this);
@@ -52,30 +53,35 @@ public class RotateToAngle extends Command implements PIDOutput {
     protected void initialize() {
     	turnController.setSetpoint(angle);
     	turnController.enable();
+    	SmartDashboard.putNumber("P Value", kP);
+    	startTime = System.currentTimeMillis();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 //    	dt.runMotors(.1, -.1);
-    	dt.runMotors(rotateToAngleRate, -rotateToAngleRate);
-    	SmartDashboard.putNumber("Angle Rate", dt.rotateToAngleRate);
-    	SmartDashboard.putBoolean("On Target", dt.onTarget());
-    	SmartDashboard.putNumber("Target", dt.getSetpoint());
-    	SmartDashboard.putNumber("Get Position", dt.getPosition());
-
-
+    	double motorLimit = SmartDashboard.getNumber("Motor Limit", .3);
+    	kP = SmartDashboard.getNumber("P Value", kP);
+    	turnController.setPID(kP, kI, kD);
+    	System.out.println("Rotate to Angle: " + rotateToAngleRate);
+    	
+    	double newSpeed = (Math.abs(rotateToAngleRate) + motorLimit)* Math.signum(rotateToAngleRate);
+    	
+    	dt.runMotors(newSpeed, -newSpeed);
+    	
 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
-    	return turnController.onTarget();
+    	return turnController.onTarget() || System.currentTimeMillis() - startTime > 1800;
     	
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("Done");
 //    	dt.runMotors(-.1, .1);
 //    	dt.disable();
     	turnController.disable();

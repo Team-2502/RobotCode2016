@@ -15,6 +15,10 @@ public class ActiveBar extends Subsystem {
 	public static final int FORWARD = 1;
 	public static final int BACKWARD = -FORWARD;
 
+	
+	public ActiveBar() {
+		System.out.println("Active Bar");
+	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 

@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,29 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
     
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
-	public static final int TICKS_PER_REV = 4 * 1023;
-	public static final int wheelRadius = 8;
-	
-//	public static final Point OUTER_LEFT = new Point(0, 0);
-//	public static final Point OUTER_MIDDLE = new Point(0, 0);
-//	public static final Point OUTER_RIGHT = new Point(0, 0);
-//	
-//	public static final Point INNER_LEFT = new Point(0, 0);
-//	public static final Point INNER_MIDDLE = new Point(0, 0);
-//	public static final Point INNER_RIGHT = new Point(0, 0);
-	
-	
-	public enum Motors {
-		LEFT_MOTORS, RIGHT_MOTORS, WINCH_MOTORS
-	}
-	
-//	private static DriveTrain instance;
-	
-
-	
 	private final RobotDrive simDrive;
 	private final RobotDrive miniSimDrive;
 	
@@ -56,17 +35,29 @@ public class DriveTrain extends Subsystem {
 	private final CANTalon rightSimTwo;
 	private final CANTalon rightMiniSim;
 	
-	
-	
 	private final int wheelBase = 24;
+	public double rotateToAngleRate = 0;
 	
-//	private Sensors sensors = Robot.sensors;
 	
-	int i = 0;
+	public enum Motors {
+		LEFT_MOTORS, RIGHT_MOTORS, WINCH_MOTORS
+	}
 	
-	public DriveTrain() {
+	private static final double ROBOT_STRAIGHT = 0,
+			ROBOT_FACE_LEFT = 60,
+			ROBOT_FACE_RIGHT = -60;
 
-		leftSimOne = new CANTalon(RobotMap.LEFT_MOTOR_SIM_ONE);
+	private static final double kToleranceDegrees = 2.0f;
+    // Initialize your subsystem here
+    public DriveTrain() {
+        // Use these to get going:
+        // setSetpoint() -  Sets where the PID controller should move the system
+        //                  to
+        // enable() - Enables the PID controller.
+    	
+    	
+    	
+    	leftSimOne = new CANTalon(RobotMap.LEFT_MOTOR_SIM_ONE);
 		leftSimTwo = new CANTalon(RobotMap.LEFT_MOTOR_SIM_TWO);
 		leftMiniSim = new CANTalon(RobotMap.LEFT_MOTOR_MINI_SIM);
 
@@ -75,7 +66,7 @@ public class DriveTrain extends Subsystem {
 		rightSimTwo = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_TWO);
 		rightMiniSim = new CANTalon(RobotMap.RIGHT_MOTOR_MINI_SIM);
 		System.err.println("Right");
-
+		
 		//Will need to make a custom RobotDrive for all 6 motors
 		simDrive = new RobotDrive(leftSimOne, leftSimTwo, rightSimOne, rightSimTwo);
 		miniSimDrive = new RobotDrive(leftMiniSim, rightMiniSim);
@@ -83,39 +74,25 @@ public class DriveTrain extends Subsystem {
 		System.err.println("Drives");
 		
 		System.err.println("Solenoid");
-
 //		accel = new BuiltInAccelerometer();
 
-		leftSimOne.setPosition(0);
-		leftSimTwo.setPosition(0);
-		leftMiniSim.setPosition(0);
-
-		rightSimOne.setPosition(0);
-		rightSimTwo.setPosition(0);
-		rightMiniSim.setPosition(0);
 		
-		
-		
-//		simDrive.setInvertedMotor(motor, isInverted);
-	}
-	
-//	public static DriveTrain getInstance() {
-//		if (instance == null) {
-//			instance = new DriveTrain();
-//		}
-//		System.err.println("Instance");
-//		return instance;
-//	}
-
+	    simDrive.setExpiration(.1);
+	    miniSimDrive.setExpiration(.1);
+	    System.out.println("Expiration");
+    }
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new TankDriveSix());
-    	System.err.println("Default Drive");
     }
     
     public void driveSix() {
     	
+//    	if (getPIDController().isEnabled()) {
+//    		getPIDController().disable();
+//    	}
     	double leftSpeed = -OI.getLeftStick().getY();
     	double rightSpeed = -OI.getRightStick().getY();
     	
@@ -129,31 +106,30 @@ public class DriveTrain extends Subsystem {
     	miniSimDrive.tankDrive(leftSpeed, rightSpeed, true);
     }
     
-   
-    
-    public double getEncoderValue(Motors m) {
-    	switch (m)  {
-    		case LEFT_MOTORS:
-    			return leftSimOne.getPosition();
-    			
-    		case RIGHT_MOTORS:
-    			return rightSimOne.getPosition();
-    			
-    		case WINCH_MOTORS:
-    		default :
-    			return 0;
-//    			return climberWinch1.getPosition();
-    	}
-    }
-    
     public void turn(double speed, boolean left) {
     	simDrive.tankDrive(speed * ((left) ? -1: 1), speed * ((left) ? 1: -1));
     	miniSimDrive.tankDrive(speed * ((left) ? -1: 1), speed * ((left) ? 1: -1));
     }
     
     public void stopDrive() {
-    	simDrive.tankDrive(0, 0);
-    	miniSimDrive.tankDrive(0, 0);
+    	
+//    	brakeMode(true);
+
+    	simDrive.tankDrive(-.05, -0.05);
+    	miniSimDrive.tankDrive(-.05, -0.05);
+    	
+    	Timer.delay(.3);
+//    	brakeMode(false);
+    }
+    
+    public void brakeMode(boolean on) {
+    	leftSimOne.enableBrakeMode(on);
+    	leftSimTwo.enableBrakeMode(on);
+    	leftMiniSim.enableBrakeMode(on);
+
+    	rightSimOne.enableBrakeMode(on);
+    	rightSimTwo.enableBrakeMode(on);
+    	rightMiniSim.enableBrakeMode(on);
     }
     
     public void driveAlongRadius(double speed, double radius) {
@@ -163,17 +139,17 @@ public class DriveTrain extends Subsystem {
     }
     
     public void runMotors(double left, double right) {
+    	if (Math.abs(left) > 1) left /= Math.abs(left);
+    	if (Math.abs(right) > 1) right /= Math.abs(right);
+
     	simDrive.tankDrive(left, right);
     	miniSimDrive.tankDrive(left, right);
     }
     
-    public void driveStraight(double speed) {
-    	
-    	
-    	simDrive.arcadeDrive(speed, Sensors.ahrs.getAngle());
-    	
-    	
-    	
+    public void driveStraight(double speed, double turn) {
+    	simDrive.drive(speed, turn);
+    	miniSimDrive.drive(speed, turn);
+
     }
     
     

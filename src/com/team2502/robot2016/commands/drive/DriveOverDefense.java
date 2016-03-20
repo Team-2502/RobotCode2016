@@ -1,7 +1,7 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveOverDefense extends Command {
 
-	private PIDDriveTrain dt = Robot.driveTrain;
+	private DriveTrain dt = Robot.driveTrain;
 	private Sensors s = Robot.sensors;
 	
 	private final int BEFORE_DEFENSE = 0;
@@ -38,7 +38,7 @@ public class DriveOverDefense extends Command {
     		if ((Math.abs(s.getPitch()) > 5) || Math.abs(s.accelZ()) > 1.5) {
     			state++;
     		}
-    		dt.driveStraight(.9);
+//    		dt.driveStraight(.9);
     	case IN_DEFENSE :
     		dt.runMotors(.8, .8);
     		Timer.delay(.4);   // REVIEW NJL

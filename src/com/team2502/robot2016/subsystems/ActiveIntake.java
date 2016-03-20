@@ -17,6 +17,9 @@ public class ActiveIntake extends Subsystem {
 	private final Solenoid activeSolenoid = new Solenoid(RobotMap.ACTIVE_SOLENOID);
 	private final Solenoid pokerSolenoid = new Solenoid(RobotMap.POKER_SOLENOID);
 	
+	public ActiveIntake() {
+		System.out.println("Active Intake");
+	}
 	
 	
     public void initDefaultCommand() {

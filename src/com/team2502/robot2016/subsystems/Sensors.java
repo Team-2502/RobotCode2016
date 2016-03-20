@@ -84,8 +84,8 @@ public class Sensors extends Subsystem {
 
 	public static AHRS ahrs;
 	
-	private AnalogInput leftBallSensor;
-	private AnalogInput rightBallSensor;
+//	private AnalogInput leftBallSensor;
+//	private AnalogInput rightBallSensor;
 //
 	private AnalogInput frontLongDistance;
 	private AnalogInput frontShortDistance;
@@ -113,9 +113,9 @@ public class Sensors extends Subsystem {
     
 	public Sensors() {
 		
-		
-	    leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
-	    rightDistance = new AnalogInput(RobotMap.RIGHT_DISTANCE);
+			System.out.println("Before initial Sensors");
+	    
+
 
 	  
     	
@@ -135,22 +135,32 @@ public class Sensors extends Subsystem {
 	        	}
 	        }
     	 
+			System.out.println("Navx Board");
+
+    	 
 //    	 gyro = new AnalogGyro(1);
 //     	gyro.initGyro();
 //		table = NetworkTable.getTable("GRIP/GRIPConvex");
 		ringLight = new DigitalOutput(RobotMap.RING_LIGHT);
 		
+		System.out.println("RingLight");
+
 		frontLongDistance = new AnalogInput(RobotMap.FRONT_LONG_DISTANCE);
 		frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
+
+		System.out.println("Fron Distance Sensors");
+
 		leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
 		rightDistance = new AnalogInput(RobotMap.RIGHT_DISTANCE);
+		System.out.println("Left and right sensors");
 
 		
-		leftBallSensor = new AnalogInput(RobotMap.LEFT_BALL_SENSOR);
-		rightBallSensor = new AnalogInput(RobotMap.RIGHT_BALL_SENSOR);
-		
+//		leftBallSensor = new AnalogInput(RobotMap.LEFT_BALL_SENSOR);
+//		rightBallSensor = new AnalogInput(RobotMap.RIGHT_BALL_SENSOR);
+		System.out.println("Ball Sensors");
 
 
+		System.out.println("Sensors");
 
 	}
 
@@ -251,25 +261,24 @@ public class Sensors extends Subsystem {
     	switch(sensor) {
     	case FrontLong:
     		return frontLongDistance.getVoltage();
-    		break;
     	case FrontShort:
     		return frontShortDistance.getVoltage();
-    		break;
     	case Left:
     		return leftDistance.getVoltage();
-    		break;
     	case Right:
     		return rightDistance.getVoltage();
-    		break;
     	}
+    	return -1;
     }
     
     public double getLeftBallSensor() {
-    	return leftBallSensor.getVoltage();
+//    	return leftBallSensor.getVoltage();
+    	return -1;
     }
     
     public double getRightBallSensor() {
-    	return rightBallSensor.getVoltage() + .6;
+//    	return rightBallSensor.getVoltage() + .6;
+    	return -1;
     }
     
     public boolean ballInActive() {
@@ -426,8 +435,8 @@ public class Sensors extends Subsystem {
     
  public void updateData() {
     	
-    	System.err.println("Updating?");
-    	System.out.println("Updating?");
+//    	System.err.println("Updating?");
+//    	System.out.println("Updating?");
     	 boolean zero_yaw_pressed = OI.getRightStick().getRawButton(2);
          if ( zero_yaw_pressed ) {
              ahrs.zeroYaw();
@@ -550,7 +559,8 @@ public void updateOtherSensors() {
 	SmartDashboard.putNumber("Left Sensor", getDistanceLeft());
 	SmartDashboard.putNumber("Right Sensor", getDistanceRight());
 
-
+	SmartDashboard.putNumber("Left Joystick", OI.getLeftStick().getY());
+	SmartDashboard.putNumber("Right Joystick", OI.getRightStick().getY());
 
 //	(se.getRightBallSensor() > RobotMap.BALL_VOLT_SHOOTER || se.getLeftBallSensor() > RobotMap.BALL_VOLT_SHOOTER)
 

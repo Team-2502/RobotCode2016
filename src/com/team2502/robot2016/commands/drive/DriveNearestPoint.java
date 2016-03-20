@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,7 +22,7 @@ public class DriveNearestPoint extends Command {
 	private Point nearestPoint;
 	private double shortestDistance = Integer.MAX_VALUE;
 	
-	private PIDDriveTrain dt = Robot.driveTrain;
+	private DriveTrain dt = Robot.driveTrain;
 	private Sensors s = Robot.sensors;
 	
     public DriveNearestPoint(Location l) {

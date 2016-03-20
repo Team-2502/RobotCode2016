@@ -2,23 +2,23 @@ package com.team2502.robot2016;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SerialPort.Parity;
+import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.SerialPort.StopBits;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
-import com.team2502.robot2016.commands.autonomous.DriveTowardTower;
-import com.team2502.robot2016.commands.drive.DriveSensorExtra;
 import com.team2502.robot2016.commands.drive.DriveStraight;
 import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
-import com.team2502.robot2016.subsystems.ActiveBar;
-import com.team2502.robot2016.subsystems.ActiveIntake;
-import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.PIDDriveTrain;
-import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.*;
 //import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
@@ -36,13 +36,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 //	public static final DriveTrain driveTrain = new DriveTrain();
-	public static final PIDDriveTrain driveTrain = new PIDDriveTrain();
+	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter ballShooter = new Shooter();
 	public static final ActiveIntake active = new ActiveIntake();
 	public static final ActiveBar activeBar = new ActiveBar();
+	public static final Subsystem vision = new Vision();
 
 	public static final Sensors sensors = new Sensors();
-//	public static final Sensors sensors = new Sensors();
+
+	/**
+	 *  For communication between RaspberryPi (Vision) and RoboRio
+	 */
+	public static final SerialPort serialPort = new SerialPort(9600, Port.kOnboard, 8, Parity.kNone, StopBits.kOne);
 	
 //	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
@@ -57,6 +62,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
+    	
 		System.err.println("Start init");
 		oi = new OI();
 		System.err.println("OI");
@@ -76,8 +82,8 @@ public class Robot extends IterativeRobot {
         chooser.addObject("Full Auto", new DriveAndShoot(startPosition));
         chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         chooser.addObject("No Auto", null);
-        chooser.addObject("Drive to Tower", new DriveStraight(.9));
-        chooser.addObject("Drive to Tower and Shoot", new DriveTowardTower());
+//        chooser.addObject("Drive to Tower", new DriveStraight(.9));
+//        chooser.addObject("Drive to Tower and Shoot", new DriveTowardTower());
 //        chooser.addObject("Drive to hdbjhsbdcs and Shoot", new DriveAndShoot());
 
 //        chooser.addObject("My Auto", new MyAutoCommand());
@@ -86,13 +92,19 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
 		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
 		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
+
+		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
+//		SmartDashboard.putNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
+		SmartDashboard.putNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
+		SmartDashboard.putNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
+		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 		
 		RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
 		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
 		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
 		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-		
-		testAutoParts(startPosition);
+		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+
 		
 		
     }
@@ -103,11 +115,12 @@ public class Robot extends IterativeRobot {
     	Sensor sensor = Sensor.Left;
     	
     	if (startingPosition == 4) {
-    		
+    		turnAngle = -10;
+    		sensor = Sensor.FrontLong;
     	} else if (startingPosition == 2 || startingPosition == 3) {
-    		turnAngle = -90;
-    	} else if (startingPosition == 5) {
     		turnAngle = 90;
+    	} else if (startingPosition == 5) {
+    		turnAngle = -90;
     		sensor = Sensor.Right;
     	}
     	
@@ -116,9 +129,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
 		SmartDashboard.putData("Drive to sensor limit wall", new DriveToSensorValue(.7, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
 		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
-		SmartDashboard.putData("Drive in front of Tower", new DriveToSensorValue(.7, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT));
-		SmartDashboard.putData("Rotate to forward", new RotateToAngle(0));
-		SmartDashboard.putData("Drive to tower", new DriveSensorExtra(.7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT));
+		SmartDashboard.putData("Drive in front of Tower", new DriveToSensorValue(.63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true));
+		SmartDashboard.putData("Rotate to forward", new RotateToAngle(-3));
+		SmartDashboard.putData("Flip Active", new ToggleActive());
+		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5));
 
     }
 	
@@ -149,6 +163,7 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
         sensors.updateData();
+        driveTrain.brakeMode(true);
 //    	autonomousCommand = new LightOn(10);
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -163,6 +178,10 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
+        int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+
+		testAutoParts(startPosition);
+        
         if (autonomousCommand != null) autonomousCommand.start();
 
     }
@@ -174,6 +193,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         sensors.updateData();
+        driveTrain.brakeMode(true);
     }
 
     @Override
@@ -182,9 +202,15 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-    	
+    	driveTrain.brakeMode(true);
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+
+		testAutoParts(startPosition);
+		
+
 
     }
 
