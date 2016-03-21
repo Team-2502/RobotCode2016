@@ -1,6 +1,5 @@
 package com.team2502.robot2016.commands.drive;
 
-import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.subsystems.DriveTrain;
@@ -9,8 +8,8 @@ import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -18,11 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveStraight extends Command implements PIDOutput {
 	
-	private DriveTrain dt = Robot.driveTrain;
-	private double angle;
+	protected DriveTrain dt = Robot.driveTrain;
+	protected double angle;
 	
-	private PIDController turnController;
-	private double rotateToAngleRate;
+	protected PIDController turnController;
+	protected double rotateToAngleRate;
     
     /* The following PID Controller coefficients will need to be tuned */
     /* to match the dynamics of your drive system.  Note that the      */
@@ -30,25 +29,28 @@ public class DriveStraight extends Command implements PIDOutput {
     /* controllers by displaying a form where you can enter new P, I,  */
     /* and D constants and test the mechanism.                         */
     
-	private static double kP = 0.04;
-	private static final double kI = 0.00;
-	private static final double kD = 0.00;
-	private static final double kF = 0.00;
+	protected static double kP = 0.04;
+	protected static final double kI = 0.00;
+	protected static final double kD = 0.00;
+	protected static final double kF = 0.00;
     
-	private static final double kToleranceDegrees = 1.0f;
+	protected static final double kToleranceDegrees = 1.0f;
 	
-	private double startTime;
+	protected double startTime;
 	
-	private Sensors s = Robot.sensors;
-	private Sensor sensor;
-	private double sensorLimit;
-	private double speed = .7;
-	private int counter = 0;
-	private boolean change = false;
-	private double initialReading;
-	private double extraTime = 0;
-	private double realSpeed = 0;
-	private double minTime = 0;
+	protected Sensors s = Robot.sensors;
+	protected Sensor sensor;
+	protected double sensorLimit;
+	protected double speed = .7;
+	protected int counter = 0;
+	protected boolean change = false;
+	protected double initialReading;
+	protected double extraTime = 0;
+	protected double realSpeed = 0;
+	protected double minTime = 0;
+	
+	protected boolean insideRange = false;
+	protected int insideRangeCounter = 0;
 	
 
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue) {
@@ -78,10 +80,23 @@ public class DriveStraight extends Command implements PIDOutput {
     	this.extraTime = extraTime;
     }
     
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime) {
+    	this(angle, speed, sensor, sensorValue);
+    	this.extraTime = extraTime;
+    	this.change = change;
+    }
+    
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime) {
     	this(angle, speed, sensor, sensorValue);
     	this.extraTime = extraTime;
     	this.minTime = minTime;
+    }
+    
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime, double minTime) {
+    	this(angle, speed, sensor, sensorValue);
+    	this.extraTime = extraTime;
+    	this.minTime = minTime;
+    	this.change = change;
     }
 
     // Called just before this Command runs the first time
@@ -115,18 +130,32 @@ public class DriveStraight extends Command implements PIDOutput {
     	if (realSpeed > speed) realSpeed = speed;
     	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
 
-    	if (change) {
-    		if (Math.abs(s.getSensorDistance(sensor) - initialReading) > sensorLimit) {
-    			counter++;
-    		}
+    	if (s.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS) {
+    		insideRangeCounter++;
     	} else {
-	    	if (Math.abs(s.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION) {
-	    		counter++;
-	
-	    	} else {
-	    		counter = 0;
-	    	}
+    		insideRangeCounter = 0;
     	}
+    	
+    	if (insideRangeCounter > 4) {
+    		insideRange = true;
+    	}
+    	
+    	if (insideRange) {
+			if (change) {
+				if (Math.abs(s.getSensorDistance(sensor) - initialReading) > sensorLimit) {
+					counter++;
+				}
+			} else {
+		    	if (Math.abs(s.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION) {
+		    		counter++;
+		
+		    	} else {
+		    		counter = 0;
+		    	}
+			}
+    	}
+    	
+    	
     	
     		
     }
@@ -140,11 +169,11 @@ public class DriveStraight extends Command implements PIDOutput {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("Done");
-//    	dt.runMotors(-.1, .1);
-//    	dt.disable();
-    	turnController.disable();
+    	
+    	Timer.delay(extraTime);
     	dt.stopDrive();
+    	System.out.println("End Function: " + s.getSensorDistance(sensor));
+    	Sensors.BEFORE_TURN_VALUE = s.getSensorDistance(sensor);
     }
 
     // Called when another command which requires one or more of the same

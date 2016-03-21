@@ -2,12 +2,10 @@ package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.subsystems.ActiveBar;
 import com.team2502.robot2016.subsystems.ActiveIntake;
 import com.team2502.robot2016.subsystems.Sensors;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

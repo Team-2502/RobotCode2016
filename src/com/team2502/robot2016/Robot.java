@@ -16,11 +16,9 @@ import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
 import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
 import com.team2502.robot2016.commands.drive.DriveStraight;
-import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.*;
-//import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
@@ -89,26 +87,26 @@ public class Robot extends IterativeRobot {
 
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        SmartDashboard.putNumber("BALL_VOLT_ACTIVE", RobotMap.BALL_VOLT_ACTIVE);
-		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
-		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
-		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
+//        SmartDashboard.putNumber("BALL_VOLT_ACTIVE", RobotMap.BALL_VOLT_ACTIVE);
+//		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
+//		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
+//		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
 
-		SmartDashboard.putNumber("Auto Time Beginning", 2.3);
-		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
+//		SmartDashboard.putNumber("Auto Time Beginning", 2.3);
+//		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
 //		SmartDashboard.putNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
-		SmartDashboard.putNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
-		SmartDashboard.putNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+//		SmartDashboard.putNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
+//		SmartDashboard.putNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
+//		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 		
-		SmartDashboard.putNumber("Outer Short Value", .8);
-		SmartDashboard.putNumber("Side Delay", .3);
-
-		RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
-		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
-		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
-		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+//		SmartDashboard.putNumber("Outer Short Value", .8);
+//		SmartDashboard.putNumber("Side Delay", .3);
+//
+//		RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
+//		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
+//		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
+//		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
+//		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 
 		sensors.zeroGyro();
     }
@@ -132,11 +130,11 @@ public class Robot extends IterativeRobot {
     	
     	
     	
-		SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
-		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
-		SmartDashboard.putData("Drive to sensor limit wall", new DriveToSensorValue(.7, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
+//		SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
+//		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
+		SmartDashboard.putData("Drive to sensor limit wall", new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
 		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
-		SmartDashboard.putData("Drive in front of Tower", new DriveToSensorValue(.63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
+		SmartDashboard.putData("Drive in front of Tower", new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
 		SmartDashboard.putData("Rotate to forward", new RotateToAngle(0));
 		SmartDashboard.putData("Flip Active", new ToggleActive());
 		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5));

@@ -4,24 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import com.team2502.robot2016.commands.active.AutoActive;
 import com.team2502.robot2016.commands.active.PokePokers;
-import com.team2502.robot2016.commands.active.PokerTest;
 import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
-import com.team2502.robot2016.commands.shooter.Climber;
-import com.team2502.robot2016.commands.shooter.ClimberEnd;
-import com.team2502.robot2016.commands.shooter.ClimberWinch;
-import com.team2502.robot2016.commands.shooter.ReloadShooter;
 import com.team2502.robot2016.commands.shooter.RingLight;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
-import com.team2502.robot2016.commands.shooter.ShootBall;
-//import com.team2502.robot2016.commands.active.SpinActive;
-//import com.team2502.robot2016.commands.drive.Climber;
-//import com.team2502.robot2016.commands.shooter.ShootAndReload;
-//import com.team2502.robot2016.subsystems.ActiveIntake;
-import com.team2502.robot2016.subsystems.ActiveIntake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -62,9 +50,6 @@ public class OI {
 	private static Button rollerButtonIn;
 	private static Button rollerButtonOut;
 	
-	private static Button testRollerButtonIn;
-	private static Button testRollerButtonOut;
-	
 	private static Button testRotateCommand;
 	private static Button testRingLight;
 
@@ -77,7 +62,6 @@ public class OI {
 	private static Button shootButton;
 	
 	private static Button pokerButton;
-	private static Button pokerTest;
 		
 //	private static Button rollerButton;
 

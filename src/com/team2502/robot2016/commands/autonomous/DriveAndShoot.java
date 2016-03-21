@@ -27,7 +27,7 @@ public class DriveAndShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new DriveTowerSensors(startingPosition));
-//    	addSequential(new ShootAndReload());
+    	addSequential(new DriveTowerNoShoot(startingPosition));
+    	addSequential(new ShootAndReload());
     }
 }

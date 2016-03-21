@@ -1,7 +1,6 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +11,6 @@ public class LightOn extends Command {
 
 	private double time;
 	private double startTime;
-	private Sensors s = Robot.sensors;
 	
     public LightOn(double time) {
         // Use requires() here to declare subsystem dependencies

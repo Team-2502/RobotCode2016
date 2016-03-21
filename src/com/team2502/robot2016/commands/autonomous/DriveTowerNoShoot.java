@@ -1,13 +1,14 @@
-package com.team2502.robot2016.commands.active;
+package com.team2502.robot2016.commands.autonomous;
+
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoActive extends CommandGroup {
+public class DriveTowerNoShoot extends CommandGroup {
     
-    public  AutoActive() {
+    public  DriveTowerNoShoot(int startingPosition) {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,9 +25,9 @@ public class AutoActive extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new ToggleActive(true));
-    	addSequential(new SpinActive(1, true));
-    	addSequential(new PokerAuto(), 2);
+    	
+    	addSequential(new DriveOverDefense());
+    	addSequential(new DriveAfterDefense(startingPosition));
     	
     	
     }

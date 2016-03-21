@@ -1,6 +1,5 @@
 package com.team2502.robot2016.commands.drive;
 
-import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.DriveTrain;
 import com.team2502.robot2016.subsystems.Sensors;
@@ -60,13 +59,11 @@ public class RotateToAngle extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 //    	dt.runMotors(.1, -.1);
-    	double motorLimit = SmartDashboard.getNumber("Motor Limit", .3);
     	kP = SmartDashboard.getNumber("P Value", kP);
     	turnController.setPID(kP, kI, kD);
     	System.out.println("Rotate to Angle: " + rotateToAngleRate);
     	
     	double newSpeed = rotateToAngleRate;
-    	
     	
     	newSpeed = .7 * Math.signum(rotateToAngleRate);
     	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);

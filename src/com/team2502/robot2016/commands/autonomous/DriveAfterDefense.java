@@ -3,7 +3,6 @@ package com.team2502.robot2016.commands.autonomous;
 import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.DriveStraight;
-import com.team2502.robot2016.commands.drive.DriveToSensorValue;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
@@ -59,7 +58,7 @@ public class DriveAfterDefense extends CommandGroup {
     	addSequential(new RotateToAngle(turnAngle), 2);
     	
     	//Once turned, read side sensor until on front of tower
-    	addSequential(new DriveToSensorValue(.63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35, timeMin));
+    	addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35, timeMin));
     	//Once in front of tower, turn back to straight
     	addSequential(new RotateToAngle(5), 2);
     	
@@ -67,7 +66,6 @@ public class DriveAfterDefense extends CommandGroup {
     	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5), 3.3);
     
     	
-    	addSequential(new ShootAndReload());
 
     }
 }

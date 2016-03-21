@@ -1,10 +1,7 @@
 package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.subsystems.ActiveIntake;
-import com.team2502.robot2016.subsystems.Sensors;
-import com.team2502.robot2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -14,24 +11,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ToggleActive extends Command {
 
 	private ActiveIntake ai = Robot.active;
-	private Shooter s = Robot.ballShooter;
-	private Sensors se = Robot.sensors;
-	
-	private boolean flipped = false;
-	private boolean state;
-	private boolean custom = false;
 	
     public ToggleActive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.active);
     	requires(Robot.ballShooter);
-    }
-    
-    public ToggleActive(boolean state) {
-    	this();
-    	this.state = state;
-    	this.custom = true;
     }
 
     // Called just before this Command runs the first time

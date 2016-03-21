@@ -1,10 +1,6 @@
 package com.team2502.robot2016.commands.shooter;
 
-import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.subsystems.DriveTrain;
-//import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -18,27 +14,16 @@ public class Climber extends Command {
 	public static final int DOWN = -1;
 	
 	private Shooter s = Robot.ballShooter;
-//	private Sensors s = Robot.sensors;
-	
-	private double voltageLimit;
-	private double speed;
-	
-	private boolean ifHooked = false;
-	private long time;
-	private boolean manual;
-	private boolean launch = false;
 	
     public Climber() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.ballShooter);
-//    	requires(Robot.sensors);
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-//    	s.setClimberVoltageLimits(voltageLimit);
     }
 
     // Called repeatedly when this Command is scheduled to run
