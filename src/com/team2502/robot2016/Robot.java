@@ -34,19 +34,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-//	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter ballShooter = new Shooter();
 	public static final ActiveIntake active = new ActiveIntake();
 	public static final ActiveBar activeBar = new ActiveBar();
-//	public static final Subsystem vision = new Vision();
 
 	public static final Sensors sensors = new Sensors();
 
-	/**
-	 *  For communication between RaspberryPi (Vision) and RoboRio
-	 */
-//	public static final SerialPort serialPort = new SerialPort(9600, Port.kOnboard, 8, Parity.kNone, StopBits.kOne);
+	
 	
 //	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
