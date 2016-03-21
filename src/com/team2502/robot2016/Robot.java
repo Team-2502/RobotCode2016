@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import com.team2502.robot2016.commands.active.SetActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
@@ -176,6 +177,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit(){
+    	Scheduler.getInstance().add(new SetActive(false));
     }
 	
     @Override
