@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
+import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
 import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
+import com.team2502.robot2016.commands.drive.DriveDefense;
 import com.team2502.robot2016.commands.drive.DriveStraight;
 import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
@@ -48,6 +50,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+    public static SendableChooser positionSelector;
+    public static SendableChooser goalSelector;
 
 
     /**
@@ -69,11 +73,13 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture("cam0");
         chooser = new SendableChooser();
-        
+        positionSelector = new SendableChooser();
+        goalSelector = new SendableChooser();
+
 		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
 		
         chooser.addDefault("Defense Only - forward time", new DriveTime(3));
-        chooser.addObject("Full Auto", new DriveAndShoot(startPosition));
+        chooser.addObject("Full Auto", new DriveAndShoot());
         chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         chooser.addObject("No Auto", null);
 //        chooser.addObject("Drive to Tower", new DriveStraight(.9));
@@ -86,6 +92,10 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
 //		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
 //		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
+
+        SmartDashboard.putNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES);
+        SmartDashboard.putNumber("SIDE_GOAL_TOWER_DISTANCE", RobotMap.SIDE_GOAL_TOWER_DISTANCE);
+        SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE);
 
 //		SmartDashboard.putNumber("Auto Time Beginning", 2.3);
 //		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
@@ -103,6 +113,20 @@ public class Robot extends IterativeRobot {
 //		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
 //		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 
+        positionSelector.addDefault("Second Position", 2);
+        positionSelector.addObject("Third Position", 3);
+        positionSelector.addObject("Fourth Position", 4);
+        positionSelector.addObject("Fifth Position", 5);
+        
+        SmartDashboard.putData("Position Selector", positionSelector);
+        
+        goalSelector.addDefault("Middle Goal", 1);
+        goalSelector.addObject("Left Goal", 2);
+        goalSelector.addObject("Right Goal", 3);
+        
+        SmartDashboard.putData("Goal Selector", goalSelector);
+
+        
 		sensors.zeroGyro();
     }
     
@@ -127,13 +151,24 @@ public class Robot extends IterativeRobot {
     	
 //		SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
 //		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
-		SmartDashboard.putData("Drive to sensor limit wall", new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
+		SmartDashboard.putData("Drive Over Defense to Wall", new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5));
+    	SmartDashboard.putData("Drive to sensor limit wall", new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
 		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
 		SmartDashboard.putData("Drive in front of Tower", new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
-		SmartDashboard.putData("Rotate to forward", new RotateToAngle(0));
+		SmartDashboard.putData("Rotate to forward", new RotateToAngle(5));
 		SmartDashboard.putData("Flip Active", new ToggleActive());
-		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5));
-
+		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));
+		
+		
+		SmartDashboard.putData("Drive After Defense", new DriveAfterDefenseTesting(startingPosition));
+    }
+    
+    public static int getStartPosition() {
+    	return (int) positionSelector.getSelected();
+    }
+    
+    public static int getGoal() {
+    	return (int) goalSelector.getSelected();
     }
 	
 	/**
@@ -161,7 +196,7 @@ public class Robot extends IterativeRobot {
 	 */
     @Override
     public void autonomousInit() {
-    	
+    	        
         autonomousCommand = (Command) chooser.getSelected();
         sensors.updateData();
         sensors.zeroGyro();

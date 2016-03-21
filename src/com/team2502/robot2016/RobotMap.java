@@ -90,7 +90,12 @@ public class RobotMap
 	public static final double LONG_SENSOR_RANGE_LIMITS = 4.6;
 	public static final double SHORT_SENSOR_RANGE_LIMITS = 4.4;
 
+	public static final double SIDE_GOAL_WALL_DISTANCE = 1.4;
+	public static final double SIDE_GOAL_TOWER_DISTANCE = 1.4;
+	public static final double SIDE_GOAL_ROTATE_DEGREES = 30;
 
+	
+	
 	public static double BALL_VOLT_ACTIVE = 1.65;
 	public static double BALL_VOLT_SHOOTER = 4;
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;

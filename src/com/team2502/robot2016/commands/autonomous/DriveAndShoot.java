@@ -1,15 +1,17 @@
 package com.team2502.robot2016.commands.autonomous;
 
+import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveAndShoot extends CommandGroup {
     
-    public  DriveAndShoot(int startingPosition) {
+    public  DriveAndShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,7 +29,7 @@ public class DriveAndShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new DriveTowerNoShoot(startingPosition));
+    	addSequential(new DriveTowerNoShoot(Robot.getStartPosition()));
     	addSequential(new ShootAndReload());
     }
 }

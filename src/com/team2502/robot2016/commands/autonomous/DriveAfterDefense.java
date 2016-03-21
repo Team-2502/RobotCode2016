@@ -63,7 +63,7 @@ public class DriveAfterDefense extends CommandGroup {
     	addSequential(new RotateToAngle(5), 2);
     	
     	addParallel(new ToggleActive());
-    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .5), 3.3);
+    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3), 3.3);
     
     	
 
