@@ -40,7 +40,6 @@ public class RotateToAngle extends Command implements PIDOutput {
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
     	this.angle = angle;
-    	
     	turnController = new PIDController(kP, kI, kD, kF, Sensors.ahrs, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-1.0, 1.0);
@@ -61,7 +60,6 @@ public class RotateToAngle extends Command implements PIDOutput {
 //    	dt.runMotors(.1, -.1);
     	kP = SmartDashboard.getNumber("P Value", kP);
     	turnController.setPID(kP, kI, kD);
-    	System.out.println("Rotate to Angle: " + rotateToAngleRate);
     	
     	double newSpeed = rotateToAngleRate;
     	

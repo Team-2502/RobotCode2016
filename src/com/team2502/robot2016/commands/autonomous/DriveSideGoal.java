@@ -36,12 +36,17 @@ public class DriveSideGoal extends CommandGroup {
         // arm.
     	
     	int adjustAngle = (Robot.getGoal() == 2) ? 1 : -1;
-    	addSequential(new DriveDefense(0, .85, Sensor.FrontLong, SmartDashboard.getNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE)));
+    	if (adjustAngle > 0) {
+    	addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT));
+    	} else {
+        	addSequential(new DriveDefense(0, .85, Sensor.FrontShort, RobotMap.SIDE_GOAL_WALL_DISTANCE_RIGHT));
+
+    	}
     	addSequential(new RotateToAngle(adjustAngle * SmartDashboard.getNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES)));
     	addParallel(new ToggleActive());
     	addSequential(new DriveStraight(adjustAngle * SmartDashboard.getNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES), 
     			.65, Sensor.FrontShort, 
-    			SmartDashboard.getNumber("SIDE_GOAL_TOWER_DISTANCE", RobotMap.SIDE_GOAL_TOWER_DISTANCE),
+    			RobotMap.TOWER_SENSOR_DISTANCE_LIMIT,
     			.4), .6);
     	addSequential(new ShootAndReload());
     }

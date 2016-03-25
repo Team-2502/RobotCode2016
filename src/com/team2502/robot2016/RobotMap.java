@@ -81,18 +81,18 @@ public class RobotMap
 	public static final int LEFT_DISTANCE = 2;
 	public static final int RIGHT_DISTANCE = 3;
 	
-	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 3.8;
+	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 4.0;
 	public static double SIDE_DISTANCE_SENSOR_TURN_LIMIT = .4;
-	public static double TOWER_SENSOR_DISTANCE_LIMIT = 2;
-	public static double SENSOR_ZONE_OF_PRECISION = .12;
+	public static double TOWER_SENSOR_DISTANCE_LIMIT = 1.5;
+	public static double SENSOR_ZONE_OF_PRECISION = .2;
 	public static double TOWER_EXTRA_TIME = .33;
 
 	public static final double LONG_SENSOR_RANGE_LIMITS = 4.6;
 	public static final double SHORT_SENSOR_RANGE_LIMITS = 4.4;
 
-	public static final double SIDE_GOAL_WALL_DISTANCE = 1.4;
-	public static final double SIDE_GOAL_TOWER_DISTANCE = 1.4;
-	public static final double SIDE_GOAL_ROTATE_DEGREES = 30;
+	public static final double SIDE_GOAL_WALL_DISTANCE_LEFT = 1.7;
+	public static final double SIDE_GOAL_ROTATE_DEGREES = 60;
+	public static final double SIDE_GOAL_WALL_DISTANCE_RIGHT = 3.1;
 
 	
 	

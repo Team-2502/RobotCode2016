@@ -27,8 +27,9 @@ public class ShootAndReload extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new DriveSpeed(.2), (Robot.active.getActiveState()) ? 1.8 : .3);
-    	addSequential(new ShootBall(), 2);
+//    	addParallel(new DriveSpeed(.2), (Robot.active.getActiveState()) ? 1.8 : .3);
+    	addSequential(new ShootBall(), 2.5);
     	addSequential(new ReloadShooter());
+    	
     }
 }

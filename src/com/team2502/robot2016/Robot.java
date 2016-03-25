@@ -44,6 +44,8 @@ public class Robot extends IterativeRobot {
 
 	public static final Sensors sensors = new Sensors();
 	
+	public static boolean inAuto = false;
+	
 //	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
@@ -63,7 +65,23 @@ public class Robot extends IterativeRobot {
 		System.err.println("Start init");
 		oi = new OI();
 		System.err.println("OI");
-		
+
+		positionSelector = new SendableChooser();
+        goalSelector = new SendableChooser();
+
+        positionSelector.addDefault("Second Position", 2);
+        positionSelector.addObject("Third Position", 3);
+        positionSelector.addObject("Fourth Position", 4);
+        positionSelector.addObject("Fifth Position", 5);
+        
+        SmartDashboard.putData("Position Selector", positionSelector);
+        
+        goalSelector.addDefault("Middle Goal", 1);
+        goalSelector.addObject("Left Goal", 2);
+        goalSelector.addObject("Right Goal", 3);
+        
+        SmartDashboard.putData("Goal Selector", goalSelector);
+
 		SmartDashboard.putData("Drive Train", driveTrain);
 		SmartDashboard.putData("Shooter", ballShooter);
 		SmartDashboard.putData("Active", active);
@@ -72,9 +90,7 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer.getInstance().startAutomaticCapture("cam0");
         chooser = new SendableChooser();
-        positionSelector = new SendableChooser();
-        goalSelector = new SendableChooser();
-
+        
 		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
 		
         chooser.addDefault("Defense Only - forward time", new DriveTime(3));
@@ -93,8 +109,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
 
         SmartDashboard.putNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES);
-        SmartDashboard.putNumber("SIDE_GOAL_TOWER_DISTANCE", RobotMap.SIDE_GOAL_TOWER_DISTANCE);
-        SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE);
+        SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT);
 
 //		SmartDashboard.putNumber("Auto Time Beginning", 2.3);
 //		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
@@ -111,19 +126,6 @@ public class Robot extends IterativeRobot {
 //		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
 //		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
 //		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
-
-        positionSelector.addDefault("Second Position", 2);
-        positionSelector.addObject("Third Position", 3);
-        positionSelector.addObject("Fourth Position", 4);
-        positionSelector.addObject("Fifth Position", 5);
-        
-        SmartDashboard.putData("Position Selector", positionSelector);
-        
-        goalSelector.addDefault("Middle Goal", 1);
-        goalSelector.addObject("Left Goal", 2);
-        goalSelector.addObject("Right Goal", 3);
-        
-        SmartDashboard.putData("Goal Selector", goalSelector);
 
         
 		sensors.zeroGyro();
@@ -197,6 +199,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
     	        
+    	inAuto = true;
         autonomousCommand = (Command) chooser.getSelected();
         sensors.updateData();
         sensors.zeroGyro();
@@ -235,10 +238,13 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
+    	inAuto = false;
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
+        chooser.addObject("Full Auto", new DriveAndShoot());
+
     	driveTrain.brakeMode(true);
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();

@@ -58,12 +58,12 @@ public class DriveAfterDefense extends CommandGroup {
     	addSequential(new RotateToAngle(turnAngle), 2);
     	
     	//Once turned, read side sensor until on front of tower
-    	addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35, timeMin));
+    	addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .1));
     	//Once in front of tower, turn back to straight
-    	addSequential(new RotateToAngle(5), 2);
+    	addSequential(new RotateToAngle(0), 2);
     	
     	addParallel(new ToggleActive());
-    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3), 3.3);
+    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT), 3.3);
     
     	
 

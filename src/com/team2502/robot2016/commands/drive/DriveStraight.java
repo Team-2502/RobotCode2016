@@ -128,6 +128,7 @@ public class DriveStraight extends Command implements PIDOutput {
     	realSpeed += .08;
     	
     	if (realSpeed > speed) realSpeed = speed;
+    	System.out.println("Goal: " + sensorLimit);
     	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
 
     	if (s.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS) {
@@ -136,10 +137,11 @@ public class DriveStraight extends Command implements PIDOutput {
     		insideRangeCounter = 0;
     	}
     	
-    	if (insideRangeCounter > 4) {
+    	if (insideRangeCounter > 3) {
     		insideRange = true;
     	}
     	
+    	System.out.println("In Range: " + insideRange);
     	if (insideRange) {
 			if (change) {
 				if (Math.abs(s.getSensorDistance(sensor) - initialReading) > sensorLimit) {
@@ -163,8 +165,8 @@ public class DriveStraight extends Command implements PIDOutput {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
+    	System.out.println("Counter: " + counter);
     	return (counter > 2 && System.currentTimeMillis() - startTime > minTime * 1000);
-    	
     }
 
     // Called once after isFinished returns true
@@ -186,7 +188,6 @@ public class DriveStraight extends Command implements PIDOutput {
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
         rotateToAngleRate = output;
-        System.out.println("Output: " + output);
 
 	}
 }

@@ -2,6 +2,7 @@ package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.ActiveIntake;
+import com.team2502.robot2016.subsystems.Sensors;
 //import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 
@@ -12,7 +13,7 @@ public class ShootBall extends Command {
 	
     private Shooter bs = Robot.ballShooter;
     private ActiveIntake ai = Robot.active;
-//    private Sensors s = Robot.sensors;
+    private Sensors s = Robot.sensors;
     
     public ShootBall() {
     	requires(Robot.ballShooter);
@@ -42,8 +43,10 @@ public class ShootBall extends Command {
 //    	}
 		
     	
-    	
+    	if (Robot.inAuto) Timer.delay(.5);
 		System.err.println("Shot");
+		
+		if ((s.getAngle() < 4 || s.getAngle() > 356) || !Robot.inAuto)
     	bs.setSolenoid(true);
     	Timer.delay(1);               // REVIEW NJL
 
