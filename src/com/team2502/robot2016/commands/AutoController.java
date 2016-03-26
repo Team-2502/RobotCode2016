@@ -29,6 +29,8 @@ public class AutoController extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	System.out.println("Start Position: " + Robot.getStartPosition());
+    	System.out.println("Goal: " + Robot.getGoal());
     	int position = Robot.getStartPosition();
     	int goal = Robot.getGoal();
     	

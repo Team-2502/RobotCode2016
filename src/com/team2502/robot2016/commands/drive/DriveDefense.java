@@ -49,7 +49,7 @@ public class DriveDefense extends DriveStraight {
     			if (Sensors.ahrs.getRoll() < -5) STATE++;
     			break;
     		case FACING_DOWN:
-    			if (Math.abs(Sensors.ahrs.getRoll()) < 1.3) STATE++;
+    			if (Math.abs(Sensors.ahrs.getRoll()) < .6) STATE++;
     			break;
     		case FLATTEN_OUT:
     			break;

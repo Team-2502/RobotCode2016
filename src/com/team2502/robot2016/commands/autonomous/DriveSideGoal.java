@@ -47,7 +47,7 @@ public class DriveSideGoal extends CommandGroup {
     	addSequential(new DriveStraight(adjustAngle * SmartDashboard.getNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES), 
     			.65, Sensor.FrontShort, 
     			RobotMap.TOWER_SENSOR_DISTANCE_LIMIT,
-    			.4), .6);
+    			.4), 1.6);
     	addSequential(new ShootAndReload());
     }
 }

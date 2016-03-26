@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+import com.team2502.robot2016.commands.AutoController;
 import com.team2502.robot2016.commands.active.SetActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
@@ -88,7 +89,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Active Bar", activeBar);
 
 		
-		CameraServer.getInstance().startAutomaticCapture("cam0");
+//		CameraServer.getInstance().startAutomaticCapture("cam0");
         chooser = new SendableChooser();
         
 		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
@@ -116,7 +117,7 @@ public class Robot extends IterativeRobot {
 //		SmartDashboard.putNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
 //		SmartDashboard.putNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
 //		SmartDashboard.putNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-//		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 		
 //		SmartDashboard.putNumber("Outer Short Value", .8);
 //		SmartDashboard.putNumber("Side Delay", .3);
@@ -200,7 +201,6 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	        
     	inAuto = true;
-        autonomousCommand = (Command) chooser.getSelected();
         sensors.updateData();
         sensors.zeroGyro();
         driveTrain.brakeMode(true);
@@ -218,10 +218,14 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
+		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+
         int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
 
 		testAutoParts(startPosition);
-        
+        autonomousCommand = (Command) chooser.getSelected();
+
         if (autonomousCommand != null) autonomousCommand.start();
 
     }
@@ -243,15 +247,19 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        chooser.addObject("Full Auto", new DriveAndShoot());
+		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+
+		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+
+    	testAutoParts(startPosition);
+
+        chooser.addObject("Full Auto", new AutoController());
 
     	driveTrain.brakeMode(true);
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();
         
-		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
 
-		testAutoParts(startPosition);
 		
 
 
