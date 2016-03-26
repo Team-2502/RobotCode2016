@@ -137,7 +137,7 @@ public class DriveStraight extends Command implements PIDOutput {
     		insideRangeCounter = 0;
     	}
     	
-    	if (insideRangeCounter > 3) {
+    	if (insideRangeCounter > 2) {
     		insideRange = true;
     	}
     	
