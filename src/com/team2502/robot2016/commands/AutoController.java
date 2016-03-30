@@ -3,6 +3,7 @@ package com.team2502.robot2016.commands;
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveSideGoal;
+import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -33,7 +34,7 @@ public class AutoController extends CommandGroup {
     	System.out.println("Goal: " + Robot.getGoal());
     	int position = Robot.getStartPosition();
     	int goal = Robot.getGoal();
-    	
+    	Sensors.ahrs.zeroYaw();
     	if (goal == 1) {
     		
     		addSequential(new DriveAndShoot());

@@ -48,6 +48,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	protected double extraTime = 0;
 	protected double realSpeed = 0;
 	protected double minTime = 0;
+	protected boolean done = false;
 	
 	protected boolean insideRange = false;
 	protected int insideRangeCounter = 0;
@@ -154,11 +155,19 @@ public class DriveStraight extends Command implements PIDOutput {
 		    	} else {
 		    		counter = 0;
 		    	}
+
 			}
     	}
+		if (Math.abs(s.getSensorDistance(sensor)) < RobotMap.LONG_SENSOR_RANGE_LIMITS+.1 && Math.abs(s.getSensorDistance(sensor)) > .9) {
+			insideRange = true;
+		} else {
+			insideRange = false;
+		}
+
     	
-    	
-    	
+    	if (counter > 2) {
+    		done = true;
+    	}
     		
     }
 
@@ -166,7 +175,7 @@ public class DriveStraight extends Command implements PIDOutput {
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
     	System.out.println("Counter: " + counter);
-    	return (counter > 2 && System.currentTimeMillis() - startTime > minTime * 1000);
+    	return (done && System.currentTimeMillis() - startTime > minTime * 1000);
     }
 
     // Called once after isFinished returns true

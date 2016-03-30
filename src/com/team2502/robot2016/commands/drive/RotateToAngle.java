@@ -26,7 +26,7 @@ public class RotateToAngle extends Command implements PIDOutput {
     /* controllers by displaying a form where you can enter new P, I,  */
     /* and D constants and test the mechanism.                         */
     
-	private static double kP = 0.02;
+	private static double kP = 0.03;
 	private static final double kI = 0.00;
 	private static final double kD = 0.00;
 	private static final double kF = 0.00;
@@ -76,7 +76,7 @@ public class RotateToAngle extends Command implements PIDOutput {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
-    	return turnController.onTarget() || System.currentTimeMillis() - startTime > 1800;
+    	return turnController.onTarget() || System.currentTimeMillis() - startTime > 2000;
     	
     }
 

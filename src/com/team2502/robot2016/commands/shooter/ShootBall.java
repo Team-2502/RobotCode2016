@@ -33,22 +33,24 @@ public class ShootBall extends Command {
      * Shoot the boulder.
      */
     protected void execute() {
-    	ai.openPokers();
     	
 //    	if (!ai.getActiveState()) {
 //    		ai.setActiveState(true);
 //    		Timer.delay(1.4);
 //    	} else {
-    		Timer.delay(.1);
 //    	}
 		
     	
-    	if (Robot.inAuto) Timer.delay(.5);
-		System.err.println("Shot");
+    	
 		
-		if ((s.getAngle() < 4 || s.getAngle() > 356) || !Robot.inAuto)
-    	bs.setSolenoid(true);
-    	Timer.delay(1);               // REVIEW NJL
+		if ((s.getAngle() < 3 || s.getAngle() > 357) || !Robot.inAuto) {
+	    	ai.openPokers();
+    		Timer.delay(.1);
+    		if (Robot.inAuto) Timer.delay(.5);
+    		System.err.println("Shot");
+			bs.setSolenoid(true);
+
+		}
 
     	
     }
@@ -62,8 +64,12 @@ public class ShootBall extends Command {
      * Stop the lowering of the bar.
      */
     protected void end() {
+    	Timer.delay(1);               // REVIEW NJL
+
     	ai.closerPokers();
+
     	Robot.driveTrain.brakeMode(false);
+
 
     }
 

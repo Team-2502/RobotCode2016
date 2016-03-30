@@ -31,6 +31,8 @@ public class DriveAndShoot extends CommandGroup {
         // arm.
     	System.out.println("Position: " + Robot.getStartPosition());
     	addSequential(new DriveTowerNoShoot(Robot.getStartPosition()));
+    	
+    	addParallel(new DriveTime(1));
     	addSequential(new ShootAndReload());
     }
 }

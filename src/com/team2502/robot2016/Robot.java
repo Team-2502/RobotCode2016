@@ -95,7 +95,7 @@ public class Robot extends IterativeRobot {
 		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
 		
         chooser.addDefault("Defense Only - forward time", new DriveTime(3));
-        chooser.addObject("Full Auto", new DriveAndShoot());
+        chooser.addObject("Full Auto", new AutoController());
         chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         chooser.addObject("No Auto", null);
 //        chooser.addObject("Drive to Tower", new DriveStraight(.9));
@@ -199,10 +199,11 @@ public class Robot extends IterativeRobot {
 	 */
     @Override
     public void autonomousInit() {
-    	        
+        sensors.zeroGyro();
+        Sensors.ahrs.zeroYaw();
+        
     	inAuto = true;
         sensors.updateData();
-        sensors.zeroGyro();
         driveTrain.brakeMode(true);
 //    	autonomousCommand = new LightOn(10);
         
@@ -222,6 +223,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 
         int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+        chooser.addObject("Full Auto", new AutoController());
 
 		testAutoParts(startPosition);
         autonomousCommand = (Command) chooser.getSelected();
