@@ -101,7 +101,7 @@ public class RobotMap
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
 	public static double BALL_NOTHING_VOLT_ACTIVE = 2;
 
-
+	public static final int Pressure_Sensor = 4;
 
     
 

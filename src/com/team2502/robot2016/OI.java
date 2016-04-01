@@ -55,10 +55,10 @@ public class OI {
 
 	private static Button activeDown;
 	
-//	private static Button winchUp;
-//	private static Button winchDown;
+	private static Button winchUp;
+	private static Button winchDown;
 	
-//	private static Button climbButton;
+	private static Button climbButton;
 	private static Button shootButton;
 	
 	private static Button pokerButton;
@@ -82,10 +82,10 @@ public class OI {
 		testRingLight = new JoystickButton(buttonStick, 7);
 
 		
-//		winchUp = new JoystickButton(buttonStick, 12);
-//		winchDown = new JoystickButton(buttonStick, 10);
-//				
-//		climbButton = new JoystickButton(buttonStick, 11);
+		winchUp = new JoystickButton(buttonStick, 12);
+		winchDown = new JoystickButton(buttonStick, 10);
+				
+		climbButton = new JoystickButton(buttonStick, 11);
 		shootButton = new JoystickButton(buttonStick, 1);
 		
 		activeDown = new JoystickButton(buttonStick, 2);

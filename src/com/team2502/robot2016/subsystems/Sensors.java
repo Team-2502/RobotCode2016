@@ -86,6 +86,7 @@ public class Sensors extends Subsystem {
 	private AnalogInput frontShortDistance;
 	private AnalogInput leftDistance;
 	private AnalogInput rightDistance;
+	private AnalogInput Pressure_Sensor;
 //	private AnalogInput testSensor;
 	
 	public static final double CLOSE_TO_TOWER = 1;
@@ -142,7 +143,8 @@ public class Sensors extends Subsystem {
 
 		frontLongDistance = new AnalogInput(RobotMap.FRONT_LONG_DISTANCE);
 		frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
-
+		Pressure_Sensor = new AnalogInput(RobotMap.Pressure_Sensor);
+		
 		System.out.println("Fron Distance Sensors");
 
 		leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
@@ -550,6 +552,7 @@ public void updateOtherSensors() {
 	SmartDashboard.putBoolean("Ball in Middle", inMiddle && notBothMiddle);
 	SmartDashboard.putBoolean("Ball Middle Method", ballInActive());
 	SmartDashboard.putBoolean("Ball Shooter", ballInActive());
+	SmartDashboard.putNumber("Pressure", Pressure_Sensor.getVoltage());
 
 	
 	
