@@ -80,6 +80,8 @@ public class RobotMap
 	public static final int FRONT_SHORT_DISTANCE = 1;
 	public static final int LEFT_DISTANCE = 2;
 	public static final int RIGHT_DISTANCE = 3;
+	public static final int TANK_SENSOR = 4;
+
 	
 	public static double FRONT_DISTANCE_SENSOR_TURN_LIMIT = 4.2;
 	public static double SIDE_DISTANCE_SENSOR_TURN_LIMIT = .4;
@@ -93,8 +95,6 @@ public class RobotMap
 	public static final double SIDE_GOAL_WALL_DISTANCE_LEFT = 2.6;
 	public static final double SIDE_GOAL_ROTATE_DEGREES = 55;
 	public static final double SIDE_GOAL_WALL_DISTANCE_RIGHT = 3.1;
-
-	
 	
 	public static double BALL_VOLT_ACTIVE = 1.65;
 	public static double BALL_VOLT_SHOOTER = 4;

@@ -145,6 +145,8 @@ public class DriveStraight extends Command implements PIDOutput {
     	System.out.println("In Range: " + insideRange);
     	if (insideRange) {
 			if (change) {
+				//The getSensorDistance just gets the voltage of a particular sensor.
+				//Use an AnalogInput for the sensor.
 				if (Math.abs(s.getSensorDistance(sensor) - initialReading) > sensorLimit) {
 					counter++;
 				}
@@ -175,6 +177,16 @@ public class DriveStraight extends Command implements PIDOutput {
     protected boolean isFinished() {
 //        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
     	System.out.println("Counter: " + counter);
+    	
+    	
+    	//HEY LOOK HERE!!!!! TRY UNCOMMENTING THIS LINE TO TEST A SAFETY TO NOT RUN INTO
+    	//A WALL - USES SHORT SENSOR, SO NOT SURE WHERE GOING TO BE MOUNTED, BUT HOPEFULLY
+    	//THE LINE BELOW THIS WOULD MAKE THE ROBOT NOT CAUSE A DRIVER STATION TO BE
+    	//KNOCKED OFF OF THE PLATFORM THINGY
+    	//ONLY TRIGGERS IF 5 SECONDS HAVE PASSED JUST TO BE EXTRA SAFE TIME WISE
+//    	if (System.currentTimeMillis() - startTime > 5000 && s.getSensorDistance(Sensor.FrontShort) < 1.3 && s.getSensorDistance(Sensor.FrontShort) > .8) return true;
+    	
+    	
     	return (done && System.currentTimeMillis() - startTime > minTime * 1000);
     }
 
@@ -190,7 +202,7 @@ public class DriveStraight extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-//    	end();
+//    	end();h
     }
 
 	@Override

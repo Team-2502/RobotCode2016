@@ -23,9 +23,16 @@ public class Shooter extends Subsystem
 	
 	public boolean climberUp = false;
 	
+	public static final double CLIMBER_UP_SPEED = 1;
+	public static final double CLIMBER_DOWN_SPEED = -.5;
+
+	
 	public Shooter() {
 		climberWinch1 = new CANTalon(RobotMap.CLIMBER_WINCH_ONE);
 		climberWinch2 = new CANTalon(RobotMap.CLIMBER_WINCH_TWO);
+
+		climberWinch1.enableBrakeMode(true);
+		climberWinch2.enableBrakeMode(true);
 
 		climberSolenoid = new Solenoid(RobotMap.CLIMBER_SOLENOID);
 //		climberSolenoid.set(false);
@@ -44,7 +51,7 @@ public class Shooter extends Subsystem
     
     public void stopClimber() {
     	climberWinch1.set(0);
-    	climberWinch1.set(0);
+    	climberWinch2.set(0);
 
     }
     

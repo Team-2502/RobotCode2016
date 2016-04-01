@@ -88,6 +88,9 @@ public class Sensors extends Subsystem {
 	private AnalogInput rightDistance;
 //	private AnalogInput testSensor;
 	
+	private AnalogInput tankPressure;
+
+	
 	public static final double CLOSE_TO_TOWER = 1;
 	
 	public enum Sensor {
@@ -142,7 +145,10 @@ public class Sensors extends Subsystem {
 
 		frontLongDistance = new AnalogInput(RobotMap.FRONT_LONG_DISTANCE);
 		frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
+		
+		tankPressure = new AnalogInput(RobotMap.TANK_SENSOR);
 
+		
 		System.out.println("Fron Distance Sensors");
 
 		leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);
@@ -552,7 +558,7 @@ public void updateOtherSensors() {
 	SmartDashboard.putBoolean("Ball Shooter", ballInActive());
 
 	
-	
+	SmartDashboard.putNumber("Tank Pressure", getTankPressure());
 	SmartDashboard.putNumber("Front Long Sensor", getDistanceFrontLong());
 	SmartDashboard.putNumber("Front Short Sensor", getDistanceFrontShort());
 	SmartDashboard.putNumber("Left Sensor", getDistanceLeft());
@@ -563,6 +569,10 @@ public void updateOtherSensors() {
 
 //	(se.getRightBallSensor() > RobotMap.BALL_VOLT_SHOOTER || se.getLeftBallSensor() > RobotMap.BALL_VOLT_SHOOTER)
 
+}
+
+public double getTankPressure() {
+	return tankPressure.getAverageVoltage() * 24 + 10;
 }
 
 

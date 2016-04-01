@@ -8,8 +8,10 @@ import com.team2502.robot2016.commands.active.PokePokers;
 import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
+import com.team2502.robot2016.commands.shooter.ClimberOptions;
 import com.team2502.robot2016.commands.shooter.RingLight;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
+import com.team2502.robot2016.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -58,7 +60,9 @@ public class OI {
 //	private static Button winchUp;
 //	private static Button winchDown;
 	
-//	private static Button climbButton;
+	private static Button climbUpButton;
+	private static Button climbDownButton;
+
 	private static Button shootButton;
 	
 	private static Button pokerButton;
@@ -85,7 +89,10 @@ public class OI {
 //		winchUp = new JoystickButton(buttonStick, 12);
 //		winchDown = new JoystickButton(buttonStick, 10);
 //				
-//		climbButton = new JoystickButton(buttonStick, 11);
+		climbUpButton = new JoystickButton(buttonStick, 11);
+		climbDownButton = new JoystickButton(buttonStick, 12);
+
+		
 		shootButton = new JoystickButton(buttonStick, 1);
 		
 		activeDown = new JoystickButton(buttonStick, 2);
@@ -125,6 +132,9 @@ public class OI {
 		
 		//This one for hold button to hook and then climb
 //		climbButton.whileHeld(new Climber(Climber.UP, 4.8));
+
+		climbUpButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_UP_SPEED));
+		climbDownButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_DOWN_SPEED));
 
 //		shootButton.whenPressed(new ShootAndReload());
 //		shootButton.whenPressed(new ShootBall());
