@@ -57,11 +57,9 @@ public class OI {
 
 	private static Button activeDown;
 	
-//	private static Button winchUp;
-//	private static Button winchDown;
-	
 	private static Button climbUpButton;
 	private static Button climbDownButton;
+
 
 	private static Button shootButton;
 	
@@ -84,69 +82,30 @@ public class OI {
 		
 		testRotateCommand = new JoystickButton(driveRightStick, 8);
 		testRingLight = new JoystickButton(buttonStick, 7);
-
-		
-//		winchUp = new JoystickButton(buttonStick, 12);
-//		winchDown = new JoystickButton(buttonStick, 10);
-//				
+	
 		climbUpButton = new JoystickButton(buttonStick, 11);
 		climbDownButton = new JoystickButton(buttonStick, 12);
 
-		
 		shootButton = new JoystickButton(buttonStick, 1);
 		
 		activeDown = new JoystickButton(buttonStick, 2);
 		
 		pokerButton = new JoystickButton(buttonStick, 6);
 		
-//		pokerTest = new JoystickButton(buttonStick, 12);
-		
-//		pokerTest.whenPressed(new PokerTest());
-
 		rollerButtonIn.whenPressed(new SpinActive(-1, false));
 		rollerButtonOut.whenPressed(new SpinActive(1, false));
 		
-//		testRollerButtonIn.whenPressed(new AutoActive());
 		testRotateCommand.whenPressed(new RotateToAngle(0));
-		testRingLight.whenPressed(new RingLight());
-		
-//		testRollerButtonOut.whenPressed(new SpinActive(1, true));
-		
-//		winchUp.whenPressed(new Climber(Climber.UP, 4));
-//		winchDown.whenPressed(new Climber(Climber.DOWN, .3));
-		
-//		winchUp.whileHeld(new Climber(Climber.UP, 4, true));
-//		winchDown.whileHeld(new Climber(Climber.DOWN, .3, true));
-		
-//		winchUp.whenPressed(new ClimberWinch(true));
-//		winchDown.whileHeld(new ClimberWinch(false));
-		
 		
 		activeDown.whenPressed(new ToggleActive());
 		
 		pokerButton.whenPressed(new PokePokers(true));
 		pokerButton.whenReleased(new PokePokers(false));
 		
-		//This one for auto climbing
-//		climbButton.whenPressed(new Climber());
-		
-		//This one for hold button to hook and then climb
-//		climbButton.whileHeld(new Climber(Climber.UP, 4.8));
-
 		climbUpButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_UP_SPEED));
 		climbDownButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_DOWN_SPEED));
 
-//		shootButton.whenPressed(new ShootAndReload());
-//		shootButton.whenPressed(new ShootBall());
 		shootButton.whenPressed(new ShootAndReload());
-
-//		shootButton.whenReleased(new ReloadShooter());
-		
-//		towerClimb.whenActive(new Climber(Climber.UP, 4));
-		
-//		rollerButtonIn.cancelWhenActive(new SpinActive(0));
-//		rollerButtonOut.cancelWhenActive(new SpinActive(0));
-
 
 	}
 	

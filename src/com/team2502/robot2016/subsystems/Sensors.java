@@ -86,6 +86,7 @@ public class Sensors extends Subsystem {
 	private AnalogInput frontShortDistance;
 	private AnalogInput leftDistance;
 	private AnalogInput rightDistance;
+	private AnalogInput Pressure_Sensor;
 //	private AnalogInput testSensor;
 	
 	private AnalogInput tankPressure;
@@ -147,7 +148,6 @@ public class Sensors extends Subsystem {
 		frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
 		
 		tankPressure = new AnalogInput(RobotMap.TANK_SENSOR);
-
 		
 		System.out.println("Fron Distance Sensors");
 
@@ -556,6 +556,7 @@ public void updateOtherSensors() {
 	SmartDashboard.putBoolean("Ball in Middle", inMiddle && notBothMiddle);
 	SmartDashboard.putBoolean("Ball Middle Method", ballInActive());
 	SmartDashboard.putBoolean("Ball Shooter", ballInActive());
+	SmartDashboard.putNumber("Pressure", Pressure_Sensor.getVoltage());
 
 	
 	SmartDashboard.putNumber("Tank Pressure", getTankPressure());
