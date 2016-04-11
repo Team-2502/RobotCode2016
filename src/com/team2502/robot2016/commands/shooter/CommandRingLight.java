@@ -1,43 +1,49 @@
 package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.Sensors;
-
+import com.team2502.robot2016.subsystems.SubsystemSensors;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RingLight extends Command {
+public class CommandRingLight extends Command
+{
 
-	private Sensors s = Robot.sensors;
-	
-	
-    public RingLight() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    private SubsystemSensors sensors = Robot.sensors;
+
+    public CommandRingLight()
+    {
+        requires(Robot.sensors);
     }
 
     // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+    @Override
+    protected void initialize()
+    {}
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	s.setRingLight(!s.ringState);
+    @Override
+    protected void execute()
+    {
+        sensors.setRingLight(!sensors.ringState);
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    @Override
+    protected boolean isFinished()
+    {
         return true;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
-    }
+    @Override
+    protected void end()
+    {}
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
-    }
+    @Override
+    protected void interrupted()
+    {}
 }
