@@ -9,7 +9,7 @@ import com.team2502.robot2016.subsystems.SubsystemSensors;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class SpinActive extends Command
+public class CommandSpinActive extends Command
 {
     private final SubsystemActiveRoller m_activeRoller = Robot.activeRoller;
     private final SubsystemBallHolder   m_ballHolder   = Robot.ballHolder;
@@ -21,7 +21,7 @@ public class SpinActive extends Command
     private int                         counter        = 0;
     private boolean                     test           = false;
 
-    public SpinActive(double speed, boolean test)
+    public CommandSpinActive(double speed, boolean test)
     {
         requires(Robot.activeRoller);
         requires(Robot.ballHolder);

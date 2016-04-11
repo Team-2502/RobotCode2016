@@ -1,7 +1,7 @@
 package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.active.CommandActiveController;
-import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.active.CommandSpinActive;
 import com.team2502.robot2016.commands.shooter.CommandClimber;
 import com.team2502.robot2016.commands.shooter.CommandClimber.MotorMode;
 import com.team2502.robot2016.commands.shooter.CommandGShootAndReload;
@@ -60,8 +60,8 @@ public class OI
 
         pokerButton = new JoystickButton(functionControlStick, 6);
 
-        rollerButtonIn.whenPressed(new SpinActive(-1, false));
-        rollerButtonOut.whenPressed(new SpinActive(1, false));
+        rollerButtonIn.whenPressed(new CommandSpinActive(-1, false));
+        rollerButtonOut.whenPressed(new CommandSpinActive(1, false));
 
         activeDown.whenPressed(new CommandActiveController(2));
 

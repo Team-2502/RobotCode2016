@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveStraight extends Command implements PIDOutput
+public class CommandDriveStraight extends Command implements PIDOutput
 {
 
     protected SubsystemDriveTrain dt                 = Robot.driveTrain;
@@ -53,7 +53,7 @@ public class DriveStraight extends Command implements PIDOutput
     protected boolean             insideRange        = false;
     protected int                 insideRangeCounter = 0;
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue)
     {
         requires(Robot.driveTrain);
         requires(Robot.sensors);
@@ -70,33 +70,33 @@ public class DriveStraight extends Command implements PIDOutput
         turnController.setContinuous(true);
     }
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
     {
         this(angle, speed, sensor, sensorValue);
         this.change = change;
     }
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
     }
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
         this.change = change;
     }
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
         this.minTime = minTime;
     }
 
-    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime, double minTime)
+    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime, double minTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;

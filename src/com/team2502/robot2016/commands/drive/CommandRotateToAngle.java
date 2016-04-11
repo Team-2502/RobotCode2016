@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class RotateToAngle extends Command implements PIDOutput
+public class CommandRotateToAngle extends Command implements PIDOutput
 {
 
     private SubsystemDriveTrain dt                = Robot.driveTrain;
@@ -35,7 +35,7 @@ public class RotateToAngle extends Command implements PIDOutput
 
     private double              startTime;
 
-    public RotateToAngle(double angle)
+    public CommandRotateToAngle(double angle)
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

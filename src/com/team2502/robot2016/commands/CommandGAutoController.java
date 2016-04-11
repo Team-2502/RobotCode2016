@@ -1,8 +1,8 @@
 package com.team2502.robot2016.commands;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
-import com.team2502.robot2016.commands.autonomous.DriveSideGoal;
+import com.team2502.robot2016.commands.autonomous.CommandGDriveAndShoot;
+import com.team2502.robot2016.commands.autonomous.CommandGDriveSideGoal;
 import com.team2502.robot2016.subsystems.SubsystemSensors;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -21,10 +21,10 @@ public class CommandGAutoController extends CommandGroup
         SubsystemSensors.ahrs.zeroYaw();
         if(goal == 1)
         {
-            addSequential(new DriveAndShoot());
+            addSequential(new CommandGDriveAndShoot());
         } else if(goal == 2 || goal == 3)
         {
-            addSequential(new DriveSideGoal());
+            addSequential(new CommandGDriveSideGoal());
         }
     }
 }

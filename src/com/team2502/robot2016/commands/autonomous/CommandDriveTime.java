@@ -4,10 +4,7 @@ import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
-/**
- *
- */
-public class DriveTime extends Command
+public class CommandDriveTime extends Command
 {
 
     private double              time;
@@ -15,7 +12,7 @@ public class DriveTime extends Command
     // private DriveTrain dt = Robot.driveTrain;
     private SubsystemDriveTrain dt = Robot.driveTrain;
 
-    public DriveTime(double time)
+    public CommandDriveTime(double time)
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

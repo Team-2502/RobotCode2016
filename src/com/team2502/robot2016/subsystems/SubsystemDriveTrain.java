@@ -4,7 +4,7 @@ import com.team2502.robot2016.OI;
 //import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 //import com.team2502.robot2016.commands.drive.TankDriveSix;
-import com.team2502.robot2016.commands.drive.TankDriveSix;
+import com.team2502.robot2016.commands.drive.CommandTankDriveSix;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
@@ -77,7 +77,7 @@ public class SubsystemDriveTrain extends Subsystem
     {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new TankDriveSix());
+        setDefaultCommand(new CommandTankDriveSix());
     }
 
     public void driveSix()

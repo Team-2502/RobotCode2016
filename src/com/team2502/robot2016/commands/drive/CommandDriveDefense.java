@@ -6,7 +6,7 @@ import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
 /**
  *
  */
-public class DriveDefense extends DriveStraight
+public class CommandDriveDefense extends CommandDriveStraight
 {
 
     private static final int BEFORE_DEFENSE = 1;
@@ -16,24 +16,24 @@ public class DriveDefense extends DriveStraight
 
     private int              STATE          = 1;
 
-    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue)
+    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue)
     {
         super(angle, speed, sensor, sensorValue);
     }
 
-    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
+    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
     {
         super(angle, speed, sensor, sensorValue, change);
 
     }
 
-    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
+    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
     {
         super(angle, speed, sensor, sensorValue, change, extraTime);
 
     }
 
-    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
+    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
     {
         super(angle, speed, sensor, sensorValue, extraTime);
     }

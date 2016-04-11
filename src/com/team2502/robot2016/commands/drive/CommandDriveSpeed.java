@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TankDriveSix extends Command
+public class CommandDriveSpeed extends Command
 {
 
-    // private DriveTrain dt = Robot.driveTrain;
     private SubsystemDriveTrain dt = Robot.driveTrain;
+    private double              speed;
 
-    public TankDriveSix()
+    public CommandDriveSpeed(double speed)
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -29,8 +29,7 @@ public class TankDriveSix extends Command
     @Override
     protected void execute()
     {
-        dt.driveSix();
-
+        dt.runMotors(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -43,11 +42,15 @@ public class TankDriveSix extends Command
     // Called once after isFinished returns true
     @Override
     protected void end()
-    {}
+    {
+        dt.stopDrive();
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted()
-    {}
+    {
+        dt.stopDrive();
+    }
 }
