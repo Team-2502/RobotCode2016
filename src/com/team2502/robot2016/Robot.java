@@ -42,7 +42,23 @@ public class Robot extends IterativeRobot
 
     public static boolean                     inAuto             = false;
 
+<<<<<<< HEAD
     public static Command                     autonomousCommand;
+=======
+	public static final Sensors sensors = new Sensors();
+	
+	public static boolean inAuto = false;
+	
+//	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static OI oi;
+
+    Command autonomousCommand;
+    SendableChooser chooser;
+    public static SendableChooser positionSelector;
+    public static SendableChooser goalSelector;
+    public static SendableChooser climberOption;
+
+>>>>>>> origin/master
 
     /**
      * Adds controls to choose which defense the robot will be starting at in
@@ -64,6 +80,7 @@ public class Robot extends IterativeRobot
      * used for any initialization code.
      */
     @Override
+<<<<<<< HEAD
     public void robotInit()
     {
         System.out.println("Initializing Robot.");
@@ -91,6 +108,61 @@ public class Robot extends IterativeRobot
         autoModeChooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         autoModeChooser.addObject("No Auto", null);
         SmartDashboard.putData("Auto mode", autoModeChooser);
+=======
+    public void robotInit() {
+    	
+		System.err.println("Start init");
+		oi = new OI();
+		System.err.println("OI");
+
+		positionSelector = new SendableChooser();
+        goalSelector = new SendableChooser();
+        climberOption = new SendableChooser();
+
+        positionSelector.addDefault("Second Position", 2);
+        positionSelector.addObject("Third Position", 3);
+        positionSelector.addObject("Fourth Position", 4);
+        positionSelector.addObject("Fifth Position", 5);
+        
+        SmartDashboard.putData("Position Selector", positionSelector);
+        
+        goalSelector.addDefault("Middle Goal", 1);
+        goalSelector.addObject("Left Goal", 2);
+        goalSelector.addObject("Right Goal", 3);
+        
+        SmartDashboard.putData("Goal Selector", goalSelector);
+
+		SmartDashboard.putData("Drive Train", driveTrain);
+		SmartDashboard.putData("Shooter", ballShooter);
+		SmartDashboard.putData("Active", active);
+		SmartDashboard.putData("Active Bar", activeBar);
+
+		climberOption.addDefault("Buttons 11 (up) and 12 (down)", "Buttons");
+		climberOption.addObject("Button and Joystick Control", "Joystick");
+
+        SmartDashboard.putData("Climber Options Chooser", climberOption);
+
+		
+//		CameraServer.getInstance().startAutomaticCapture("cam0");
+        chooser = new SendableChooser();
+        
+		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
+		
+        chooser.addDefault("Defense Only - forward time", new DriveTime(3));
+        chooser.addObject("Full Auto", new AutoController());
+        chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
+        chooser.addObject("No Auto", null);
+//        chooser.addObject("Drive to Tower", new DriveStraight(.9));
+//        chooser.addObject("Drive to Tower and Shoot", new DriveTowardTower());
+//        chooser.addObject("Drive to hdbjhsbdcs and Shoot", new DriveAndShoot());
+
+//        chooser.addObject("My Auto", new MyAutoCommand());
+        SmartDashboard.putData("Auto mode", chooser);
+//        SmartDashboard.putNumber("BALL_VOLT_ACTIVE", RobotMap.BALL_VOLT_ACTIVE);
+//		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
+//		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
+//		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
+>>>>>>> origin/master
 
         SmartDashboard.putNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES);
         SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT);
@@ -141,8 +213,17 @@ public class Robot extends IterativeRobot
     {
         return (int) autoGoalChooser.getSelected();
     }
+<<<<<<< HEAD
 
     /**
+=======
+    
+    public static String getClimberOption() {
+    	return (String) climberOption.getSelected();
+    }
+	
+	/**
+>>>>>>> origin/master
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
      * the robot is disabled.

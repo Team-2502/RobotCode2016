@@ -117,6 +117,7 @@ public class DriveStraight extends Command implements PIDOutput
     }
 
     // Called repeatedly when this Command is scheduled to run
+<<<<<<< HEAD
     @Override
     protected void execute()
     {
@@ -204,6 +205,85 @@ public class DriveStraight extends Command implements PIDOutput
         // Sensors.ahrs.getFusedHeading() > 170;
         System.out.println("Counter: " + counter);
         return done && System.currentTimeMillis() - startTime > minTime * 1000;
+=======
+    protected void execute() {
+    	
+//    	if ((s.getRoll() > 5.5 && s.getSensorDistance(sensor) < SmartDashboard.getNumber("Outer Short Value", .8))
+//    			|| Math.abs(s.getAngle() - angle) > 10) {
+//    		double newSpeed = rotateToAngleRate;
+//        	newSpeed = .7 * Math.signum(rotateToAngleRate);
+//        	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);
+////        	newSpeed = (Math.abs(newSpeed) + motorLimit)* Math.signum(newSpeed);
+//        	dt.runMotors(newSpeed, -newSpeed);
+//        	System.out.println("Rotate Straight");
+//    	} else {
+    		dt.driveStraight(realSpeed, rotateToAngleRate);
+    		System.out.println("Normal Straight");
+
+//    	}
+    	realSpeed += .08;
+    	
+    	if (realSpeed > speed) realSpeed = speed;
+    	System.out.println("Goal: " + sensorLimit);
+    	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
+
+    	if (s.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS) {
+    		insideRangeCounter++;
+    	} else {
+    		insideRangeCounter = 0;
+    	}
+    	
+    	if (insideRangeCounter > 2) {
+    		insideRange = true;
+    	}
+    	
+    	System.out.println("In Range: " + insideRange);
+    	if (insideRange) {
+			if (change) {
+				//The getSensorDistance just gets the voltage of a particular sensor.
+				//Use an AnalogInput for the sensor.
+				if (Math.abs(s.getSensorDistance(sensor) - initialReading) > sensorLimit) {
+					counter++;
+				}
+			} else {
+		    	if (Math.abs(s.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION) {
+		    		counter++;
+		
+		    	} else {
+		    		counter = 0;
+		    	}
+
+			}
+    	}
+		if (Math.abs(s.getSensorDistance(sensor)) < RobotMap.LONG_SENSOR_RANGE_LIMITS+.1 && Math.abs(s.getSensorDistance(sensor)) > .9) {
+			insideRange = true;
+		} else {
+			insideRange = false;
+		}
+
+    	
+    	if (counter > 2) {
+    		done = true;
+    	}
+    		
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+//        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
+    	System.out.println("Counter: " + counter);
+    	
+    	
+    	//HEY LOOK HERE!!!!! TRY UNCOMMENTING THIS LINE TO TEST A SAFETY TO NOT RUN INTO
+    	//A WALL - USES SHORT SENSOR, SO NOT SURE WHERE GOING TO BE MOUNTED, BUT HOPEFULLY
+    	//THE LINE BELOW THIS WOULD MAKE THE ROBOT NOT CAUSE A DRIVER STATION TO BE
+    	//KNOCKED OFF OF THE PLATFORM THINGY
+    	//ONLY TRIGGERS IF 5 SECONDS HAVE PASSED JUST TO BE EXTRA SAFE TIME WISE
+//    	if (System.currentTimeMillis() - startTime > 5000 && s.getSensorDistance(Sensor.FrontShort) < 1.3 && s.getSensorDistance(Sensor.FrontShort) > .8) return true;
+    	
+    	
+    	return (done && System.currentTimeMillis() - startTime > minTime * 1000);
+>>>>>>> origin/master
     }
 
     // Called once after isFinished returns true
@@ -219,10 +299,15 @@ public class DriveStraight extends Command implements PIDOutput
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
+<<<<<<< HEAD
     @Override
     protected void interrupted()
     {
         // end();
+=======
+    protected void interrupted() {
+//    	end();h
+>>>>>>> origin/master
     }
 
     @Override
