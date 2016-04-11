@@ -7,30 +7,11 @@ import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-/**
- *
- */
 public class DriveAfterDefense extends CommandGroup
 {
 
     public DriveAfterDefense(int startingPosition)
     {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        // addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        // addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
         double turnAngle = 0;
         Sensor sensor = Sensor.Left;
         double extraTime = 0;
@@ -77,21 +58,7 @@ public class DriveAfterDefense extends CommandGroup
         // Once in front of tower, turn back to straight
         addSequential(new RotateToAngle(0), 2);
 
-<<<<<<< HEAD
         addParallel(new CommandActiveController(2));
         addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT), 3.3);
-=======
-    	} else {
-    		addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, extraTime), 3.5);
-    	}
-    	//Once in front of tower, turn back to straight
-    	addSequential(new RotateToAngle(0), 2);
-    	
-    	addParallel(new ToggleActive());
-    	addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT), 3.3);
-    
-    	
->>>>>>> origin/master
-
     }
 }

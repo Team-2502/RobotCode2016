@@ -141,7 +141,7 @@ public class SubsystemSensors extends Subsystem
 
         frontLongDistance = new AnalogInput(RobotMap.FRONT_LONG_DISTANCE);
         frontShortDistance = new AnalogInput(RobotMap.FRONT_SHORT_DISTANCE);
-        Pressure_Sensor = new AnalogInput(RobotMap.Pressure_Sensor);
+        Pressure_Sensor = new AnalogInput(RobotMap.PRESSURE_SENSOR);
         System.out.println("Fron Distance Sensors");
 
         leftDistance = new AnalogInput(RobotMap.LEFT_DISTANCE);

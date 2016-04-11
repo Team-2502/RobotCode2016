@@ -63,11 +63,11 @@ public class CommandClimber extends Command
         switch(m_motor)
         {
             case LEFT:
-                return !OI.getInstance().getButtonStick().getRawButton(11);
+                return !OI.getInstance().getFunctionControlStick().getRawButton(11);
             case RIGHT:
-                return !OI.getInstance().getButtonStick().getRawButton(12);
+                return !OI.getInstance().getFunctionControlStick().getRawButton(12);
             case BOTH:
-                return !OI.getInstance().getButtonStick().getRawButton(9) && !OI.getInstance().getButtonStick().getRawButton(7);
+                return !OI.getInstance().getFunctionControlStick().getRawButton(9) && !OI.getInstance().getFunctionControlStick().getRawButton(7);
             default:
                 return true;
         }
