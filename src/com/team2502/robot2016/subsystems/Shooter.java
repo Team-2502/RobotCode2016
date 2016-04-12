@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * TODO: Remove unnecessary Solenoid/Talon
  */
-public class SubsystemShooter extends Subsystem
+public class Shooter extends Subsystem
 {
     // private final CANTalon shooterMotor = new
     // CANTalon(RobotMap.SHOOTER_MOTOR);
     private final Solenoid shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID);
 
-    public SubsystemShooter()
+    public Shooter()
     {
         // climberSolenoid.set(false);
     }

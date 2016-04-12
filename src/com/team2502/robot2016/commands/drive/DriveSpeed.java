@@ -1,20 +1,21 @@
-package com.team2502.robot2016.commands.shooter;
+package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CommandRingLight extends Command
+public class DriveSpeed extends Command
 {
 
-    private SubsystemSensors sensors = Robot.sensors;
+    private DriveTrain dt = Robot.driveTrain;
+    private double              speed;
 
-    public CommandRingLight()
+    public DriveSpeed(double speed)
     {
-        requires(Robot.sensors);
+        requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -26,24 +27,28 @@ public class CommandRingLight extends Command
     @Override
     protected void execute()
     {
-        sensors.setRingLight(!sensors.ringState);
+        dt.runMotors(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished()
     {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true
     @Override
     protected void end()
-    {}
+    {
+        dt.stopDrive();
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted()
-    {}
+    {
+        dt.stopDrive();
+    }
 }

@@ -4,11 +4,11 @@ import com.team2502.robot2016.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class SubsystemActiveFrame extends Subsystem
+public class Active extends Subsystem
 {
     private final Solenoid activeSolenoid;
 
-    public SubsystemActiveFrame()
+    public Active()
     {
         activeSolenoid = new Solenoid(RobotMap.ACTIVE_SOLENOID);
     }

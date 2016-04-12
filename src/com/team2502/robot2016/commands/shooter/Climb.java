@@ -2,16 +2,16 @@ package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemClimber;
+import com.team2502.robot2016.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CommandClimber extends Command
+public class Climb extends Command
 {
 
-    private final SubsystemClimber m_climber = Robot.climber;
+    private final Climber m_climber = Robot.climber;
     private final MotorMode        m_motor;
     private final double           m_speed;
 
@@ -22,7 +22,7 @@ public class CommandClimber extends Command
      *            The speed at which they run (Positive = Raise & Negative =
      *            Lower)
      */
-    public CommandClimber(MotorMode motor, double speed)
+    public Climb(MotorMode motor, double speed)
     {
         m_motor = motor;
         m_speed = speed;
@@ -63,11 +63,11 @@ public class CommandClimber extends Command
         switch(m_motor)
         {
             case LEFT:
-                return !OI.getInstance().getFunctionControlStick().getRawButton(11);
+                return !OI.getInstance().getButtonStick().getRawButton(11);
             case RIGHT:
-                return !OI.getInstance().getFunctionControlStick().getRawButton(12);
+                return !OI.getInstance().getButtonStick().getRawButton(12);
             case BOTH:
-                return !OI.getInstance().getFunctionControlStick().getRawButton(9) && !OI.getInstance().getFunctionControlStick().getRawButton(7);
+                return !OI.getInstance().getButtonStick().getRawButton(9) && !OI.getInstance().getButtonStick().getRawButton(7);
             default:
                 return true;
         }

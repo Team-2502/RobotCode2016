@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class SubsystemBallHolder extends Subsystem
+public class Pokers extends Subsystem
 {
     private final Solenoid ballHolderSolenoid;
 
-    public SubsystemBallHolder()
+    public Pokers()
     {
         ballHolderSolenoid = new Solenoid(RobotMap.POKER_SOLENOID);
     }

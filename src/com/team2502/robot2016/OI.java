@@ -1,10 +1,10 @@
 package com.team2502.robot2016;
 
-import com.team2502.robot2016.commands.active.CommandActiveController;
-import com.team2502.robot2016.commands.active.CommandSpinActive;
-import com.team2502.robot2016.commands.shooter.CommandClimber;
-import com.team2502.robot2016.commands.shooter.CommandClimber.MotorMode;
-import com.team2502.robot2016.commands.shooter.CommandGShootAndReload;
+import com.team2502.robot2016.commands.active.ActiveController;
+import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.shooter.Climb;
+import com.team2502.robot2016.commands.shooter.Climb.MotorMode;
+import com.team2502.robot2016.commands.shooter.GShootAndReload;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -26,7 +26,7 @@ public class OI
         return INSTANCE;
     }
 
-    private Joystick functionControlStick;
+    private Joystick buttonStick;
     private Joystick driveLeftStick;
     private Joystick driveRightStick;
 
@@ -44,39 +44,39 @@ public class OI
 
     public OI()
     {
-        functionControlStick = new Joystick(RobotMap.Joystick.FUNCTION_CONTROL_JOYSTICK);
+        buttonStick = new Joystick(RobotMap.Joystick.FUNCTION_CONTROL_JOYSTICK);
         driveLeftStick = new Joystick(RobotMap.Joystick.LEFT_JOYSTICK);
         driveRightStick = new Joystick(RobotMap.Joystick.RIGHT_JOYSTICK);
 
-        rollerButtonIn = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_IN);
-        rollerButtonOut = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
+        rollerButtonIn = new JoystickButton(buttonStick, RobotMap.Joystick.Button.ROLLER_CONTROL_IN);
+        rollerButtonOut = new JoystickButton(buttonStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
 
-        climbLowerButton = new JoystickButton(functionControlStick, 9);
-        climbRaiseButton = new JoystickButton(functionControlStick, 7);
+        climbLowerButton = new JoystickButton(buttonStick, 9);
+        climbRaiseButton = new JoystickButton(buttonStick, 7);
 
-        shootButton = new JoystickButton(functionControlStick, 1);
+        shootButton = new JoystickButton(buttonStick, 1);
 
-        activeDown = new JoystickButton(functionControlStick, 2);
+        activeDown = new JoystickButton(buttonStick, 2);
 
-        pokerButton = new JoystickButton(functionControlStick, 6);
+        pokerButton = new JoystickButton(buttonStick, 6);
 
-        rollerButtonIn.whenPressed(new CommandSpinActive(-1, false));
-        rollerButtonOut.whenPressed(new CommandSpinActive(1, false));
+        rollerButtonIn.whenPressed(new SpinActive(-1, false));
+        rollerButtonOut.whenPressed(new SpinActive(1, false));
 
-        activeDown.whenPressed(new CommandActiveController(2));
+        activeDown.whenPressed(new ActiveController(2));
 
-        pokerButton.whenPressed(new CommandActiveController(1));
-        pokerButton.whenReleased(new CommandActiveController(0));
+        pokerButton.whenPressed(new ActiveController(1));
+        pokerButton.whenReleased(new ActiveController(0));
 
-        climbRaiseButton.whileHeld(new CommandClimber(MotorMode.BOTH, 1));
-        climbLowerButton.whileHeld(new CommandClimber(MotorMode.BOTH, -1));
+        climbRaiseButton.whileHeld(new Climb(MotorMode.BOTH, 1));
+        climbLowerButton.whileHeld(new Climb(MotorMode.BOTH, -1));
 
-        shootButton.whenPressed(new CommandGShootAndReload());
+        shootButton.whenPressed(new GShootAndReload());
     }
 
-    public Joystick getFunctionControlStick()
+    public Joystick getButtonStick()
     {
-        return functionControlStick;
+        return buttonStick;
     }
     
     public Joystick getLeftStick()

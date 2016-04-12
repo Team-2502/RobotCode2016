@@ -4,7 +4,7 @@ import com.team2502.robot2016.OI;
 //import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 //import com.team2502.robot2016.commands.drive.TankDriveSix;
-import com.team2502.robot2016.commands.drive.CommandTankDriveSix;
+import com.team2502.robot2016.commands.drive.TankDriveSix;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class SubsystemDriveTrain extends Subsystem
+public class DriveTrain extends Subsystem
 {
 
     private final RobotDrive simDrive;
@@ -35,13 +35,9 @@ public class SubsystemDriveTrain extends Subsystem
         LEFT_MOTORS, RIGHT_MOTORS, WINCH_MOTORS
     }
 
-    private static final double ROBOT_STRAIGHT    = 0,
-                                        ROBOT_FACE_LEFT = 60, ROBOT_FACE_RIGHT = -60;
-
-    private static final double kToleranceDegrees = 2.0f;
 
     // Initialize your subsystem here
-    public SubsystemDriveTrain()
+    public DriveTrain()
     {
         // Use these to get going:
         // setSetpoint() - Sets where the PID controller should move the system
@@ -77,7 +73,7 @@ public class SubsystemDriveTrain extends Subsystem
     {
         // Set the default command for a subsystem here.
         // setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new CommandTankDriveSix());
+        setDefaultCommand(new TankDriveSix());
     }
 
     public void driveSix()

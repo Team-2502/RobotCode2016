@@ -1,8 +1,8 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
+import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Sensors;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class CommandRotateToAngle extends Command implements PIDOutput
+public class RotateToAngle extends Command implements PIDOutput
 {
 
-    private SubsystemDriveTrain dt                = Robot.driveTrain;
+    private DriveTrain dt                = Robot.driveTrain;
 
     private PIDController       turnController;
     private double              rotateToAngleRate;
@@ -35,13 +35,13 @@ public class CommandRotateToAngle extends Command implements PIDOutput
 
     private double              startTime;
 
-    public CommandRotateToAngle(double angle)
+    public RotateToAngle(double angle)
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(Robot.driveTrain);
         this.angle = angle;
-        turnController = new PIDController(kP, kI, kD, kF, SubsystemSensors.ahrs, this);
+        turnController = new PIDController(kP, kI, kD, kF, Sensors.ahrs, this);
         turnController.setInputRange(-180.0f, 180.0f);
         turnController.setOutputRange(-1.0, 1.0);
         turnController.setAbsoluteTolerance(kToleranceDegrees);

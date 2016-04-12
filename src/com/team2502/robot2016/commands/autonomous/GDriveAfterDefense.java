@@ -1,16 +1,16 @@
 package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.commands.active.CommandActiveController;
-import com.team2502.robot2016.commands.drive.CommandDriveStraight;
-import com.team2502.robot2016.commands.drive.CommandRotateToAngle;
-import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
+import com.team2502.robot2016.commands.active.ActiveController;
+import com.team2502.robot2016.commands.drive.DriveStraight;
+import com.team2502.robot2016.commands.drive.RotateToAngle;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CommandGDriveAfterDefense extends CommandGroup
+public class GDriveAfterDefense extends CommandGroup
 {
 
-    public CommandGDriveAfterDefense(int startingPosition)
+    public GDriveAfterDefense(int startingPosition)
     {
         double turnAngle = 0;
         Sensor sensor = Sensor.Left;
@@ -44,21 +44,21 @@ public class CommandGDriveAfterDefense extends CommandGroup
         // RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
         // Turn to the right - limit of 2 seconds (command ends if gets to
         // number faster)
-        addSequential(new CommandRotateToAngle(turnAngle), 2);
+        addSequential(new RotateToAngle(turnAngle), 2);
 
         // Once turned, read side sensor until on front of tower
         if(startingPosition == 4)
         {
-            addSequential(new CommandDriveTime(1.2));
+            addSequential(new DriveTime(1.2));
 
         } else
         {
-            addSequential(new CommandDriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, extraTime));
+            addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, extraTime));
         }
         // Once in front of tower, turn back to straight
-        addSequential(new CommandRotateToAngle(0), 2);
+        addSequential(new RotateToAngle(0), 2);
 
-        addParallel(new CommandActiveController(2));
-        addSequential(new CommandDriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT), 3.3);
+        addParallel(new ActiveController(2));
+        addSequential(new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT), 3.3);
     }
 }

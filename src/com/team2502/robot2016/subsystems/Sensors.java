@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class SubsystemSensors extends Subsystem
+public class Sensors extends Subsystem
 {
 
     // Put methods for controlling this subsystem
@@ -98,7 +98,7 @@ public class SubsystemSensors extends Subsystem
 
     // private static NetworkTable table;
 
-    public SubsystemSensors()
+    public Sensors()
     {
 
         System.out.println("Before initial Sensors");

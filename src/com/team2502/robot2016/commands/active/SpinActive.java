@@ -2,26 +2,26 @@ package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemActiveFrame;
-import com.team2502.robot2016.subsystems.SubsystemActiveRoller;
-import com.team2502.robot2016.subsystems.SubsystemBallHolder;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
+import com.team2502.robot2016.subsystems.Active;
+import com.team2502.robot2016.subsystems.ActiveBar;
+import com.team2502.robot2016.subsystems.Pokers;
+import com.team2502.robot2016.subsystems.Sensors;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class CommandSpinActive extends Command
+public class SpinActive extends Command
 {
-    private final SubsystemActiveRoller m_activeRoller = Robot.activeRoller;
-    private final SubsystemBallHolder   m_ballHolder   = Robot.ballHolder;
-    private final SubsystemActiveFrame  m_activeFrame  = Robot.activeFrame;
-    private final SubsystemSensors      m_sensors      = Robot.sensors;
+    private final ActiveBar m_activeRoller = Robot.activeRoller;
+    private final Pokers   m_ballHolder   = Robot.ballHolder;
+    private final Active  m_activeFrame  = Robot.activeFrame;
+    private final Sensors      m_sensors      = Robot.sensors;
 
     private double                      m_speed;
     private boolean                     m_flipped      = false;
     private int                         counter        = 0;
     private boolean                     test           = false;
 
-    public CommandSpinActive(double speed, boolean test)
+    public SpinActive(double speed, boolean test)
     {
         requires(Robot.activeRoller);
         requires(Robot.ballHolder);
@@ -66,7 +66,7 @@ public class CommandSpinActive extends Command
     @Override
     protected boolean isFinished()
     {
-        return m_flipped || !OI.getInstance().getFunctionControlStick().getRawButton(3) && !OI.getInstance().getFunctionControlStick().getRawButton(4) && !test;
+        return m_flipped || !OI.getInstance().getButtonStick().getRawButton(3) && !OI.getInstance().getButtonStick().getRawButton(4) && !test;
     }
 
     @Override

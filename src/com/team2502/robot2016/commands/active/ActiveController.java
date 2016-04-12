@@ -1,17 +1,17 @@
 package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemActiveFrame;
-import com.team2502.robot2016.subsystems.SubsystemBallHolder;
+import com.team2502.robot2016.subsystems.Active;
+import com.team2502.robot2016.subsystems.Pokers;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CommandActiveController extends Command
+public class ActiveController extends Command
 {
-    private SubsystemBallHolder  m_ballHolder  = Robot.ballHolder;
-    private SubsystemActiveFrame m_activeFrame = Robot.activeFrame;
+    private Pokers  m_ballHolder  = Robot.ballHolder;
+    private Active m_activeFrame = Robot.activeFrame;
     private final int            m_mode;
 
-    public CommandActiveController(int mode)
+    public ActiveController(int mode)
     {
         requires(Robot.ballHolder);
         requires(Robot.activeFrame);

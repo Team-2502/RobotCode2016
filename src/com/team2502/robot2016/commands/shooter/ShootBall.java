@@ -1,26 +1,26 @@
 package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemBallHolder;
-import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
+import com.team2502.robot2016.subsystems.Pokers;
+import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Sensors;
 //import com.team2502.robot2016.subsystems.Sensors;
-import com.team2502.robot2016.subsystems.SubsystemShooter;
+import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
-public class CommandShootBall extends Command
+public class ShootBall extends Command
 {
 
-    private SubsystemShooter    ballShooter = Robot.ballShooter;
-    private SubsystemBallHolder ballHolder  = Robot.ballHolder;
-    private SubsystemSensors    sensors     = Robot.sensors;
-    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
+    private Shooter    ballShooter = Robot.ballShooter;
+    private Pokers ballHolder  = Robot.ballHolder;
+    private Sensors    sensors     = Robot.sensors;
+    private DriveTrain driveTrain  = Robot.driveTrain;
     private static boolean      run         = true,
                                         stop = true, end = false;;
 
-    public CommandShootBall()
+    public ShootBall()
     {
         requires(Robot.ballShooter);
         requires(Robot.ballHolder);

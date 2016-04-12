@@ -1,19 +1,19 @@
 package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
+import com.team2502.robot2016.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class CommandTankDriveSix extends Command
+public class TankDriveSix extends Command
 {
 
     // private DriveTrain dt = Robot.driveTrain;
-    private SubsystemDriveTrain dt = Robot.driveTrain;
+    private DriveTrain dt = Robot.driveTrain;
 
-    public CommandTankDriveSix()
+    public TankDriveSix()
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

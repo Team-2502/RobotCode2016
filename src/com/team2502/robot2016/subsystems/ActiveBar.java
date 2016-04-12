@@ -4,11 +4,11 @@ import com.team2502.robot2016.RobotMap;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class SubsystemActiveRoller extends Subsystem
+public class ActiveBar extends Subsystem
 {
     private final CANTalon rollerBar;
 
-    public SubsystemActiveRoller()
+    public ActiveBar()
     {
         rollerBar = new CANTalon(RobotMap.ACTIVE_ROLLER_BAR);
     }

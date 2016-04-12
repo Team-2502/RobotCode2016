@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 /**
  * Fires the shooter then lowers it back down.
  */
-public class CommandGShootAndReload extends CommandGroup
+public class GShootAndReload extends CommandGroup
 {
-    public CommandGShootAndReload()
+    public GShootAndReload()
     {
-        addSequential(new CommandShootBall());
-        addSequential(new CommandReloadShooter());
+        addSequential(new ShootBall());
+        addSequential(new ReloadShooter());
     }
 }

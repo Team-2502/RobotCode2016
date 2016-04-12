@@ -1,12 +1,12 @@
 package com.team2502.robot2016.commands.drive;
 
-import com.team2502.robot2016.subsystems.SubsystemSensors;
-import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
+import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 /**
  *
  */
-public class CommandDriveDefense extends CommandDriveStraight
+public class DriveDefense extends DriveStraight
 {
 
     private static final int BEFORE_DEFENSE = 1;
@@ -16,24 +16,24 @@ public class CommandDriveDefense extends CommandDriveStraight
 
     private int              STATE          = 1;
 
-    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue)
+    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue)
     {
         super(angle, speed, sensor, sensorValue);
     }
 
-    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
+    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
     {
         super(angle, speed, sensor, sensorValue, change);
 
     }
 
-    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
+    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
     {
         super(angle, speed, sensor, sensorValue, change, extraTime);
 
     }
 
-    public CommandDriveDefense(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
+    public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
     {
         super(angle, speed, sensor, sensorValue, extraTime);
     }
@@ -52,19 +52,19 @@ public class CommandDriveDefense extends CommandDriveStraight
         switch(STATE)
         {
             case BEFORE_DEFENSE:
-                if(SubsystemSensors.ahrs.getRoll() > 5)
+                if(Sensors.ahrs.getRoll() > 5)
                 {
                     STATE++;
                 }
                 break;
             case GOING_OVER:
-                if(SubsystemSensors.ahrs.getRoll() < -5)
+                if(Sensors.ahrs.getRoll() < -5)
                 {
                     STATE++;
                 }
                 break;
             case FACING_DOWN:
-                if(Math.abs(SubsystemSensors.ahrs.getRoll()) < 1)
+                if(Math.abs(Sensors.ahrs.getRoll()) < 1)
                 {
                     STATE++;
                 }

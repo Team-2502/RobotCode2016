@@ -2,15 +2,15 @@ package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
 //import com.team2502.robot2016.subsystems.Sensors;
-import com.team2502.robot2016.subsystems.SubsystemShooter;
+import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CommandReloadShooter extends Command
+public class ReloadShooter extends Command
 {
 
-    private SubsystemShooter bs = Robot.ballShooter;
+    private Shooter bs = Robot.ballShooter;
 
-    public CommandReloadShooter()
+    public ReloadShooter()
     {
         requires(Robot.ballShooter);
     }

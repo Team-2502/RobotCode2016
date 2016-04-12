@@ -2,9 +2,9 @@ package com.team2502.robot2016.commands.drive;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.RobotMap;
-import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
-import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
+import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class CommandDriveStraight extends Command implements PIDOutput
+public class DriveStraight extends Command implements PIDOutput
 {
 
-    protected SubsystemDriveTrain dt                 = Robot.driveTrain;
-    protected SubsystemSensors    sensors            = Robot.sensors;
+    protected DriveTrain dt                 = Robot.driveTrain;
+    protected Sensors    sensors            = Robot.sensors;
     protected double              angle;
 
     protected PIDController       turnController;
@@ -53,7 +53,7 @@ public class CommandDriveStraight extends Command implements PIDOutput
     protected boolean             insideRange        = false;
     protected int                 insideRangeCounter = 0;
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue)
     {
         requires(Robot.driveTrain);
         requires(Robot.sensors);
@@ -63,40 +63,40 @@ public class CommandDriveStraight extends Command implements PIDOutput
         this.speed = speed;
         this.sensor = sensor;
 
-        turnController = new PIDController(kP, kI, kD, kF, SubsystemSensors.ahrs, this);
+        turnController = new PIDController(kP, kI, kD, kF, Sensors.ahrs, this);
         turnController.setInputRange(-180.0f, 180.0f);
         turnController.setOutputRange(-1.0, 1.0);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(true);
     }
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change)
     {
         this(angle, speed, sensor, sensorValue);
         this.change = change;
     }
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
     }
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
         this.change = change;
     }
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, double extraTime, double minTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
         this.minTime = minTime;
     }
 
-    public CommandDriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime, double minTime)
+    public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue, boolean change, double extraTime, double minTime)
     {
         this(angle, speed, sensor, sensorValue);
         this.extraTime = extraTime;
@@ -224,7 +224,7 @@ public class CommandDriveStraight extends Command implements PIDOutput
         Timer.delay(extraTime);
         dt.stopDrive();
         System.out.println("End Function: " + sensors.getSensorDistance(sensor));
-        SubsystemSensors.BEFORE_TURN_VALUE = sensors.getSensorDistance(sensor);
+        Sensors.BEFORE_TURN_VALUE = sensors.getSensorDistance(sensor);
     }
 
     // Called when another command which requires one or more of the same

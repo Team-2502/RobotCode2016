@@ -1,21 +1,21 @@
 package com.team2502.robot2016;
 
-import com.team2502.robot2016.commands.CommandGAutoController;
-import com.team2502.robot2016.commands.active.CommandActiveController;
-import com.team2502.robot2016.commands.autonomous.CommandGDriveAfterDefense;
-import com.team2502.robot2016.commands.autonomous.CommandGDriveAfterDefenseTesting;
-import com.team2502.robot2016.commands.autonomous.CommandDriveTime;
-import com.team2502.robot2016.commands.drive.CommandDriveDefense;
-import com.team2502.robot2016.commands.drive.CommandDriveStraight;
-import com.team2502.robot2016.commands.drive.CommandRotateToAngle;
-import com.team2502.robot2016.subsystems.SubsystemActiveFrame;
-import com.team2502.robot2016.subsystems.SubsystemActiveRoller;
-import com.team2502.robot2016.subsystems.SubsystemBallHolder;
-import com.team2502.robot2016.subsystems.SubsystemClimber;
-import com.team2502.robot2016.subsystems.SubsystemDriveTrain;
-import com.team2502.robot2016.subsystems.SubsystemSensors;
-import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
-import com.team2502.robot2016.subsystems.SubsystemShooter;
+import com.team2502.robot2016.commands.GAutoController;
+import com.team2502.robot2016.commands.active.ActiveController;
+import com.team2502.robot2016.commands.autonomous.GDriveAfterDefense;
+import com.team2502.robot2016.commands.autonomous.GDriveAfterDefenseTesting;
+import com.team2502.robot2016.commands.autonomous.DriveTime;
+import com.team2502.robot2016.commands.drive.DriveDefense;
+import com.team2502.robot2016.commands.drive.DriveStraight;
+import com.team2502.robot2016.commands.drive.RotateToAngle;
+import com.team2502.robot2016.subsystems.Active;
+import com.team2502.robot2016.subsystems.ActiveBar;
+import com.team2502.robot2016.subsystems.Pokers;
+import com.team2502.robot2016.subsystems.Climber;
+import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
+import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,13 +32,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot
 {
-    public static final SubsystemDriveTrain   driveTrain         = new SubsystemDriveTrain();
-    public static final SubsystemShooter      ballShooter        = new SubsystemShooter();
-    public static final SubsystemBallHolder   ballHolder         = new SubsystemBallHolder();
-    public static final SubsystemActiveRoller activeRoller       = new SubsystemActiveRoller();
-    public static final SubsystemActiveFrame  activeFrame        = new SubsystemActiveFrame();
-    public static final SubsystemClimber      climber            = new SubsystemClimber();
-    public static final SubsystemSensors      sensors            = new SubsystemSensors();
+    public static final DriveTrain   driveTrain         = new DriveTrain();
+    public static final Shooter      ballShooter        = new Shooter();
+    public static final Pokers   ballHolder         = new Pokers();
+    public static final ActiveBar activeRoller       = new ActiveBar();
+    public static final Active  activeFrame        = new Active();
+    public static final Climber      climber            = new Climber();
+    public static final Sensors      sensors            = new Sensors();
 
     public static boolean                     inAuto             = false;
 
@@ -86,9 +86,9 @@ public class Robot extends IterativeRobot
         SmartDashboard.putData("Active", ballHolder);
         SmartDashboard.putData("Active Bar", activeRoller);
 
-        autoModeChooser.addDefault("Defense Only - forward time", new CommandDriveTime(3));
-        autoModeChooser.addObject("Full Auto", new CommandGAutoController());
-        autoModeChooser.addObject("Spy Bot - forward time 1.5", new CommandDriveTime(1.5));
+        autoModeChooser.addDefault("Defense Only - forward time", new DriveTime(3));
+        autoModeChooser.addObject("Full Auto", new GAutoController());
+        autoModeChooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         autoModeChooser.addObject("No Auto", null);
         SmartDashboard.putData("Auto mode", autoModeChooser);
 
@@ -101,7 +101,7 @@ public class Robot extends IterativeRobot
     private void testAutoParts(int startingPosition)
     {
 
-        SmartDashboard.putData("After Defense", new CommandGDriveAfterDefense(startingPosition));
+        SmartDashboard.putData("After Defense", new GDriveAfterDefense(startingPosition));
 
         double turnAngle = 0;
         Sensor sensor = Sensor.Left;
@@ -121,15 +121,15 @@ public class Robot extends IterativeRobot
 
         // SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
         // SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
-        SmartDashboard.putData("Drive Over Defense to Wall", new CommandDriveDefense(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5));
-        SmartDashboard.putData("Drive to sensor limit wall", new CommandDriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
-        SmartDashboard.putData("Rotate sideways", new CommandRotateToAngle(turnAngle));
-        SmartDashboard.putData("Drive in front of Tower", new CommandDriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
-        SmartDashboard.putData("Rotate to forward", new CommandRotateToAngle(5));
-        SmartDashboard.putData("Flip Active", new CommandActiveController(2));
-        SmartDashboard.putData("Drive to tower", new CommandDriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));
+        SmartDashboard.putData("Drive Over Defense to Wall", new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5));
+        SmartDashboard.putData("Drive to sensor limit wall", new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
+        SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
+        SmartDashboard.putData("Drive in front of Tower", new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
+        SmartDashboard.putData("Rotate to forward", new RotateToAngle(5));
+        SmartDashboard.putData("Flip Active", new ActiveController(2));
+        SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));
 
-        SmartDashboard.putData("Drive After Defense", new CommandGDriveAfterDefenseTesting(startingPosition));
+        SmartDashboard.putData("Drive After Defense", new GDriveAfterDefenseTesting(startingPosition));
     }
 
     public static int getStartPosition()
@@ -174,7 +174,7 @@ public class Robot extends IterativeRobot
     public void autonomousInit()
     {
         sensors.zeroGyro();
-        SubsystemSensors.ahrs.zeroYaw();
+        Sensors.ahrs.zeroYaw();
 
         inAuto = true;
         sensors.updateData();
@@ -184,7 +184,7 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 
         int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
-        autoModeChooser.addObject("Full Auto", new CommandGAutoController());
+        autoModeChooser.addObject("Full Auto", new GAutoController());
 
         testAutoParts(startPosition);
         autonomousCommand = (Command) autoModeChooser.getSelected();
@@ -219,7 +219,7 @@ public class Robot extends IterativeRobot
 
         testAutoParts((int) SmartDashboard.getNumber("Start Position", 2));
 
-        autoModeChooser.addObject("Full Auto", new CommandGAutoController());
+        autoModeChooser.addObject("Full Auto", new GAutoController());
 
         driveTrain.brakeMode(true);
         System.err.println("RSF-teleopinit");
