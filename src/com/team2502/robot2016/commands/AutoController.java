@@ -32,22 +32,12 @@ public class AutoController extends CommandGroup {
     	
     	System.out.println("Start Position: " + Robot.getStartPosition());
     	System.out.println("Goal: " + Robot.getGoal());
-    	int position = Robot.getStartPosition();
     	int goal = Robot.getGoal();
     	Sensors.ahrs.zeroYaw();
     	if (goal == 1) {
-    		
     		addSequential(new DriveAndShoot());
-    		
-    		
-    		
     	} else if (goal == 2 || goal == 3) {
-    		
     		addSequential(new DriveSideGoal());
-    		
     	}
-    	
-    	
-    	
     }
 }

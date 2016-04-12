@@ -36,11 +36,6 @@ public class DriveTrain extends Subsystem {
 		LEFT_MOTORS, RIGHT_MOTORS, WINCH_MOTORS
 	}
 	
-	private static final double ROBOT_STRAIGHT = 0,
-			ROBOT_FACE_LEFT = 60,
-			ROBOT_FACE_RIGHT = -60;
-
-	private static final double kToleranceDegrees = 2.0f;
     // Initialize your subsystem here
     public DriveTrain() {
         // Use these to get going:

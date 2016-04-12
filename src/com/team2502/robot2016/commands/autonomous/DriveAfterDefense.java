@@ -4,7 +4,6 @@ import com.team2502.robot2016.RobotMap;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.DriveStraight;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
-import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -40,9 +39,6 @@ public class DriveAfterDefense extends CommandGroup {
     		sensor = Sensor.FrontLong;
     	} else if (startingPosition == 2 || startingPosition == 3) {
     		turnAngle = 90;
-//    		if (startingPosition == 3) {
-//    			extraTime = .2;
-//    		}
 			extraTime = .2;
 
     	} else if (startingPosition == 5) {

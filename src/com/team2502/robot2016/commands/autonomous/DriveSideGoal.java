@@ -10,7 +10,6 @@ import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -37,17 +36,15 @@ public class DriveSideGoal extends CommandGroup {
     	
     	int adjustAngle = (Robot.getGoal() == 2) ? 1 : -1;
     	if (adjustAngle > 0) {
-    	addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT));
+    		addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT));
     	} else {
         	addSequential(new DriveDefense(0, .85, Sensor.FrontShort, RobotMap.SIDE_GOAL_WALL_DISTANCE_RIGHT));
 
     	}
     	addSequential(new RotateToAngle(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES));
     	addParallel(new ToggleActive());
-    	addSequential(new DriveStraight(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES, 
-    			.65, Sensor.FrontShort, 
-    			RobotMap.TOWER_SENSOR_DISTANCE_LIMIT,
-    			.4), 1.6);
+    	addSequential(new DriveStraight(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES, .65, Sensor.FrontShort, 
+    			RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .4), 1.6);
     	addSequential(new ShootAndReload());
     }
 }

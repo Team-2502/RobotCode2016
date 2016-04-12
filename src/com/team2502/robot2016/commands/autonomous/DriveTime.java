@@ -2,7 +2,6 @@ package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +12,6 @@ public class DriveTime extends Command {
 
 	private double time;
 	private double startTime;
-//	private DriveTrain dt = Robot.driveTrain;
 	private DriveTrain dt = Robot.driveTrain;
 
 	
@@ -42,7 +40,6 @@ public class DriveTime extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	dt.stopDrive();
-//    	new RotateToAngle(-20);
     }
 
     // Called when another command which requires one or more of the same

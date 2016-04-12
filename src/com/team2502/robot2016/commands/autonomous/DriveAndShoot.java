@@ -2,10 +2,8 @@ package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
-import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

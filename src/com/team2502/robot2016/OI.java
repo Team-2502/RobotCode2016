@@ -12,7 +12,6 @@ import com.team2502.robot2016.commands.shooter.ClimberOptions;
 import com.team2502.robot2016.commands.shooter.RingLight;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Climber;
-import com.team2502.robot2016.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator

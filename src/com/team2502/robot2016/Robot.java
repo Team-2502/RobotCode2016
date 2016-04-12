@@ -1,14 +1,8 @@
 package com.team2502.robot2016;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Parity;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-import edu.wpi.first.wpilibj.SerialPort.StopBits;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import com.team2502.robot2016.commands.AutoController;
@@ -16,11 +10,9 @@ import com.team2502.robot2016.commands.active.SetActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
-import com.team2502.robot2016.commands.autonomous.DriveAndShoot;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
 import com.team2502.robot2016.commands.drive.DriveDefense;
 import com.team2502.robot2016.commands.drive.DriveStraight;
-import com.team2502.robot2016.commands.drive.LightOn;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.subsystems.*;
 import com.team2502.robot2016.subsystems.Shooter;
@@ -48,7 +40,6 @@ public class Robot extends IterativeRobot {
 	
 	public static boolean inAuto = false;
 	
-//	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -226,11 +217,6 @@ public class Robot extends IterativeRobot {
     	driveTrain.brakeMode(true);
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();
-        
-
-		
-
-
     }
 
     /**
