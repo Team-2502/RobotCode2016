@@ -5,52 +5,49 @@ import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ReloadShooter extends Command
-{
-
+public class ReloadShooter extends Command {
+	
     private Shooter bs = Robot.ballShooter;
-
-    public ReloadShooter()
-    {
-        requires(Robot.ballShooter);
+//    private Sensors s = Robot.sensors;
+    
+    public ReloadShooter() {
+    	requires(Robot.ballShooter);
+//    	requires(Robot.sensors);
+    }
+    
+    /**
+     * Lower the bar if it is not already at the lowest possible point.
+     * Lowest Point = limitSwitch.get() == true
+     */
+    @Override
+    protected void initialize() {
     }
 
     /**
-     * Lower the bar if it is not already at the lowest possible point. Lowest
-     * Point = limitSwitch.get() == true
+     * Shoot the boulder.
      */
-    @Override
-    protected void initialize()
-    {}
+    protected void execute() {
+    	System.err.println("UnShoot");
 
-    @Override
-    protected void execute()
-    {
-        bs.setSolenoid(false);
+    	bs.setSolenoid(false);
     }
 
-    @Override
-    protected boolean isFinished()
-    {
-        // return s.shooterAllTheWayBack();
+    protected boolean isFinished() {
+//        return s.shooterAllTheWayBack();
         return true;
     }
 
     /**
      * Stop the lowering of the bar.
      */
-    @Override
-    protected void end()
-    {
+    protected void end() {
 
     }
 
     /**
      * Emergency stop the lowering of the bar.
      */
-    @Override
-    protected void interrupted()
-    {
+    protected void interrupted() {
 
     }
 }

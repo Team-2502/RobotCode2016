@@ -1,90 +1,47 @@
 package com.team2502.robot2016;
 
-import com.team2502.robot2016.commands.active.ActiveController;
-import com.team2502.robot2016.commands.active.SpinActive;
-import com.team2502.robot2016.commands.shooter.Climb;
-import com.team2502.robot2016.commands.shooter.Climb.MotorMode;
-import com.team2502.robot2016.commands.shooter.GShootAndReload;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import com.team2502.robot2016.commands.active.PokePokers;
+import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.active.ToggleActive;
+import com.team2502.robot2016.commands.drive.RotateToAngle;
+import com.team2502.robot2016.commands.shooter.ClimberOptions;
+import com.team2502.robot2016.commands.shooter.RingLight;
+import com.team2502.robot2016.commands.shooter.ShootAndReload;
+import com.team2502.robot2016.subsystems.Shooter;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI
-{
-    private static OI INSTANCE = null;
 
-    public static OI getInstance()
-    {
-        if(INSTANCE == null)
-        {
-            INSTANCE = new OI();
-        }
-        return INSTANCE;
-    }
-
-    private Joystick buttonStick;
-    private Joystick driveLeftStick;
-    private Joystick driveRightStick;
-
-    private Button   rollerButtonIn;
-    private Button   rollerButtonOut;
-
-    private Button   activeDown;
-
-    private Button   climbLowerButton;
-    private Button   climbRaiseButton;
-
-    private Button   shootButton;
-
-    private Button   pokerButton;
-
-    public OI()
-    {
-        buttonStick = new Joystick(RobotMap.Joystick.FUNCTION_CONTROL_JOYSTICK);
-        driveLeftStick = new Joystick(RobotMap.Joystick.LEFT_JOYSTICK);
-        driveRightStick = new Joystick(RobotMap.Joystick.RIGHT_JOYSTICK);
-
-        rollerButtonIn = new JoystickButton(buttonStick, RobotMap.Joystick.Button.ROLLER_CONTROL_IN);
-        rollerButtonOut = new JoystickButton(buttonStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
-
-        climbLowerButton = new JoystickButton(buttonStick, 9);
-        climbRaiseButton = new JoystickButton(buttonStick, 7);
-
-        shootButton = new JoystickButton(buttonStick, 1);
-
-        activeDown = new JoystickButton(buttonStick, 2);
-
-        pokerButton = new JoystickButton(buttonStick, 6);
-
-        rollerButtonIn.whenPressed(new SpinActive(-1, false));
-        rollerButtonOut.whenPressed(new SpinActive(1, false));
-
-        activeDown.whenPressed(new ActiveController(2));
-
-        pokerButton.whenPressed(new ActiveController(1));
-        pokerButton.whenReleased(new ActiveController(0));
-
-        climbRaiseButton.whileHeld(new Climb(MotorMode.BOTH, 1));
-        climbLowerButton.whileHeld(new Climb(MotorMode.BOTH, -1));
-
-        shootButton.whenPressed(new GShootAndReload());
-    }
-
-    public Joystick getButtonStick()
-    {
-        return buttonStick;
-    }
+public class OI {
+    //// CREATING BUTTONS
+    // One type of button is a joystick button which is any button on a joystick.
+    // You create one by telling it which joystick it's on and which button
+    // number it is.
+    // Joystick stick = new Joystick(port);
+    // Button button = new JoystickButton(stick, buttonNumber);
     
-<<<<<<< HEAD
-    public Joystick getLeftStick()
-    {
-        return driveLeftStick;
-    }
-=======
+    // There are a few additional built in buttons you can use. Additionally,
+    // by subclassing Button you can create custom triggers and bind those to
+    // commands the same as any other Button.
+    
+    //// TRIGGERING COMMANDS WITH BUTTONS
+    // Once you have a button, it's trivial to bind it to a button in one of
+    // three ways:
+    
+    // Start the command when the button is pressed and let it run the command
+    // until it is finished as determined by it's isFinished method.
+    // button.whenPressed(new ExampleCommand());
+    
+    // Run the command while the button is being held down and interrupt it once
+    // the button is released.
+    // button.whileHeld(new ExampleCommand());
+    
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
@@ -103,7 +60,9 @@ public class OI
 //	private static Button winchUp;
 //	private static Button winchDown;
 	
-//	private static Button climbButton;
+	private static Button climbUpButton;
+	private static Button climbDownButton;
+
 	private static Button shootButton;
 	
 	private static Button pokerButton;
@@ -130,7 +89,10 @@ public class OI
 //		winchUp = new JoystickButton(buttonStick, 12);
 //		winchDown = new JoystickButton(buttonStick, 10);
 //				
-//		climbButton = new JoystickButton(buttonStick, 11);
+		climbUpButton = new JoystickButton(buttonStick, 11);
+		climbDownButton = new JoystickButton(buttonStick, 12);
+
+		
 		shootButton = new JoystickButton(buttonStick, 1);
 		
 		activeDown = new JoystickButton(buttonStick, 2);
@@ -171,6 +133,9 @@ public class OI
 		//This one for hold button to hook and then climb
 //		climbButton.whileHeld(new Climber(Climber.UP, 4.8));
 
+		climbUpButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_UP_SPEED));
+		climbDownButton.toggleWhenPressed(new ClimberOptions(Shooter.CLIMBER_DOWN_SPEED));
+
 //		shootButton.whenPressed(new ShootAndReload());
 //		shootButton.whenPressed(new ShootBall());
 		shootButton.whenPressed(new ShootAndReload());
@@ -196,10 +161,5 @@ public class OI
 	public static Joystick getButtonStick() {
 		return buttonStick;
 	}
->>>>>>> parent of 3562747... more something and pressure switch
 
-    public Joystick getRightStick()
-    {
-        return driveRightStick;
-    }
 }

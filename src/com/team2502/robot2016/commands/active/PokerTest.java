@@ -1,24 +1,20 @@
-package com.team2502.robot2016.commands.drive;
-
+package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.ActiveIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TankDriveSix extends Command {
+public class PokerTest extends Command {
 
-//	private DriveTrain dt = Robot.driveTrain;
-	private DriveTrain dt = Robot.driveTrain;
-
-
-    public TankDriveSix() {
+	private ActiveIntake ai = Robot.active;
+    public PokerTest() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.active);
     }
 
     // Called just before this Command runs the first time
@@ -27,14 +23,13 @@ public class TankDriveSix extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.driveSix();
-    	
+    	ai.closerPokers();
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

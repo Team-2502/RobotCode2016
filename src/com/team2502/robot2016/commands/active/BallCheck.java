@@ -1,24 +1,24 @@
-package com.team2502.robot2016.commands.drive;
-
+package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.RobotMap;
+import com.team2502.robot2016.subsystems.ActiveIntake;
+import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TankDriveSix extends Command {
+public class BallCheck extends Command {
 
-//	private DriveTrain dt = Robot.driveTrain;
-	private DriveTrain dt = Robot.driveTrain;
-
-
-    public TankDriveSix() {
+	private ActiveIntake ai = Robot.active;
+	private Sensors s = Robot.sensors;
+	
+    public BallCheck() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.active);
     }
 
     // Called just before this Command runs the first time
@@ -27,9 +27,9 @@ public class TankDriveSix extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.driveSix();
-    	
-    	
+    	if ((s.getRightBallSensor() > RobotMap.BALL_VOLT_ACTIVE || s.getLeftBallSensor() > RobotMap.BALL_VOLT_ACTIVE) && !ai.getActiveState()) {
+    		ai.setActiveState(false);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

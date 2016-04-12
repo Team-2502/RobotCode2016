@@ -8,21 +8,6 @@ package com.team2502.robot2016;
  */
 public class RobotMap
 {
-    public static final class Joystick
-    {
-        public static final int FUNCTION_CONTROL_JOYSTICK = 2;
-        public static final int LEFT_JOYSTICK             = 1;
-        public static final int RIGHT_JOYSTICK            = 0;
-
-        public static final class Button
-        {
-            public static final int ROLLER_CONTROL_IN = 3;
-            public static final int ROLLER_CONTROL_OUT = 4;
-        }
-    }
-
-    public static final int    CLIMBER_WINCH_LEFT               = 8;
-    public static final int    CLIMBER_WINCH_RIGHT              = 9;
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
 	 public static final int BUTTON_JOYSTICK = 2;
@@ -50,6 +35,10 @@ public class RobotMap
      public static final int CLIMBER_WINCH_ONE = 8;
      public static final int CLIMBER_WINCH_TWO = 9;
 
+     
+     
+     
+     
      public static final int CLIMBER_BUTTON_STICK_BUTTON = 7;
   
     // If you are using multiple modules, make sure to define both the port
@@ -112,12 +101,8 @@ public class RobotMap
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
 	public static double BALL_NOTHING_VOLT_ACTIVE = 2;
 
-<<<<<<< HEAD
-	public static final int PRESSURE_SENSOR = 4;
-=======
 
 
     
 
->>>>>>> parent of 3562747... more something and pressure switch
 }

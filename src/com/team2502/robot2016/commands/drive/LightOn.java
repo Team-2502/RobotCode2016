@@ -1,44 +1,45 @@
 package com.team2502.robot2016.commands.drive;
 
-
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TankDriveSix extends Command {
+public class LightOn extends Command {
 
-//	private DriveTrain dt = Robot.driveTrain;
-	private DriveTrain dt = Robot.driveTrain;
-
-
-    public TankDriveSix() {
+	private double time;
+	private double startTime;
+	
+    public LightOn(double time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	requires(Robot.sensors);
+    	this.time = time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	this.startTime = System.currentTimeMillis();
+    	
+//    	s.setRingLight(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.driveSix();
-    	
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return System.currentTimeMillis() - startTime > time * 1000;
+
     }
 
     // Called once after isFinished returns true
     protected void end() {
+//        s.setRingLight(false);
+
     }
 
     // Called when another command which requires one or more of the same

@@ -1,24 +1,23 @@
-package com.team2502.robot2016.commands.drive;
+package com.team2502.robot2016.commands.shooter;
 
-
+import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TankDriveSix extends Command {
+public class ClimberOptions extends Command {
 
-//	private DriveTrain dt = Robot.driveTrain;
-	private DriveTrain dt = Robot.driveTrain;
-
-
-    public TankDriveSix() {
+	private Shooter s = Robot.ballShooter;
+	private double speed;
+	
+    public ClimberOptions(double dir) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+    	this.speed = dir;
     }
 
     // Called just before this Command runs the first time
@@ -27,7 +26,21 @@ public class TankDriveSix extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.driveSix();
+    	switch (Robot.getClimberOption()) {
+    	
+    	case "Buttons":
+        	s.runClimber(speed);
+
+    		break;
+    		
+    	case "Joystick" :
+    		s.runClimber(OI.getButtonStick().getY());
+    		break;
+    	}
+    	
+    	
+    	
+    	
     	
     	
     }
@@ -39,10 +52,12 @@ public class TankDriveSix extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	s.stopClimber();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
