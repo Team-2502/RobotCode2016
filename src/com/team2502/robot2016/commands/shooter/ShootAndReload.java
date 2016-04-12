@@ -1,8 +1,5 @@
 package com.team2502.robot2016.commands.shooter;
 
-import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.commands.drive.DriveSpeed;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**

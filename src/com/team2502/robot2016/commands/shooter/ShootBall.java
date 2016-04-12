@@ -14,6 +14,7 @@ public class ShootBall extends Command {
     private Shooter bs = Robot.ballShooter;
     private ActiveIntake ai = Robot.active;
     private Sensors s = Robot.sensors;
+    private double timeEnd = 0;
     
     public ShootBall() {
     	requires(Robot.ballShooter);
@@ -51,20 +52,20 @@ public class ShootBall extends Command {
 			bs.setSolenoid(true);
 
 		}
-
+		timeEnd = System.currentTimeMillis();
     	
     }
 
     protected boolean isFinished() {
 //        return s.shooterAllTheWayForward();
-        return true;
+        return timeEnd != 0 && System.currentTimeMillis() - timeEnd > 900;
     }
 
     /**
      * Stop the lowering of the bar.
      */
     protected void end() {
-    	Timer.delay(1);               // REVIEW NJL
+//    	Timer.delay(1);               // REVIEW NJL
 
     	ai.closerPokers();
 

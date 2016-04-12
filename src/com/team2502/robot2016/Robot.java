@@ -42,6 +42,7 @@ public class Robot extends IterativeRobot {
 	public static final Shooter ballShooter = new Shooter();
 	public static final ActiveIntake active = new ActiveIntake();
 	public static final ActiveBar activeBar = new ActiveBar();
+	public static final Climber climber = new Climber();
 
 	public static final Sensors sensors = new Sensors();
 	
@@ -51,7 +52,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser autoChooser;
     public static SendableChooser positionSelector;
     public static SendableChooser goalSelector;
     public static SendableChooser climberOption;
@@ -70,73 +71,43 @@ public class Robot extends IterativeRobot {
 		System.err.println("OI");
 
 		positionSelector = new SendableChooser();
-        goalSelector = new SendableChooser();
-        climberOption = new SendableChooser();
-
         positionSelector.addDefault("Second Position", 2);
         positionSelector.addObject("Third Position", 3);
         positionSelector.addObject("Fourth Position", 4);
         positionSelector.addObject("Fifth Position", 5);
-        
         SmartDashboard.putData("Position Selector", positionSelector);
         
+        goalSelector = new SendableChooser();
         goalSelector.addDefault("Middle Goal", 1);
         goalSelector.addObject("Left Goal", 2);
         goalSelector.addObject("Right Goal", 3);
-        
         SmartDashboard.putData("Goal Selector", goalSelector);
 
+        climberOption = new SendableChooser();
+		climberOption.addDefault("Buttons 11 (up) and 12 (down)", "Buttons");
+		climberOption.addObject("Button and Joystick Control", "Joystick");
+        SmartDashboard.putData("Climber Options Chooser", climberOption);
+        
 		SmartDashboard.putData("Drive Train", driveTrain);
 		SmartDashboard.putData("Shooter", ballShooter);
 		SmartDashboard.putData("Active", active);
 		SmartDashboard.putData("Active Bar", activeBar);
-
-		climberOption.addDefault("Buttons 11 (up) and 12 (down)", "Buttons");
-		climberOption.addObject("Button and Joystick Control", "Joystick");
-
-        SmartDashboard.putData("Climber Options Chooser", climberOption);
-
+        
 		
 //		CameraServer.getInstance().startAutomaticCapture("cam0");
-        chooser = new SendableChooser();
+        autoChooser = new SendableChooser();		
+        autoChooser.addDefault("Defense Only - forward time", new DriveTime(3));
+        autoChooser.addObject("Full Auto", new AutoController());
+        autoChooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
+        autoChooser.addObject("No Auto", null);
+        SmartDashboard.putData("Auto mode", autoChooser);
         
-		int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
-		
-        chooser.addDefault("Defense Only - forward time", new DriveTime(3));
-        chooser.addObject("Full Auto", new AutoController());
-        chooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
-        chooser.addObject("No Auto", null);
-//        chooser.addObject("Drive to Tower", new DriveStraight(.9));
-//        chooser.addObject("Drive to Tower and Shoot", new DriveTowardTower());
-//        chooser.addObject("Drive to hdbjhsbdcs and Shoot", new DriveAndShoot());
-
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
-//        SmartDashboard.putNumber("BALL_VOLT_ACTIVE", RobotMap.BALL_VOLT_ACTIVE);
-//		SmartDashboard.putNumber("BALL_VOLT_SHOOTER", RobotMap.BALL_VOLT_SHOOTER);
-//		SmartDashboard.putNumber("BALL_MIDDLE_VOLT_SHOOTER", RobotMap.BALL_MIDDLE_VOLT_ACTIVE);
-//		SmartDashboard.putNumber("BALL_NOTHING_VOLT_SHOOTER", RobotMap.BALL_NOTHING_VOLT_ACTIVE);
-
+        
         SmartDashboard.putNumber("SIDE_GOAL_ROTATE_DEGREES", RobotMap.SIDE_GOAL_ROTATE_DEGREES);
         SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT);
-
-//		SmartDashboard.putNumber("Auto Time Beginning", 2.3);
-//		SmartDashboard.putNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
-//		SmartDashboard.putNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
-//		SmartDashboard.putNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
-//		SmartDashboard.putNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
-		
-//		SmartDashboard.putNumber("Outer Short Value", .8);
-//		SmartDashboard.putNumber("Side Delay", .3);
-//
-//		RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("FRONT_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT);
-//		RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT = SmartDashboard.getNumber("SIDE_DISTANCE_SENSOR_TURN_LIMIT", RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT);
-//		RobotMap.TOWER_SENSOR_DISTANCE_LIMIT = SmartDashboard.getNumber("TOWER_SENSOR_DISTANCE_LIMIT", RobotMap.TOWER_SENSOR_DISTANCE_LIMIT);
-//		RobotMap.SENSOR_ZONE_OF_PRECISION = SmartDashboard.getNumber("SENSOR_ZONE_OF_PRECISION", RobotMap.SENSOR_ZONE_OF_PRECISION);
-//		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
-
         
+        SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
+		
 		sensors.zeroGyro();
     }
     
@@ -157,10 +128,6 @@ public class Robot extends IterativeRobot {
     		sensor = Sensor.Right;
     	}
     	
-    	
-    	
-//		SmartDashboard.putData("Drive 3 seconds", new DriveTime(3));
-//		SmartDashboard.putData("Rotate to 0", new RotateToAngle(0));
 		SmartDashboard.putData("Drive Over Defense to Wall", new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5));
     	SmartDashboard.putData("Drive to sensor limit wall", new DriveStraight(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT, .5, 1.4));
 		SmartDashboard.putData("Rotate sideways", new RotateToAngle(turnAngle));
@@ -217,28 +184,16 @@ public class Robot extends IterativeRobot {
     	inAuto = true;
         sensors.updateData();
         driveTrain.brakeMode(true);
-//    	autonomousCommand = new LightOn(10);
         
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
     	// schedule the autonomous command (example)
 		RobotMap.TOWER_EXTRA_TIME = SmartDashboard.getNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 		SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
 
         int startPosition = (int) SmartDashboard.getNumber("Start Position", 2);
-        chooser.addObject("Full Auto", new AutoController());
+        autoChooser.addObject("Full Auto", new AutoController());
 
 		testAutoParts(startPosition);
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = (Command) autoChooser.getSelected();
 
         if (autonomousCommand != null) autonomousCommand.start();
 
@@ -251,7 +206,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
         sensors.updateData();
-        driveTrain.brakeMode(true);
     }
 
     @Override
@@ -267,7 +221,7 @@ public class Robot extends IterativeRobot {
 
     	testAutoParts(startPosition);
 
-        chooser.addObject("Full Auto", new AutoController());
+        autoChooser.addObject("Full Auto", new AutoController());
 
     	driveTrain.brakeMode(true);
     	System.err.println("RSF-teleopinit");

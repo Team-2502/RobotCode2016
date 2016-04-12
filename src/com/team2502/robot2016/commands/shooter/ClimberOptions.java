@@ -2,7 +2,8 @@ package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.Shooter;
+import com.team2502.robot2016.subsystems.Climber;
+import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,13 +12,14 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ClimberOptions extends Command {
 
-	private Shooter s = Robot.ballShooter;
+	private Climber c = Robot.climber;
 	private double speed;
 	
     public ClimberOptions(double dir) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.speed = dir;
+    	requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
@@ -29,12 +31,17 @@ public class ClimberOptions extends Command {
     	switch (Robot.getClimberOption()) {
     	
     	case "Buttons":
-        	s.runClimber(speed);
+        	c.runClimber(speed);
 
     		break;
     		
     	case "Joystick" :
-    		s.runClimber(OI.getButtonStick().getY());
+    		c.runClimber(OI.getButtonStick().getY());
+    		if (Sensors.ahrs.getRoll() < -5) {
+    			if (Math.abs(OI.getLeftStick().getY()) > .1 || Math.abs(OI.getRightStick().getY()) > .1) {
+    				c.runBoth(OI.getLeftStick().getY(), OI.getRightStick().getY());
+    			}
+    		}
     		break;
     	}
     	
@@ -52,7 +59,7 @@ public class ClimberOptions extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	s.stopClimber();
+    	c.stopClimber();
     }
 
     // Called when another command which requires one or more of the same
