@@ -112,5 +112,12 @@ public class RobotMap
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
 	public static double BALL_NOTHING_VOLT_ACTIVE = 2;
 
+<<<<<<< HEAD
 	public static final int PRESSURE_SENSOR = 4;
+=======
+
+
+    
+
+>>>>>>> parent of 3562747... more something and pressure switch
 }
