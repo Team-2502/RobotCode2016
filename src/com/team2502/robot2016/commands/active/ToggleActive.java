@@ -31,34 +31,11 @@ public class ToggleActive extends Command {
     		ai.openPokers();
     	}
     	
-//    	boolean stateThing
-    	
-//    	if (!s.getShooterState())
-    		ai.setActiveState(!ai.getActiveState());
-    	
-    	
-    	
-//    	if (!s.getShooterState()) {
-//    		if (!ai.pokersOpen() && ai.getActiveState()) {
-//        		ai.openPokers();
-//        	}
-//    		
-//    		if (custom) {
-//    			ai.setActiveState(state);
-//    		} else {
-//	    		if (!flipped) {
-//		    		ai.setActiveState(!ai.getActiveState());
-//		    		flipped = true;
-//	    		}
-//    		}
-//    	}
-    	
-    	
+    	ai.setActiveState(!ai.getActiveState());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return se.getLeftBallSensor() > RobotMap.BALL_VOLT_SHOOTER && flipped;
     	return true;
     }
 

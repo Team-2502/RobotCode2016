@@ -57,16 +57,14 @@ public class RotateToAngle extends Command implements PIDOutput {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	dt.runMotors(.1, -.1);
     	kP = SmartDashboard.getNumber("P Value", kP);
     	turnController.setPID(kP, kI, kD);
     	
     	double newSpeed = rotateToAngleRate;
     	
     	newSpeed = .7 * Math.signum(rotateToAngleRate);
-    	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);
-    	
-//    	newSpeed = (Math.abs(newSpeed) + motorLimit)* Math.signum(newSpeed);
+    	if (Math.abs(rotateToAngleRate) < .2) 
+    		newSpeed = .45 * Math.signum(newSpeed);
     	
     	dt.runMotors(newSpeed, -newSpeed);
     	
@@ -75,7 +73,6 @@ public class RotateToAngle extends Command implements PIDOutput {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return Sensors.ahrs.getFusedHeading() < 190 || Sensors.ahrs.getFusedHeading() > 170;
     	return turnController.onTarget() || System.currentTimeMillis() - startTime > 2000;
     	
     }
@@ -83,8 +80,6 @@ public class RotateToAngle extends Command implements PIDOutput {
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("Done");
-//    	dt.runMotors(-.1, .1);
-//    	dt.disable();
     	turnController.disable();
     	dt.stopDrive();
     }
@@ -92,7 +87,6 @@ public class RotateToAngle extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-//    	end();
     }
 
 	@Override

@@ -32,7 +32,6 @@ public class ClimberOptions extends Command {
     	
     	case "Buttons":
         	c.runClimber(speed);
-
     		break;
     		
     	case "Joystick" :
@@ -44,12 +43,6 @@ public class ClimberOptions extends Command {
     		}
     		break;
     	}
-    	
-    	
-    	
-    	
-    	
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

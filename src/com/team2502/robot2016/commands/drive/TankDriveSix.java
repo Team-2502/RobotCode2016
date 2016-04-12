@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TankDriveSix extends Command {
 
-//	private DriveTrain dt = Robot.driveTrain;
 	private DriveTrain dt = Robot.driveTrain;
 
 

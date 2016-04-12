@@ -8,11 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ReloadShooter extends Command {
 	
     private Shooter bs = Robot.ballShooter;
-//    private Sensors s = Robot.sensors;
     
     public ReloadShooter() {
     	requires(Robot.ballShooter);
-//    	requires(Robot.sensors);
     }
     
     /**
@@ -33,7 +31,6 @@ public class ReloadShooter extends Command {
     }
 
     protected boolean isFinished() {
-//        return s.shooterAllTheWayBack();
         return true;
     }
 

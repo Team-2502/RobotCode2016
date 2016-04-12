@@ -38,36 +38,21 @@ public class DriveTrain extends Subsystem {
 	
     // Initialize your subsystem here
     public DriveTrain() {
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
-    	
-    	
-    	
+        
     	leftSimOne = new CANTalon(RobotMap.LEFT_MOTOR_SIM_ONE);
 		leftSimTwo = new CANTalon(RobotMap.LEFT_MOTOR_SIM_TWO);
 		leftMiniSim = new CANTalon(RobotMap.LEFT_MOTOR_MINI_SIM);
 
-		System.err.println("Left");
 		rightSimOne = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_ONE);
 		rightSimTwo = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_TWO);
 		rightMiniSim = new CANTalon(RobotMap.RIGHT_MOTOR_MINI_SIM);
-		System.err.println("Right");
 		
 		//Will need to make a custom RobotDrive for all 6 motors
 		simDrive = new RobotDrive(leftSimOne, leftSimTwo, rightSimOne, rightSimTwo);
 		miniSimDrive = new RobotDrive(leftMiniSim, rightMiniSim);
-		
-		System.err.println("Drives");
-		
-		System.err.println("Solenoid");
-//		accel = new BuiltInAccelerometer();
-
-		
+				
 	    simDrive.setExpiration(.1);
 	    miniSimDrive.setExpiration(.1);
-	    System.out.println("Expiration");
     }
     
     public void initDefaultCommand() {
@@ -78,9 +63,6 @@ public class DriveTrain extends Subsystem {
     
     public void driveSix() {
     	
-//    	if (getPIDController().isEnabled()) {
-//    		getPIDController().disable();
-//    	}
     	double leftSpeed = -OI.getLeftStick().getY();
     	double rightSpeed = -OI.getRightStick().getY();
     	
@@ -101,13 +83,10 @@ public class DriveTrain extends Subsystem {
     
     public void stopDrive() {
     	
-//    	brakeMode(true);
-
     	simDrive.tankDrive(-.05, -0.05);
     	miniSimDrive.tankDrive(-.05, -0.05);
     	
     	Timer.delay(.3);
-//    	brakeMode(false);
     }
     
     public void brakeMode(boolean on) {
@@ -139,8 +118,5 @@ public class DriveTrain extends Subsystem {
     	miniSimDrive.drive(speed, turn);
 
     }
-    
-    
-
 }
 

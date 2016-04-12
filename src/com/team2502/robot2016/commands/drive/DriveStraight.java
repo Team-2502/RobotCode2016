@@ -113,19 +113,9 @@ public class DriveStraight extends Command implements PIDOutput {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-//    	if ((s.getRoll() > 5.5 && s.getSensorDistance(sensor) < SmartDashboard.getNumber("Outer Short Value", .8))
-//    			|| Math.abs(s.getAngle() - angle) > 10) {
-//    		double newSpeed = rotateToAngleRate;
-//        	newSpeed = .7 * Math.signum(rotateToAngleRate);
-//        	if (Math.abs(rotateToAngleRate) < .2) newSpeed = .45 * Math.signum(newSpeed);
-////        	newSpeed = (Math.abs(newSpeed) + motorLimit)* Math.signum(newSpeed);
-//        	dt.runMotors(newSpeed, -newSpeed);
-//        	System.out.println("Rotate Straight");
-//    	} else {
     		dt.driveStraight(realSpeed, rotateToAngleRate);
     		System.out.println("Normal Straight");
 
-//    	}
     	realSpeed += .08;
     	
     	if (realSpeed > speed) realSpeed = speed;
@@ -202,7 +192,6 @@ public class DriveStraight extends Command implements PIDOutput {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-//    	end();h
     }
 
 	@Override

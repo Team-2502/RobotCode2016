@@ -9,7 +9,6 @@ import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.commands.shooter.ClimberOptions;
-import com.team2502.robot2016.commands.shooter.RingLight;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Climber;
 
@@ -53,7 +52,6 @@ public class OI {
 	private static Button rollerButtonOut;
 	
 	private static Button testRotateCommand;
-	private static Button testRingLight;
 
 	private static Button activeDown;
 	
@@ -74,7 +72,6 @@ public class OI {
 		rollerButtonOut = new JoystickButton(buttonStick, 4);
 		
 		testRotateCommand = new JoystickButton(driveRightStick, 8);
-		testRingLight = new JoystickButton(buttonStick, 7);
 
 		climbUpButton = new JoystickButton(buttonStick, 11);
 		climbDownButton = new JoystickButton(buttonStick, 12);
@@ -90,7 +87,6 @@ public class OI {
 		rollerButtonOut.whenPressed(new SpinActive(1, false));
 		
 		testRotateCommand.whenPressed(new RotateToAngle(0));
-		testRingLight.whenPressed(new RingLight());
 		
 		activeDown.whenPressed(new ToggleActive());
 		
