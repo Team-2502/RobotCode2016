@@ -35,8 +35,9 @@ public class Robot extends IterativeRobot {
 	public static final ActiveIntake active = new ActiveIntake();
 	public static final ActiveBar activeBar = new ActiveBar();
 	public static final Climber climber = new Climber();
-
 	public static final Sensors sensors = new Sensors();
+	
+	public static final Vision vision = new Vision();
 	
 	public static boolean inAuto = false;
 	

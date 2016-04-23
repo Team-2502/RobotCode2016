@@ -8,6 +8,7 @@ import com.team2502.robot2016.subsystems.Sensors.Sensor;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,6 +53,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	
 	protected boolean insideRange = false;
 	protected int insideRangeCounter = 0;
+	protected PIDSource theSource = Sensors.ahrs;
 	
 
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue) {
@@ -64,7 +66,7 @@ public class DriveStraight extends Command implements PIDOutput {
     	this.speed = speed;
     	this.sensor = sensor;
     	
-    	turnController = new PIDController(kP, kI, kD, kF, Sensors.ahrs, this);
+    	turnController = new PIDController(kP, kI, kD, kF, theSource, this);
         turnController.setInputRange(-180.0f,  180.0f);
         turnController.setOutputRange(-1.0, 1.0);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
@@ -99,6 +101,7 @@ public class DriveStraight extends Command implements PIDOutput {
     	this.minTime = minTime;
     	this.change = change;
     }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -199,5 +202,14 @@ public class DriveStraight extends Command implements PIDOutput {
 		// TODO Auto-generated method stub
         rotateToAngleRate = output;
 
+	}
+	
+	public void setPIDSource(PIDSource source) {
+		theSource = source;
+		turnController = new PIDController(kP, kI, kD, kF, source, this);
+        turnController.setInputRange(-15.0, 15.0);
+        turnController.setOutputRange(-1.0, 1.0);
+        turnController.setAbsoluteTolerance(kToleranceDegrees);
+        turnController.setContinuous(false);
 	}
 }

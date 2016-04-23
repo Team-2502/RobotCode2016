@@ -32,16 +32,16 @@ public class ShootBall extends Command {
      * Shoot the boulder.
      */
     protected void execute() {
-    	
-		if ((s.getAngle() < 3 || s.getAngle() > 357) || !Robot.inAuto) {
-	    	ai.openPokers();
-    		Timer.delay(.1);
-    		if (Robot.inAuto) Timer.delay(.5);
-    		System.err.println("Shot");
-			bs.setSolenoid(true);
-		}
-		timeEnd = System.currentTimeMillis();
-    	
+    	if (timeEnd == 0) {
+			if ((s.getAngle() < 3 || s.getAngle() > 357) || !Robot.inAuto) {
+		    	ai.openPokers();
+	    		Timer.delay(.1);
+	    		if (Robot.inAuto) Timer.delay(.5);
+	    		System.err.println("Shot");
+				bs.setSolenoid(true);
+			}
+			timeEnd = System.currentTimeMillis();
+	    }
     }
 
     protected boolean isFinished() {
