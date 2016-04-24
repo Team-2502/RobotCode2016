@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
     public static SendableChooser positionSelector;
-    public static SendableChooser goalSelector;
+//    public static SendableChooser goalSelector;
     public static SendableChooser climberOption;
 
 
@@ -69,11 +69,11 @@ public class Robot extends IterativeRobot {
         positionSelector.addObject("Fifth Position", 5);
         SmartDashboard.putData("Position Selector", positionSelector);
         
-        goalSelector = new SendableChooser();
-        goalSelector.addDefault("Middle Goal", 1);
-        goalSelector.addObject("Left Goal", 2);
-        goalSelector.addObject("Right Goal", 3);
-        SmartDashboard.putData("Goal Selector", goalSelector);
+//        goalSelector = new SendableChooser();
+//        goalSelector.addDefault("Middle Goal", 1);
+//        goalSelector.addObject("Left Goal", 2);
+//        goalSelector.addObject("Right Goal", 3);
+//        SmartDashboard.putData("Goal Selector", goalSelector);
 
         climberOption = new SendableChooser();
 		climberOption.addDefault("Buttons 11 (up) and 12 (down)", "Buttons");
@@ -136,9 +136,9 @@ public class Robot extends IterativeRobot {
     	return (int) positionSelector.getSelected();
     }
     
-    public static int getGoal() {
-    	return (int) goalSelector.getSelected();
-    }
+//    public static int getGoal() {
+//    	return (int) goalSelector.getSelected();
+//    }
     
     public static String getClimberOption() {
     	return (String) climberOption.getSelected();

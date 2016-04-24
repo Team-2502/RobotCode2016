@@ -27,6 +27,7 @@ public class ReadVision extends Command {
     	double visionVal = 0;
     	boolean newVisionVals = false;
     	if (newVisionVals) {
+			//Needs to be -15 to 15
     		v.setLatestVision(visionVal);
     	}
     }
