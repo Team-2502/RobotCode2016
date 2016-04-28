@@ -8,6 +8,21 @@ package com.team2502.robot2016;
  */
 public class RobotMap
 {
+    public static final class Joystick
+    {
+        public static final int FUNCTION_CONTROL_JOYSTICK = 2;
+        public static final int LEFT_JOYSTICK             = 1;
+        public static final int RIGHT_JOYSTICK            = 0;
+
+        public static final class Button
+        {
+            public static final int ROLLER_CONTROL_IN = 3;
+            public static final int ROLLER_CONTROL_OUT = 4;
+        }
+    }
+
+    public static final int    CLIMBER_WINCH_LEFT               = 8;
+    public static final int    CLIMBER_WINCH_RIGHT              = 9;
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
 	 public static final int BUTTON_JOYSTICK = 2;
@@ -31,13 +46,10 @@ public class RobotMap
      
      public static final int POKER_SOLENOID = 2;
      
-     public static final int CLIMBER_WINCH_LEFT = 8;
-     public static final int CLIMBER_WINCH_RIGHT = 9;
+     public static final int CLIMBER_SOLENOID = 3;
+     public static final int CLIMBER_WINCH_ONE = 8;
+     public static final int CLIMBER_WINCH_TWO = 9;
 
-     
-     
-     
-     
      public static final int CLIMBER_BUTTON_STICK_BUTTON = 7;
   
     // If you are using multiple modules, make sure to define both the port
@@ -51,6 +63,25 @@ public class RobotMap
 //    public static final int SHOOTER_MOTOR        = Integer.MAX_VALUE;
 //    public static final int SHOOTER_SOLENOID     = Integer.MAX_VALUE;
     public static final int SHOOTER_LIMIT_SWITCH = Integer.MAX_VALUE;
+    
+    
+    
+    // Sensor Input Ports
+    
+//    public static final int CLIMBER_DISTANCE_SENSOR = 0;
+//    public static double FRONT_DISTANCE_SENSOR_LIMIT = 4.5;
+
+//    public static final int SIDE_DISTANCE_SENSOR = 5;
+//    public static final int GYRO_SENSOR = 1;
+//    public static final int ACCEL_SENSOR = 2;
+//    public static final int COLOR_SENSOR = 3;
+//    
+//    public static final int MIDDLE_LEFT_DISTANCE = 6;
+//    public static final int MIDDLE_RIGHT_DISTANCE = 6;
+//    
+//    public static final int OUTSIDE_LEFT_DISTANCE = 6;
+//    public static final int OUTSIDE_RIGHT_DISTANCE = 6;
+    
    
 	public static final int RING_LIGHT = 0;
 	public static final int LEFT_BALL_SENSOR = 1;
@@ -81,8 +112,5 @@ public class RobotMap
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
 	public static double BALL_NOTHING_VOLT_ACTIVE = 2;
 
-
-
-    
-
+	public static final int PRESSURE_SENSOR = 4;
 }
