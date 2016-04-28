@@ -2,6 +2,7 @@ package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.SubsystemActiveFrame;
+import com.team2502.robot2016.subsystems.SubsystemShooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,10 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ToggleActive extends Command {
 
     private SubsystemActiveFrame frame = Robot.activeFrame;
+    private SubsystemShooter bs = Robot.ballShooter;
     
     public ToggleActive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        requires(Robot.activeFrame);
+        requires(Robot.ballShooter);
     }
 
     // Called just before this Command runs the first time
@@ -22,6 +26,7 @@ public class ToggleActive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+//        bs.setSolenoid(false);
         frame.setActivePickupState(!frame.getActivePickupState());
     }
 

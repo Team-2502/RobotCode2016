@@ -39,11 +39,7 @@ public class SubsystemShooter extends Subsystem
         return shooterSolenoid.get();
     }
 
-    public boolean getClimberState()
-    {
-        return shooterSolenoid.get();
-    }
-
+    
     // public void windMotor(double speed) {
     // shooterMotor.set(speed);
     // }

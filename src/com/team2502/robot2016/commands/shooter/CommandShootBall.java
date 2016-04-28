@@ -17,7 +17,7 @@ public class CommandShootBall extends Command
     private SubsystemBallHolder ballHolder  = Robot.ballHolder;
     private SubsystemSensors    sensors     = Robot.sensors;
 //    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
-    private static boolean      run         = true,
+    private boolean      run         = true,
                                         stop = true, end = false;;
     private long endTime = 0;
     
@@ -76,6 +76,9 @@ public class CommandShootBall extends Command
 //            }
                 endTime = System.currentTimeMillis();
 
+        } else {
+            System.out.println(System.currentTimeMillis() - endTime);
+            end = System.currentTimeMillis() - endTime > 750;
         }
 //        driveTrain.brakeMode(false);
     }
@@ -83,17 +86,14 @@ public class CommandShootBall extends Command
     @Override
     protected boolean isFinished()
     {
-        boolean ifEnd = false;
-        if (!run) {
-            ifEnd = System.currentTimeMillis() - endTime > 800;
-        }
+        
         // return s.shooterAllTheWayForward();
         // if(stop)
         // {
         // checkEnd();
         // }
         // return end;
-        return ifEnd;
+        return end;
     }
 
     
