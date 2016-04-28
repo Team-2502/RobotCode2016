@@ -1,7 +1,9 @@
 package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.active.CommandActiveController;
+import com.team2502.robot2016.commands.active.DoPokers;
 import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.shooter.CommandClimber;
 import com.team2502.robot2016.commands.shooter.CommandClimber.MotorMode;
 import com.team2502.robot2016.commands.shooter.CommandGShootAndReload;
@@ -69,10 +71,10 @@ public class OI
         rollerButtonIn.whenPressed(new SpinActive(-1, false));
         rollerButtonOut.whenPressed(new SpinActive(1, false));
 
-        activeDown.whenPressed(new CommandActiveController(2));
+        activeDown.whenPressed(new ToggleActive());
 
-        pokerButton.whenPressed(new CommandActiveController(1));
-        pokerButton.whenReleased(new CommandActiveController(0));
+        pokerButton.whenPressed(new DoPokers(1));
+        pokerButton.whenReleased(new DoPokers(0));
 
         climbLowerButton.whileHeld(new CommandClimber(MotorMode.BOTH, -1));
         climbRaiseButton.whileHeld(new CommandClimber(MotorMode.BOTH, 1));
