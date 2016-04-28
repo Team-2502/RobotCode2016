@@ -16,16 +16,17 @@ public class CommandShootBall extends Command
     private SubsystemShooter    ballShooter = Robot.ballShooter;
     private SubsystemBallHolder ballHolder  = Robot.ballHolder;
     private SubsystemSensors    sensors     = Robot.sensors;
-    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
+//    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
     private static boolean      run         = true,
                                         stop = true, end = false;;
-
+    private long endTime = 0;
+    
     public CommandShootBall()
     {
         requires(Robot.ballShooter);
         requires(Robot.ballHolder);
-        requires(Robot.sensors);
-        requires(Robot.driveTrain);
+//        requires(Robot.sensors);
+//        requires(Robot.driveTrain);
     }
 
     /**
@@ -38,7 +39,8 @@ public class CommandShootBall extends Command
         run = true;
         stop = true;
         end = false;
-        // Robot.driveTrain.brakeMode(true);
+        Robot.driveTrain.brakeMode(true);
+//         Robot.driveTrain.brakeMode(true);
     }
 
     /**
@@ -59,18 +61,21 @@ public class CommandShootBall extends Command
             System.out.println("ShootBall.execute() Run");
 
             run = false;
-            if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
-            {
-                // ai.openPokers();
-//                driveTrain.brakeMode(true);
-                Timer.delay(.1);
+//            if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
+//            {
+                 
                 if(Robot.inAuto)
                 {
+                    ballHolder.setBallHolder(true);
+//                  driveTrain.brakeMode(true);
+                  Timer.delay(.1);
                     Timer.delay(.5);
                 }
                 // System.err.println("Shot");
                 ballShooter.setSolenoid(true);
-            }
+//            }
+                endTime = System.currentTimeMillis();
+
         }
 //        driveTrain.brakeMode(false);
     }
@@ -78,24 +83,20 @@ public class CommandShootBall extends Command
     @Override
     protected boolean isFinished()
     {
+        boolean ifEnd = false;
+        if (!run) {
+            ifEnd = System.currentTimeMillis() - endTime > 800;
+        }
         // return s.shooterAllTheWayForward();
         // if(stop)
         // {
         // checkEnd();
         // }
         // return end;
-        return true;
+        return ifEnd;
     }
 
-    public void checkEnd()
-    {
-        for(int i = 0; i < 20; ++i)
-        {
-            Scheduler.getInstance().run();
-            Timer.delay(0.05);
-        }
-        end = true;
-    }
+    
 
     /**
      * Stop the lowering of the bar.
@@ -110,7 +111,11 @@ public class CommandShootBall extends Command
         // System.out.println("ShootBall.end() Run");
         // stop = false;
 //        driveTrain.brakeMode(true);
-        Timer.delay(1);
+//        Timer.delay(1);
+        Robot.driveTrain.brakeMode(false);
+        if (Robot.inAuto)
+            ballHolder.setBallHolder(false);
+
 //        driveTrain.brakeMode(false);
 
         // REVIEW NJL
