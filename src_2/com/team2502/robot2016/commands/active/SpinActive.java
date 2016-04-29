@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SpinActive extends Command
 {
     private final SubsystemActiveRoller m_activeRoller = Robot.activeRoller;
-    private final SubsystemBallHolder   m_ballHolder   = Robot.ballHolder;
-    private final SubsystemActiveFrame  m_activeFrame  = Robot.activeFrame;
     private final SubsystemSensors      m_sensors      = Robot.sensors;
 
     private double                      m_speed;
@@ -24,9 +22,7 @@ public class SpinActive extends Command
     public SpinActive(double speed, boolean test)
     {
         requires(Robot.activeRoller);
-        requires(Robot.ballHolder);
-        requires(Robot.activeFrame);
-        requires(Robot.sensors);
+        
         m_speed = speed;
     }
 
@@ -40,26 +36,7 @@ public class SpinActive extends Command
     protected void execute()
     {
         m_activeRoller.setActiveRoller(m_speed);
-        if(test)
-        {
-            if(m_sensors.ballInActive() && m_activeFrame.getActivePickupState())
-            {
-                SmartDashboard.putBoolean("Active Flip Up", true);
-                // Timer.delay(.07);
-                counter++;
-
-                if(counter > 10)
-                {
-                    if(m_sensors.ballInActive())
-                    {
-                        m_flipped = true;
-                    }
-                } else if(counter > 0 && counter < 10 && !m_sensors.ballInActive())
-                {
-                    counter = 0;
-                }
-            }
-        }
+        
 
     }
 

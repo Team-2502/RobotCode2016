@@ -32,10 +32,10 @@ public class CommandActiveController extends Command
             case 1:
                 m_ballHolder.setBallHolder(true);
             case 2:
-//                if(!m_ballHolder.areBallHoldersOpen() && m_activeFrame.getActivePickupState())
-//                {
-//                    m_ballHolder.setBallHolder(false);
-//                }
+                if(!m_ballHolder.areBallHoldersOpen() && m_activeFrame.getActivePickupState())
+                {
+                    m_ballHolder.setBallHolder(false);
+                }
                 m_activeFrame.setActivePickupState(!m_activeFrame.getActivePickupState());
         }
     }

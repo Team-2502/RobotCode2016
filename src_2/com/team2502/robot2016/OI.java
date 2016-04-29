@@ -1,9 +1,9 @@
 package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.active.CommandActiveController;
-import com.team2502.robot2016.commands.active.CommandActiveFrame;
-import com.team2502.robot2016.commands.active.CommandBallPokers;
+import com.team2502.robot2016.commands.active.DoPokers;
 import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.shooter.CommandClimber;
 import com.team2502.robot2016.commands.shooter.CommandClimber.MotorMode;
 import com.team2502.robot2016.commands.shooter.CommandGShootAndReload;
@@ -39,8 +39,9 @@ public class OI
 
     private Button   climbLowerButton;
     private Button   climbRaiseButton;
-    private Button   climbLeftButton;
-    private Button   climbRightButton;
+    
+    private Button climbLeftButton;
+    private Button climbRightButton;
 
     private Button   shootButton;
 
@@ -57,6 +58,7 @@ public class OI
 
         climbLowerButton = new JoystickButton(functionControlStick, 9);
         climbRaiseButton = new JoystickButton(functionControlStick, 7);
+
         climbLeftButton = new JoystickButton(functionControlStick, 11);
         climbRightButton = new JoystickButton(functionControlStick, 12);
 
@@ -69,13 +71,14 @@ public class OI
         rollerButtonIn.whenPressed(new SpinActive(-1, false));
         rollerButtonOut.whenPressed(new SpinActive(1, false));
 
-        activeDown.whenPressed(new CommandActiveFrame());
+        activeDown.whenPressed(new ToggleActive());
 
-        pokerButton.whenPressed(new CommandBallPokers(true));
-        pokerButton.whenReleased(new CommandBallPokers(false));
+        pokerButton.whenPressed(new DoPokers(1));
+        pokerButton.whenReleased(new DoPokers(0));
 
         climbLowerButton.whileHeld(new CommandClimber(MotorMode.BOTH, -1));
         climbRaiseButton.whileHeld(new CommandClimber(MotorMode.BOTH, 1));
+        
         climbLeftButton.whileHeld(new CommandClimber(MotorMode.LEFT, 1));
         climbRightButton.whileHeld(new CommandClimber(MotorMode.RIGHT, 1));
 

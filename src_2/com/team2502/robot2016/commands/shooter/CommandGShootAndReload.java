@@ -10,7 +10,7 @@ public class CommandGShootAndReload extends CommandGroup
 {
     public CommandGShootAndReload()
     {
-        addSequential(new CommandShootBall());
+        addSequential(new CommandShootBall(), 1);
         addSequential(new CommandReloadShooter());
     }
 }

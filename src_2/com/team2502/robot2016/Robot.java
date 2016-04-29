@@ -40,7 +40,6 @@ public class Robot extends IterativeRobot
     public static final SubsystemActiveFrame  activeFrame        = new SubsystemActiveFrame();
     public static final SubsystemClimber      climber            = new SubsystemClimber();
     public static final SubsystemSensors      sensors            = new SubsystemSensors();
-    
 
     public static boolean                     inAuto             = false;
 
@@ -71,7 +70,6 @@ public class Robot extends IterativeRobot
         System.out.println("Initializing Robot.");
         OI.getInstance();
         System.out.println("OI Initialized.");
-        CameraServer.getInstance().startAutomaticCapture();
 
         autoDefenseChooser.addDefault("Second Position", 2);
         autoDefenseChooser.addObject("Third Position", 3);
@@ -99,6 +97,8 @@ public class Robot extends IterativeRobot
         SmartDashboard.putNumber("SIDE_GOAL_WALL_DISTANCE", RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT);
         SmartDashboard.putNumber("TOWER_EXTRA_TIME", RobotMap.TOWER_EXTRA_TIME);
         sensors.zeroGyro();
+        
+        CameraServer.getInstance().startAutomaticCapture("cam0");
     }
 
     private void testAutoParts(int startingPosition)

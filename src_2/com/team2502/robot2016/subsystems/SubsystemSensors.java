@@ -598,10 +598,14 @@ public class SubsystemSensors extends Subsystem
 
         SmartDashboard.putNumber("Left Joystick", OI.getInstance().getLeftStick().getY());
         SmartDashboard.putNumber("Right Joystick", OI.getInstance().getRightStick().getY());
-
+        SmartDashboard.putNumber("Tank Pressure", getPressure());
         // (se.getRightBallSensor() > RobotMap.BALL_VOLT_SHOOTER ||
         // se.getLeftBallSensor() > RobotMap.BALL_VOLT_SHOOTER)
 
+    }
+    
+    public double getPressure() {
+        return Pressure_Sensor.getAverageVoltage() * 24 + 10;
     }
 
 }
