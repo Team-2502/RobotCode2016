@@ -1,23 +1,20 @@
-package com.team2502.robot2016.commands.drive;
-
+package com.team2502.robot2016.commands.vision;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
+import com.team2502.robot2016.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class TankDriveSix extends Command {
+public class ReadVision extends Command {
 
-	private DriveTrain dt = Robot.driveTrain;
-
-
-    public TankDriveSix() {
+	private Vision v = Robot.vision;
+	
+    public ReadVision() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -26,9 +23,13 @@ public class TankDriveSix extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.driveSix();
-    	
-    	
+    	//read vision things and DONT BLOCK
+    	double visionVal = 0;
+    	boolean newVisionVals = false;
+    	if (newVisionVals) {
+			//Needs to be -15 to 15
+    		v.setLatestVision(visionVal);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

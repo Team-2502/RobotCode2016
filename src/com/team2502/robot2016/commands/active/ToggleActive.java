@@ -1,57 +1,51 @@
-package com.team2502.robot2016.commands.drive;
+package com.team2502.robot2016.commands.active;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.Sensors;
+import com.team2502.robot2016.subsystems.ActiveIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RotateDegrees extends Command {
+public class ToggleActive extends Command {
 
-	private DriveTrain dt = Robot.driveTrain;
-	private Sensors s = Robot.sensors;
+	private ActiveIntake ai = Robot.active;
 	
-	private double initialDegrees;
-	
-	private double degrees;
-	private double speed;
-	
-    public RotateDegrees(double degrees, double speed) {
+    public ToggleActive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.driveTrain);
-    	requires(Robot.sensors);
-    	
-    	this.degrees = degrees;
-    	this.speed = speed;
+    	requires(Robot.active);
+    	requires(Robot.ballShooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialDegrees = s.getAngle();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.turn(speed, degrees > 0);
+    	
+    	if (!ai.pokersOpen() && ai.getActiveState()) {
+    		ai.openPokers();
+    	}
+    	
+    	ai.setActiveState(!ai.getActiveState());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(s.getAngle() - initialDegrees - degrees) < 3;
+    	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	dt.stopDrive();
+    	ai.closerPokers();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	dt.stopDrive();
     }
 }

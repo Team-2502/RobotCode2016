@@ -1,47 +1,40 @@
-package com.team2502.robot2016.commands.drive;
+package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.DriveTrain;
-import com.team2502.robot2016.subsystems.DriveTrain.Motors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveDistance extends Command {
+public class DriveTime extends Command {
 
+	private double time;
+	private double startTime;
 	private DriveTrain dt = Robot.driveTrain;
+
 	
-	private double distance;
-	private double initialPosition;
-	private double finalPosition;
-	private double speed;
-	
-    public DriveDistance(double distance, double speed) {
+    public DriveTime(double time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
-    	this.distance = distance;
-    	this.speed = speed;
+    	this.time = time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialPosition = dt.getEncoderValue(Motors.LEFT_MOTORS);
-    	double ticksUntilDone = distance / (2 * DriveTrain.wheelRadius * Math.PI) * DriveTrain.TICKS_PER_REV;
-    	
-    	finalPosition = initialPosition + ticksUntilDone;
+    	this.startTime = System.currentTimeMillis();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt.runMotors(speed, speed);
+    	dt.runMotors(.85, .85);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(finalPosition - dt.getEncoderValue(Motors.LEFT_MOTORS)) < 30;
+        return System.currentTimeMillis() - startTime > time * 1000;
     }
 
     // Called once after isFinished returns true
@@ -52,6 +45,5 @@ public class DriveDistance extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
