@@ -1,5 +1,7 @@
 package com.team2502.robot2016.subsystems;
 
+import java.util.HashMap;
+
 import com.team2502.robot2016.commands.vision.ReadVision;
 
 import edu.wpi.first.wpilibj.PIDSource;
@@ -14,7 +16,8 @@ public class Vision extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	private static double visionData = 0;
+	private static HashMap<String, Double> parsedData = new HashMap<String, Double>();
+
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -22,13 +25,28 @@ public class Vision extends Subsystem {
     	
     }
     
-    public void setLatestVision(double turnNum) {
-    	visionData = turnNum;
+    public void setLatestVision(HashMap<String, Double> visionD) {
+    	parsedData = visionD;
     }
     
-    private static double getLatestVision() {
+    private static HashMap<String, Double> getLatestVision() {
 		//Needs to be -15 to 15
-    	return visionData;
+    	return parsedData;
+    }
+    
+    public static void parseData(String s) {
+    	   	
+    	String[] stringData = s.split(",");
+    	HashMap<String, Double> parsedData = new HashMap<String, Double>();
+    	
+    	for (String info : stringData) {
+    		String[] data = info.split(":");
+    		parsedData.put(data[0], Double.parseDouble(data[1]));
+    	}	
+    }
+    
+    public static double figureOutTurning() {
+    	return 0;
     }
     
     public static class PIDVision implements PIDSource {
@@ -48,7 +66,7 @@ public class Vision extends Subsystem {
 		@Override
 		public double pidGet() {
 			//Needs to be -15 to 15
-			return getLatestVision();
+			return figureOutTurning();
 		}
     	
     }
