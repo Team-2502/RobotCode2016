@@ -13,8 +13,6 @@ public class ShootBall extends Command {
 	
     private Shooter bs = Robot.ballShooter;
     private ActiveIntake ai = Robot.active;
-    private Sensors s = Robot.sensors;
-    private double timeEnd = 0;
     
     public ShootBall() {
     	requires(Robot.ballShooter);
@@ -32,27 +30,23 @@ public class ShootBall extends Command {
      * Shoot the boulder.
      */
     protected void execute() {
-    	if (timeEnd == 0) {
-			if ((s.getAngle() < 3 || s.getAngle() > 357) || !Robot.inAuto) {
+			
 		    	ai.openPokers();
 	    		Timer.delay(.1);
 	    		if (Robot.inAuto) Timer.delay(.5);
 	    		System.err.println("Shot");
 				bs.setSolenoid(true);
-			}
-			timeEnd = System.currentTimeMillis();
-	    }
+			
     }
 
     protected boolean isFinished() {
-        return timeEnd != 0 && System.currentTimeMillis() - timeEnd > 900;
+        return true;
     }
 
     /**
      * Stop the lowering of the bar.
      */
     protected void end() {
-    	ai.closerPokers();
     	Robot.driveTrain.brakeMode(false);
     }
 

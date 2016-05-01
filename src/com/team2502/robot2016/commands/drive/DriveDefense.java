@@ -34,12 +34,18 @@ public class DriveDefense extends DriveStraight {
     public DriveDefense(double angle, double speed, Sensor sensor, double sensorValue, double extraTime) {
     	super(angle, speed, sensor, sensorValue, extraTime);
     }
+    
+    @Override
+    protected void initialize() {
+    	super.initialize();
+    	insideRange = false;
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	super.execute();
     	
-    	if (STATE != FLATTEN_OUT) insideRangeCounter = 0;
+//    	if (STATE != FLATTEN_OUT) insideRangeCounter = 0;
     	
     	switch (STATE) {
     		case BEFORE_DEFENSE:
@@ -52,6 +58,7 @@ public class DriveDefense extends DriveStraight {
     			if (Math.abs(Sensors.ahrs.getRoll()) < 1) STATE++;
     			break;
     		case FLATTEN_OUT:
+    			insideRange = true;
     			break;
     	}
     }

@@ -27,6 +27,7 @@ public class Vision extends Subsystem {
     }
     
     private static double getLatestVision() {
+		//Needs to be -15 to 15
     	return visionData;
     }
     
@@ -46,6 +47,7 @@ public class Vision extends Subsystem {
 
 		@Override
 		public double pidGet() {
+			//Needs to be -15 to 15
 			return getLatestVision();
 		}
     	

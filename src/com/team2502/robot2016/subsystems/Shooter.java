@@ -14,6 +14,7 @@ public class Shooter extends Subsystem
 //    private final CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTER_MOTOR);
     private final Solenoid shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID);
     	
+    
 	public boolean climberUp = false;
 	
     public void initDefaultCommand() {

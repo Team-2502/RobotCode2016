@@ -1,6 +1,11 @@
 package com.team2502.robot2016.commands.autonomous;
 
 
+import com.team2502.robot2016.Robot;
+import com.team2502.robot2016.RobotMap;
+import com.team2502.robot2016.commands.drive.DriveDefense;
+import com.team2502.robot2016.subsystems.Sensors.Sensor;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -26,9 +31,11 @@ public class DriveTowerNoShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new DriveOverDefense());
+    	Robot.sensors.zeroGyro();
+    	addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.FRONT_DISTANCE_SENSOR_TURN_LIMIT));
+
+//    	addSequential(new DriveOverDefense());
     	addSequential(new DriveAfterDefense(startingPosition));
-    	
     	
     }
 }

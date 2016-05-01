@@ -1,40 +1,37 @@
-package com.team2502.robot2016.commands.vision;
+package com.team2502.robot2016.commands.autonomous;
 
 import com.team2502.robot2016.Robot;
-import com.team2502.robot2016.subsystems.Vision;
+import com.team2502.robot2016.subsystems.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ReadVision extends Command {
+public class ShootCheck extends Command {
 
-	private Vision v = Robot.vision;
+	private Sensors s = Robot.sensors;
+	private double angle;
 	
-    public ReadVision() {
+    public ShootCheck(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	this.angle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.driveTrain.brakeMode(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//read vision things and DONT BLOCK
-    	double visionVal = 0;
-    	boolean newVisionVals = false;
-    	if (newVisionVals) {
-			//Needs to be -15 to 15
-    		v.setLatestVision(visionVal);
-    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return s.getAngle() < angle + 3 && s.getAngle() > angle - 3;
     }
 
     // Called once after isFinished returns true

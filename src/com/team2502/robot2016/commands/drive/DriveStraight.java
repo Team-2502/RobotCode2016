@@ -51,7 +51,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	protected double minTime = 0;
 	protected boolean done = false;
 	
-	protected boolean insideRange = false;
+	protected boolean insideRange = true;
 	protected int insideRangeCounter = 0;
 	protected PIDSource theSource = Sensors.ahrs;
 	
@@ -125,15 +125,15 @@ public class DriveStraight extends Command implements PIDOutput {
     	System.out.println("Goal: " + sensorLimit);
     	System.out.println("Executing Function: " + s.getSensorDistance(sensor));
 
-    	if (s.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS) {
-    		insideRangeCounter++;
-    	} else {
-    		insideRangeCounter = 0;
-    	}
-    	
-    	if (insideRangeCounter > 2) {
-    		insideRange = true;
-    	}
+//    	if (s.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS) {
+//    		insideRangeCounter++;
+//    	} else {
+//    		insideRangeCounter = 0;
+//    	}
+//    	
+//    	if (insideRangeCounter > 2) {
+//    		insideRange = true;
+//    	}
     	
     	System.out.println("In Range: " + insideRange);
     	if (insideRange) {
@@ -144,7 +144,7 @@ public class DriveStraight extends Command implements PIDOutput {
 					counter++;
 				}
 			} else {
-		    	if (Math.abs(s.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION) {
+		    	if (s.getSensorDistance(sensor) < sensorLimit) {
 		    		counter++;
 		
 		    	} else {
@@ -153,11 +153,11 @@ public class DriveStraight extends Command implements PIDOutput {
 
 			}
     	}
-		if (Math.abs(s.getSensorDistance(sensor)) < RobotMap.LONG_SENSOR_RANGE_LIMITS+.1 && Math.abs(s.getSensorDistance(sensor)) > .9) {
-			insideRange = true;
-		} else {
-			insideRange = false;
-		}
+//		if (Math.abs(s.getSensorDistance(sensor)) < RobotMap.LONG_SENSOR_RANGE_LIMITS+.1 && Math.abs(s.getSensorDistance(sensor)) > .9) {
+//			insideRange = true;
+//		} else {
+//			insideRange = false;
+//		}
 
     	
     	if (counter > 2) {

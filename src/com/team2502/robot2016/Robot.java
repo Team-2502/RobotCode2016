@@ -9,7 +9,6 @@ import com.team2502.robot2016.commands.AutoController;
 import com.team2502.robot2016.commands.active.SetActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
-import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
 import com.team2502.robot2016.commands.drive.DriveDefense;
 import com.team2502.robot2016.commands.drive.DriveStraight;
@@ -46,7 +45,7 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autoChooser;
     public static SendableChooser positionSelector;
-    public static SendableChooser goalSelector;
+//    public static SendableChooser goalSelector;
     public static SendableChooser climberOption;
 
 
@@ -69,11 +68,11 @@ public class Robot extends IterativeRobot {
         positionSelector.addObject("Fifth Position", 5);
         SmartDashboard.putData("Position Selector", positionSelector);
         
-        goalSelector = new SendableChooser();
-        goalSelector.addDefault("Middle Goal", 1);
-        goalSelector.addObject("Left Goal", 2);
-        goalSelector.addObject("Right Goal", 3);
-        SmartDashboard.putData("Goal Selector", goalSelector);
+//        goalSelector = new SendableChooser();
+//        goalSelector.addDefault("Middle Goal", 1);
+//        goalSelector.addObject("Left Goal", 2);
+//        goalSelector.addObject("Right Goal", 3);
+//        SmartDashboard.putData("Goal Selector", goalSelector);
 
         climberOption = new SendableChooser();
 		climberOption.addDefault("Buttons 11 (up) and 12 (down)", "Buttons");
@@ -126,19 +125,16 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive in front of Tower", new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
 		SmartDashboard.putData("Rotate to forward", new RotateToAngle(5));
 		SmartDashboard.putData("Flip Active", new ToggleActive());
-		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));
-		
-		
-		SmartDashboard.putData("Drive After Defense", new DriveAfterDefenseTesting(startingPosition));
+		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));		
     }
     
     public static int getStartPosition() {
     	return (int) positionSelector.getSelected();
     }
     
-    public static int getGoal() {
-    	return (int) goalSelector.getSelected();
-    }
+//    public static int getGoal() {
+//    	return (int) goalSelector.getSelected();
+//    }
     
     public static String getClimberOption() {
     	return (String) climberOption.getSelected();
