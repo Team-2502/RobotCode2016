@@ -8,9 +8,10 @@ import com.team2502.robot2016.commands.active.PokePokers;
 import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
-import com.team2502.robot2016.commands.shooter.ClimberOptions;
+import com.team2502.robot2016.commands.shooter.Climb;
 import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Climber;
+import com.team2502.robot2016.subsystems.Climber.ClimbMode;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -55,8 +56,11 @@ public class OI {
 
 	private static Button activeDown;
 	
-	private static Button climbUpButton;
-	private static Button climbDownButton;
+	private static Button climbLowerButton;
+    private static Button climbRaiseButton;
+    
+    private Button climbLeftButton;
+    private Button climbRightButton;
 
 	private static Button shootButton;
 	
@@ -73,9 +77,11 @@ public class OI {
 		
 		testRotateCommand = new JoystickButton(driveRightStick, 8);
 
-		climbUpButton = new JoystickButton(buttonStick, 11);
-		climbDownButton = new JoystickButton(buttonStick, 12);
+		climbLowerButton = new JoystickButton(buttonStick, 9);
+        climbRaiseButton = new JoystickButton(buttonStick, 7);
 
+        climbLeftButton = new JoystickButton(buttonStick, 11);
+        climbRightButton = new JoystickButton(buttonStick, 12);
 		
 		shootButton = new JoystickButton(buttonStick, 1);
 		
@@ -93,9 +99,13 @@ public class OI {
 		pokerButton.whenPressed(new PokePokers(true));
 		pokerButton.whenReleased(new PokePokers(false));
 		
-		climbUpButton.toggleWhenPressed(new ClimberOptions(Climber.CLIMBER_UP_SPEED));
-		climbDownButton.toggleWhenPressed(new ClimberOptions(Climber.CLIMBER_DOWN_SPEED));
-
+		climbLowerButton.whileHeld(new Climb(ClimbMode.Both, Climber.CLIMB_DOWN_SPEED));
+        climbRaiseButton.whileHeld(new Climb(ClimbMode.Both, Climber.CLIMB_UP_SPEED));
+        
+        climbLeftButton.whileHeld(new Climb(ClimbMode.Left, Climber.CLIMB_UP_SPEED));
+        climbRightButton.whileHeld(new Climb(ClimbMode.Right, Climber.CLIMB_UP_SPEED));
+        
+        
 		shootButton.whenPressed(new ShootAndReload());
 	}
 	

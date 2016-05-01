@@ -9,7 +9,6 @@ import com.team2502.robot2016.commands.AutoController;
 import com.team2502.robot2016.commands.active.SetActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
-import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
 import com.team2502.robot2016.commands.drive.DriveDefense;
 import com.team2502.robot2016.commands.drive.DriveStraight;
@@ -126,10 +125,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Drive in front of Tower", new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, .35));
 		SmartDashboard.putData("Rotate to forward", new RotateToAngle(5));
 		SmartDashboard.putData("Flip Active", new ToggleActive());
-		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));
-		
-		
-		SmartDashboard.putData("Drive After Defense", new DriveAfterDefenseTesting(startingPosition));
+		SmartDashboard.putData("Drive to tower", new DriveStraight(0, .7, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .3));		
     }
     
     public static int getStartPosition() {
