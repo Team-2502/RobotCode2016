@@ -106,6 +106,7 @@ public class DriveStraight extends Command implements PIDOutput {
     // Called just before this Command runs the first time
     protected void initialize() {
     	turnController.setSetpoint(angle);
+    	Robot.vision.setTargetAngle(angle);
     	turnController.enable();
     	SmartDashboard.putNumber("P Value", kP);
     	startTime = System.currentTimeMillis();
@@ -207,7 +208,7 @@ public class DriveStraight extends Command implements PIDOutput {
 	public void setPIDSource(PIDSource source) {
 		theSource = source;
 		turnController = new PIDController(kP, kI, kD, kF, source, this);
-        turnController.setInputRange(-15.0, 15.0);
+        turnController.setInputRange(-30.0, 30.0);
         turnController.setOutputRange(-1.0, 1.0);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(false);

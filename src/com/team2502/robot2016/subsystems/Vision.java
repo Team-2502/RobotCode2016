@@ -2,6 +2,7 @@ package com.team2502.robot2016.subsystems;
 
 import java.util.HashMap;
 
+import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.commands.vision.ReadVision;
 
 import edu.wpi.first.wpilibj.PIDSource;
@@ -16,7 +17,8 @@ public class Vision extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	private static double calculatedAngle = 0;
+	private double calculatedAngle = 0;
+	private double targetAngle = 0;
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -24,7 +26,15 @@ public class Vision extends Subsystem {
     	
     }
     
-    public static double getVisionAngle() {
+    public void setTargetAngle(double angle) {
+    	targetAngle = angle;
+    }
+    
+    public double getTargetAngle() {
+    	return targetAngle;
+    }
+    
+    public double getVisionAngle() {
 		//Needs to be -15 to 15
     	return calculatedAngle;
     }
@@ -41,14 +51,8 @@ public class Vision extends Subsystem {
     	return parsedData;
     }
     
-    public static double figureOutTurning() {
-    	
-    	double angle = Sensors.ahrs.getAngle();
-    	
-    	
-    	
-    	
-    	return 0;
+    public void setVisionAngle(double angle) {
+    	calculatedAngle = angle;
     }
     
     public static class PIDVision implements PIDSource {
@@ -68,7 +72,7 @@ public class Vision extends Subsystem {
 		@Override
 		public double pidGet() {
 			//Needs to be -15 to 15
-			return figureOutTurning();
+			return Robot.vision.getVisionAngle();
 		}
     	
     }

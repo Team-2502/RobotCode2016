@@ -7,6 +7,7 @@ import java.net.SocketException;
 import java.util.HashMap;
 
 import com.team2502.robot2016.Robot;
+import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -16,14 +17,17 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ReadVision extends Command {
-
+	
+	//200 pixels at 100 inches
+	public static final double WIDTH_SCALE = .5;
 	private Vision v = Robot.vision;
 	private final int port = 21012;
 	private DatagramSocket socket;
 	private Thread receiver;
 	private PIDOutput relayOutput;
 	private HashMap<String, Double> parsedData = new HashMap<String, Double>();
-	
+	private boolean newData = false;
+	private double angleToTurn = 0;
 	
     public ReadVision() {
         // Use requires() here to declare subsystem dependencies
@@ -54,6 +58,10 @@ public class ReadVision extends Command {
 //			//Needs to be -15 to 15
 //    		v.setLatestVision(visionVal);
 //    	}
+    	if (newData) {
+    		v.setVisionAngle(angleToTurn);
+    		newData = false;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -70,6 +78,34 @@ public class ReadVision extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
+    }
+    
+    public double turnAngleCalcs(HashMap<String, Double> data) {
+    	
+    	double angle = Sensors.ahrs.getAngle();
+    	double targetAngle = v.getTargetAngle();
+    	
+    	
+    	double boxWidth = data.get("bw");
+    	double approxDist = boxWidth * WIDTH_SCALE;
+    	
+    	double centerX = data.get("cx");
+    	double centerY = data.get("cy");
+    	
+    	double angleCalc = ((centerX - 240) / 240) * 27;
+
+    	
+    	if (Math.abs(angle - targetAngle) > 10) {
+    		angleCalc += Math.signum(angleCalc) * 15;
+    		if (Math.abs(angleCalc) > 30) {
+    			angleCalc = Math.signum(angleCalc) * 30;
+    		}
+    	}
+    	
+    	newData = true;
+    	System.out.println("Angle Calculated: " + angleCalc);
+    	angleToTurn = angleCalc;
+    	return angleCalc;
     }
     
     class ReceiverThread extends Thread {
@@ -96,7 +132,7 @@ public class ReadVision extends Command {
 		        String s = new String(dp.getData(), 0, dp.getLength());
 		        System.out.println(s);
 		        HashMap<String, Double> parsedData = Vision.parseData(s);
-		        
+		        turnAngleCalcs(parsedData);
 		        Thread.yield();
 		      } catch (IOException ex) {
 		        System.err.println(ex);
