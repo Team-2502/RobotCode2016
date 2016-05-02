@@ -16,8 +16,7 @@ public class Vision extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-	private static HashMap<String, Double> parsedData = new HashMap<String, Double>();
-
+	private static double calculatedAngle = 0;
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -25,16 +24,12 @@ public class Vision extends Subsystem {
     	
     }
     
-    public void setLatestVision(HashMap<String, Double> visionD) {
-    	parsedData = visionD;
-    }
-    
-    private static HashMap<String, Double> getLatestVision() {
+    public static double getVisionAngle() {
 		//Needs to be -15 to 15
-    	return parsedData;
+    	return calculatedAngle;
     }
     
-    public static void parseData(String s) {
+    public static HashMap<String, Double> parseData(String s) {
     	   	
     	String[] stringData = s.split(",");
     	HashMap<String, Double> parsedData = new HashMap<String, Double>();
@@ -43,9 +38,16 @@ public class Vision extends Subsystem {
     		String[] data = info.split(":");
     		parsedData.put(data[0], Double.parseDouble(data[1]));
     	}	
+    	return parsedData;
     }
     
     public static double figureOutTurning() {
+    	
+    	double angle = Sensors.ahrs.getAngle();
+    	
+    	
+    	
+    	
     	return 0;
     }
     

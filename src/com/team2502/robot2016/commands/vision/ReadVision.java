@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.HashMap;
 
 import com.team2502.robot2016.Robot;
 import com.team2502.robot2016.subsystems.Vision;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -17,6 +19,11 @@ public class ReadVision extends Command {
 
 	private Vision v = Robot.vision;
 	private final int port = 21012;
+	private DatagramSocket socket;
+	private Thread receiver;
+	private PIDOutput relayOutput;
+	private HashMap<String, Double> parsedData = new HashMap<String, Double>();
+	
 	
     public ReadVision() {
         // Use requires() here to declare subsystem dependencies
@@ -27,8 +34,8 @@ public class ReadVision extends Command {
     protected void initialize() {
     			
 		try {
-			DatagramSocket socket = new DatagramSocket(port);
-			Thread receiver = new ReceiverThread(socket);
+			socket = new DatagramSocket(port);
+			receiver = new ReceiverThread(socket);
 		    receiver.start();
 		    
 		} catch (SocketException e) {
@@ -56,16 +63,16 @@ public class ReadVision extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	socket.close();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
     
-    
-    static class ReceiverThread extends Thread {
+    class ReceiverThread extends Thread {
 		  DatagramSocket socket;
 
 		  private boolean stopped = false;
@@ -79,7 +86,7 @@ public class ReadVision extends Command {
 		  }
 
 		  public void run() {
-		    byte[] buffer = new byte[32];
+		    byte[] buffer = new byte[1024];
 		    while (true) {
 		      if (stopped)
 		        return;
@@ -88,12 +95,14 @@ public class ReadVision extends Command {
 		        socket.receive(dp);
 		        String s = new String(dp.getData(), 0, dp.getLength());
 		        System.out.println(s);
-		        Vision.parseData(s);
+		        HashMap<String, Double> parsedData = Vision.parseData(s);
+		        
 		        Thread.yield();
 		      } catch (IOException ex) {
 		        System.err.println(ex);
+		        stopped = true;
 		      }
 		    }
 		  }
-		}
+    }
 }
