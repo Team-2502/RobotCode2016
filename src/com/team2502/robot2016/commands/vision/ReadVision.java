@@ -92,7 +92,14 @@ public class ReadVision extends Command {
     	double centerX = data.get("cx");
     	double centerY = data.get("cy");
     	
-    	double angleCalc = ((centerX - 240) / 240) * 27;
+    	double virtualCenterTarget = 240;
+    	if (angle > targetAngle) {
+    		virtualCenterTarget -= 18;
+    	} else {
+    		virtualCenterTarget += 18;
+    	}
+    	
+    	double angleCalc = ((centerX - virtualCenterTarget) / 240) * 27;
 
     	
     	if (Math.abs(angle - targetAngle) > 10) {
