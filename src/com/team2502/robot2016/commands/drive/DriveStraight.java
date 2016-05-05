@@ -212,5 +212,6 @@ public class DriveStraight extends Command implements PIDOutput {
         turnController.setOutputRange(-1.0, 1.0);
         turnController.setAbsoluteTolerance(kToleranceDegrees);
         turnController.setContinuous(false);
+        angle = 0;
 	}
 }
