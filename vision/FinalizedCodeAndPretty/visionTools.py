@@ -5,43 +5,49 @@ import time
 
 ifDebug = False
 ifDisplay = True
+imNum = 0
 
 def setDebug(bug) :
     ifDebug = bug
 
-def displayImage(img, comment=None) :
+def displayImage(img, origImg, comment=None) :
     useImg = img
     if ifDisplay :
-        # if comment != None :
-        #     font = cv2.FONT_HERSHEY_SIMPLEX
-        #     cv2.putText(useImg, comment, (10,400), font, 4,(255,255,255),2,cv2.LINE_AA)
-        cv2.imshow("Frame", useImg)
+        cv2.imshow("Processed", useImg)
+        cv2.imshow("Original", origImg)
         if (ifDebug) :
             cv2.waitKey(0)
-
-def displayModImage(img) :
-    cv2.imshow("Frame 2", img)
-    if (ifDebug) :
-        cv2.waitKey(0)
+def saveImage(img) :
+    cv2.imwrite("../testpicam/videoFramesToUse/imProNum%d.jpg" % imNum, img)
+    global imNum
+    imNum += 1
 
 def drawColorContours(contours, img) :
     colImg = img
-    # colImg = cv2.cvtColor(useImg, cv2.COLOR_GRAY2BGR)
     colImg = cv2.drawContours(colImg, contours, -1, (0,255,0), 3)
     return colImg
 
-# def drawModColorContours(contours, img) :
-#     colImg = img
-#     # colImg = cv2.cvtColor(useImg, cv2.COLOR_GRAY2BGR)
-#     colImg = cv2.drawContours(colImg, contours, -1, (255,100,0), 3)
-#     return colImg
+def drawHullContours(hull, img) :
+    colImg = img
+    colImg = cv2.drawContours(colImg, hull, -1, (0, 255, 255), 3)
+    for p in hull[0] :
+        # print (p[0][0], p[0][1])
+        colImg = cv2.circle(colImg, (p[0][0], p[0][1]), 5,[0, 255, 255],-1)
+    return colImg
 
-def polyContours(contours) :
+def normalContours(img) :
+    useImg = img.copy()
+    image, contours, hierarchy = cv2.findContours(useImg,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    return img, contours, hierarchy
+
+def polyContours(contours, eps=.01) :
     modContours = []
     for cnt in contours :
-        epsilon = 0.008*cv2.arcLength(cnt,True)
+        arcLength = cv2.arcLength(cnt,True)
+        epsilon = eps*arcLength
         approx = cv2.approxPolyDP(cnt,epsilon,True)
         modContours.append(approx)
+
     return modContours
 
 def getTargetBox(contours) :
@@ -50,16 +56,23 @@ def getTargetBox(contours) :
     rects = []
     for cnt in contours :
         rect = cv2.minAreaRect(cnt)
-        box = cv2.boxPoints(rect)
-        box = np.int0(box)
-        boxes.append(box)
-        angles.append(rect[2])
-        rects.append(rect)
+        area = rect[1][0] * rect[1][1]
+        if area > 2700 :
+            print "Rect Area"
+            print area
+
+            box = cv2.boxPoints(rect)
+            box = np.int0(box)
+            boxes.append(box)
+            angles.append(rect[2])
+            rects.append(rect)
     return (boxes, angles, rects)
 
-def dilate(img) :
-    dilImg = cv2.dilate(img, cv2.getStructuringElement(cv2.MORPH_RECT,(5,5)))
-    return dilImg
+def removeNoise(img) :
+    kernel = np.ones((5,5),np.uint8)
+    dilImg = cv2.dilate(img, kernel)
+    erosion = cv2.erode(dilImg,kernel,iterations = 1)
+    return erosion
 
 def drawBoxOfImage(boxes, img) :
     im = img
@@ -68,7 +81,8 @@ def drawBoxOfImage(boxes, img) :
     return im
 
 def drawCircleAt(img, x, y) :
-    centerImg = cv2.circle(img, (int(x), int(y)), int(6), (255, 100, 0), 2)
+    useImg = img
+    centerImg = cv2.circle(useImg, (int(x), int(y)), int(6), (255, 100, 0), 2)
     return centerImg
 
 def greenRange(img) :
@@ -90,138 +104,92 @@ def timeOverall() :
 
 def processImage(origImage) :
     start_time = time.time()
+    print "Flip"
     origImage = cv2.flip(origImage, 0)
+    print "HSVCol"
     hsvImg = cv2.cvtColor(origImage, cv2.COLOR_BGR2HSV)
-    # start_time = timeSinceLast("Col Convert", start_time)
 
-    displayImage(hsvImg, "HSV")
-
-
+    print "Green ranged"
     greenRanged = greenRange(hsvImg)
-    # start_time = timeSinceLast("Green", start_time)
-
-    # cannyEdges = cv2.Canny(greenRanged, 100, 200)
-    displayImage(greenRanged, "Green")
-
-    dilated = dilate(greenRanged)
-    displayImage(dilated)
-    # ret3, threshedToWhite = cv2.threshold(greenRanged,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-    # displayImage(threshedToWhite)
-    contourImage, contours, hierarchy = cv2.findContours(dilated,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    # start_time = timeSinceLast("Contours", start_time)
-
+    
+    print "Dilated"
+    dilated = removeNoise(greenRanged)
+    # displayImage(dilated, origImage)
+    
+    contourImage, contours, hierarchy = normalContours(dilated)
     contours = polyContours(contours)
-    # start_time = timeSinceLast("Poly Contours", start_time)
-
-    # print contours
-    # processContour = contours[0]
-
-    # origContours = contours
-    # otherImage = origImage
-    colContImg = drawColorContours(contours, origImage)
-    displayImage(colContImg, "Col Contours")
-
     
-    # cnt = betterContours[0]
-    # hull = cv2.convexHull(cnt,returnPoints = False)
-    # defects = cv2.convexityDefects(cnt,hull)
-
-    # for i in range(defects.shape[0]):
-    #     s,e,f,d = defects[i,0]
-    #     start = tuple(cnt[s][0])
-    #     end = tuple(cnt[e][0])
-    #     far = tuple(cnt[f][0])
-    #     cv2.line(otherImage,start,end,[0,255,0],2)
-    #     cv2.circle(otherImage,far,5,[0,0,255],-1)
-    #     otherImage = drawModColorContours(betterContours, otherImage)
-    
-    # displayModImage(otherImage)
-    # start_time = timeSinceLast("Before box", start_time)
+    print "Contours"
+    dilated = cv2.cvtColor(dilated, cv2.COLOR_GRAY2BGR)
+    colContImg = drawColorContours(contours, dilated)
+    # displayImage(colContImg, origImage, "Col Contours")
 
     boxes, angles, rects = getTargetBox(contours)
-    # start_time = timeSinceLast("Target Box", start_time)
-
-    # boxedImg = drawBoxOfImage(boxes, colContImg)
-    # displayImage(boxedImg)
-
 
     cx = None
     cy = None
     boxedImg = colContImg
-    # boxedImg2 = betterColContImg
     boxFound = False
-    # writeFile = False
     
-     for (box, angle, rect, cnt) in zip(boxes, angles, rects, contours) :
-    # if box != None :
-        # start_time = timeSinceLast("before area", start_time)
+    for (box, angle, rect, cnt) in zip(boxes, angles, rects, contours) :
 
         area = cv2.contourArea(cnt)
-        # start_time = timeSinceLast("contour Area", start_time)
-
         rectArea = rect[1][0] * rect[1][1]
-
-        # print "Normal Contours"
-
-        # print "Contour area: ",
-        # print area
-
-        # print "Rect Area: ",
-        # print rectArea
-
-        # print "Better Contours"
-        # area = cv2.contourArea(betterContours[i])
-        # rectArea = rects[i][1][0] * rects[i][1][1]
-
-        # print "Contour area: ",
-        # print area
-
-        # print "Rect Area: ",
-        # print rectArea
 
         if rectArea > 500 and (float(area) / rectArea) < .6 :
 
             isConvex = cv2.isContourConvex(cnt)
 
             if not isConvex :
-                print cnt
+                print "Contour Length: %d" % len(cnt)
                 if len(cnt) == 8 or True :
-                    hull = cv2.convexHull(cnt, returnPoints=True)
-                    pointNum = len(hull)
-                    # print "Normal Contours"
-                    # print "Points: ",
-                    # print pointNum
-                    # print hull
-                    # for c in hull :
-                    #     drawCircleAt(boxedImg, c[0][1], c[0][1])
 
-                    # hull2 = cv2.convexHull(betterContours[i], returnPoints=True)
-                    # pointNum2 = len(hull2)
-                    # print "Better Contours"
-                    # print "Points: ",
-                    # print pointNum2
-                    # print hull2
+                    hullDefectUse = cv2.convexHull(cnt, returnPoints=False)
+                    defects = cv2.convexityDefects(cnt, hullDefectUse)
+                    actualHulls = 0
+                    if defects == None :
+                        continue
+                    for i in range(defects.shape[0]):
+                        s,e,f,d = defects[i,0]
+                        if d < 20000 and d > 1000 :
+                            actualHulls += 1
 
-                    # for c1 in hull2 :
-                    #     drawCircleAt(boxedImg2, c1[0][1], c1[0][1])
+                    if actualHulls == 1 :
+                        hull = cv2.convexHull(cnt, returnPoints=True)
+                        pointNum = len(hull)
+                        print "Hull Length: %d" % pointNum
 
-                    M = cv2.moments(cnt)
-                    cx = int(M["m10"] / M["m00"])
-                    cy = int(M["m01"] / M["m00"])
+                        boxHull = polyContours([hull], eps=.1)
 
-                    boxedImg = drawBoxOfImage([box], boxedImg)
-                    boxedmg = drawCircleAt(boxedImg, cx, cy)
-                    displayImage(boxedImg, "Box Image")
-                    # setDebug(True)
-                    # displayModImage(boxedImg2)
+                        boxedImg = drawHullContours(boxHull, boxedImg)  
 
-                    boxFound = True
-                    # if rectArea > 20000 :
-                    #     writeFile = True
+                        if len(boxHull[0]) == 4 :
+
+                            for i in range(defects.shape[0]):
+                                s,e,f,d = defects[i,0]
+                                start = tuple(cnt[s][0])
+                                end = tuple(cnt[e][0])
+                                if d < 20000 and d > 1000 :
+                                    boxedImg = cv2.line(boxedImg, start, end,[255, 0, 255], 2)
+                                    boxedImg = cv2.circle(boxedImg, start,5,[255, 0, 255],-1)
+                                    boxedImg = cv2.circle(boxedImg, end,5,[255, 0, 255],-1)
+
+                            # displayImage(boxedImg, origImage, "hull")
+
+                            M = cv2.moments(cnt)
+                            cx = int(M["m10"] / M["m00"])
+                            cy = int(M["m01"] / M["m00"])
+
+                            boxedImg = drawCircleAt(boxedImg, cx, cy)
+                            # displayImage(boxedImg, origImage, "Box Image")
+                            boxFound = True
+                            
     # displayImage(boxedImg)
     if boxFound :
         imgToReturn = boxedImg
+        # saveImage(origImage)
     else :
         imgToReturn = origImage
-    timeSinceLast("End", start_time)
+    # timeSinceLast("End", start_time)
+    displayImage(imgToReturn, origImage, "Box Image")
     return boxFound, imgToReturn, (cx, cy), boxes, angles

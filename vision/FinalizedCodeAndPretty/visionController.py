@@ -1,3 +1,5 @@
+#!/home/pi/.virtualenvs/cv/bin/python
+
 import cv2
 import visionTools as vt
 import cameraProcessing as cp
@@ -12,12 +14,13 @@ def processImage(origImage) :
     found, processedImage, center, boxes, angles = vt.processImage(origImage)
     # imageKeys, imageValues = pd.processData(found, processedImage, center, boxes, angles)
     # coms.sendData(imageKeys, imageValues)
-    return processedImage
-    vt.displayImage(processedImage, "Done")
+    # vt.displayImage(processedImage, origImage, "Done")
 
-def imageFileProcess() :
-    img = processImage(cv2.imread("../testpicam/videoFramesToUse/img1.jpg"))
-    cv2.imwrite("../testpicam/videoFramesToUse/imgPro.jpg", img)
+    return processedImage
+
+def imageFileProcess(fileName) :
+    img = processImage(cv2.imread("../testpicam/videoFramesToUse/%s.jpg" % fileName, 1))
+    # cv2.imwrite("../testpicam/videoFramesToUse/Pro%s.jpg" % fileName, img)
     cv2.waitKey(0)
 
 def loopCameraProcess() :
@@ -50,5 +53,8 @@ def loopVideoProcess() :
         if cv2.waitKey(1) & 0xFF == ord("q") :
             break
 
-imageFileProcess()
+imageFileProcess("img1")
+imageFileProcess("doubleGoal")
+for i in range(33) :
+    imageFileProcess("testImg%d" % i)
 loopVideoProcess()
