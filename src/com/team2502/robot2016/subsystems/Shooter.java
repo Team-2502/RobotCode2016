@@ -13,18 +13,12 @@ public class Shooter extends Subsystem
 {
 //    private final CANTalon shooterMotor = new CANTalon(RobotMap.SHOOTER_MOTOR);
     private final Solenoid shooterSolenoid = new Solenoid(RobotMap.SHOOTER_SOLENOID);
-    	
-    
-	public boolean climberUp = false;
 	
     public void initDefaultCommand() {
 //        setDefaultCommand(new ShootBallCommand());
 //    	setDefaultCommand(new ClimberWinch());
     }
     
-    
-    
-   
 
     /**
      * Prepares the shot by either lowering the Solenoid OR pulling down the bar with a Talon.
@@ -33,14 +27,8 @@ public class Shooter extends Subsystem
         shooterSolenoid.set(state);
     }
     
+
     public boolean getShooterState() {
     	return shooterSolenoid.get();
     }
-    
-    
-    
-//    public void windMotor(double speed) {
-//        shooterMotor.set(speed);
-//    }
-
 }

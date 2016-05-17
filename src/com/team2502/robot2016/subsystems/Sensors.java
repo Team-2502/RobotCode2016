@@ -1,5 +1,6 @@
 package com.team2502.robot2016.subsystems;
 
+
 import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 
@@ -99,7 +100,6 @@ public class Sensors extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    
     /*
     public void getNetworkTableValues() {
     	double[] defaultValue = new double[0];
@@ -350,6 +350,5 @@ public class Sensors extends Subsystem {
 	public double getTankPressure() {
 		return tankPressure.getAverageVoltage() * 24 + 10;
 	}
-
 }
 

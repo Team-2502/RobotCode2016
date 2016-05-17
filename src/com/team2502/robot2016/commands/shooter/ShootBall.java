@@ -1,8 +1,8 @@
 package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
+
 import com.team2502.robot2016.subsystems.ActiveIntake;
-import com.team2502.robot2016.subsystems.Sensors;
 //import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 
@@ -23,6 +23,7 @@ public class ShootBall extends Command {
      * Lowest Point = limitSwitch.get() == true
      */
     protected void initialize() {
+
     	Robot.driveTrain.brakeMode(true);
     }
 

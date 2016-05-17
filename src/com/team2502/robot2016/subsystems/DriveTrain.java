@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class DriveTrain extends Subsystem {
     
+
 	private final RobotDrive simDrive;
 	private final RobotDrive miniSimDrive;
 	
@@ -28,6 +29,7 @@ public class DriveTrain extends Subsystem {
 	private final CANTalon rightSimTwo;
 	private final CANTalon rightMiniSim;
 	
+
 	private final int wheelBase = 24;
 	public double rotateToAngleRate = 0;
 	
@@ -50,6 +52,7 @@ public class DriveTrain extends Subsystem {
 		//Will need to make a custom RobotDrive for all 6 motors
 		simDrive = new RobotDrive(leftSimOne, leftSimTwo, rightSimOne, rightSimTwo);
 		miniSimDrive = new RobotDrive(leftMiniSim, rightMiniSim);
+
 				
 	    simDrive.setExpiration(.1);
 	    miniSimDrive.setExpiration(.1);
@@ -79,6 +82,7 @@ public class DriveTrain extends Subsystem {
     public void turn(double speed, boolean left) {
     	simDrive.tankDrive(speed * ((left) ? -1: 1), speed * ((left) ? 1: -1));
     	miniSimDrive.tankDrive(speed * ((left) ? -1: 1), speed * ((left) ? 1: -1));
+
     }
     
     public void stopDrive() {
@@ -116,7 +120,6 @@ public class DriveTrain extends Subsystem {
     public void driveStraight(double speed, double turn) {
     	simDrive.drive(speed, turn);
     	miniSimDrive.drive(speed, turn);
-
     }
 }
 

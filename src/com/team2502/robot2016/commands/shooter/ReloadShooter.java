@@ -1,13 +1,13 @@
 package com.team2502.robot2016.commands.shooter;
 
 import com.team2502.robot2016.Robot;
-//import com.team2502.robot2016.subsystems.Sensors;
 import com.team2502.robot2016.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class ReloadShooter extends Command {
 	
     private Shooter bs = Robot.ballShooter;
+
     
     public ReloadShooter() {
     	requires(Robot.ballShooter);
@@ -25,6 +25,7 @@ public class ReloadShooter extends Command {
      * Shoot the boulder.
      */
     protected void execute() {
+
     	System.err.println("UnShoot");
 
     	bs.setSolenoid(false);

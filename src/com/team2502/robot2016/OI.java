@@ -1,15 +1,16 @@
 package com.team2502.robot2016;
 
+import com.team2502.robot2016.commands.active.SpinActive;
+import com.team2502.robot2016.commands.shooter.ShootAndReload;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import com.team2502.robot2016.commands.active.PokePokers;
-import com.team2502.robot2016.commands.active.SpinActive;
 import com.team2502.robot2016.commands.active.ToggleActive;
 import com.team2502.robot2016.commands.drive.RotateToAngle;
 import com.team2502.robot2016.commands.shooter.Climb;
-import com.team2502.robot2016.commands.shooter.ShootAndReload;
 import com.team2502.robot2016.subsystems.Climber;
 import com.team2502.robot2016.subsystems.Climber.ClimbMode;
 
@@ -48,7 +49,7 @@ public class OI {
 	private static Joystick driveLeftStick;
 	private static Joystick driveRightStick;
 	private static Joystick buttonStick;
-	
+
 	private static Button rollerButtonIn;
 	private static Button rollerButtonOut;
 	
@@ -107,6 +108,7 @@ public class OI {
         
         
 		shootButton.whenPressed(new ShootAndReload());
+
 	}
 	
 	public static Joystick getLeftStick() {

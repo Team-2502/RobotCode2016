@@ -10,6 +10,7 @@ public class RobotMap
 {
     // For example to map the left and right motors, you could define the
     // following variables to use with your drivetrain subsystem.
+
 	 public static final int BUTTON_JOYSTICK = 2;
      public static final int RIGHT_JOYSTICK = 0;
      public static final int LEFT_JOYSTICK = 1;
@@ -21,6 +22,7 @@ public class RobotMap
      
      public static final int RIGHT_MOTOR_SIM_ONE = 3;
      public static final int RIGHT_MOTOR_SIM_TWO = 2;
+
      public static final int RIGHT_MOTOR_MINI_SIM = 1;
      
      
@@ -33,10 +35,6 @@ public class RobotMap
      
      public static final int CLIMBER_WINCH_LEFT = 8;
      public static final int CLIMBER_WINCH_RIGHT = 9;
-
-     
-     
-     
      
      public static final int CLIMBER_BUTTON_STICK_BUTTON = 7;
   
@@ -48,8 +46,7 @@ public class RobotMap
     /*
      * If it is set to Integer.MAX_VALUE then the id is unknown.
      */
-//    public static final int SHOOTER_MOTOR        = Integer.MAX_VALUE;
-//    public static final int SHOOTER_SOLENOID     = Integer.MAX_VALUE;
+
     public static final int SHOOTER_LIMIT_SWITCH = Integer.MAX_VALUE;
    
 	public static final int RING_LIGHT = 0;
@@ -80,9 +77,4 @@ public class RobotMap
 	public static double BALL_VOLT_SHOOTER = 4;
 	public static double BALL_MIDDLE_VOLT_ACTIVE = 1.1;
 	public static double BALL_NOTHING_VOLT_ACTIVE = 2;
-
-
-
-    
-
 }
