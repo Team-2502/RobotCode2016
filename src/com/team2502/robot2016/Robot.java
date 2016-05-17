@@ -211,7 +211,7 @@ public class Robot extends IterativeRobot {
 
         autoChooser.addObject("Full Auto", new AutoController());
 
-    	driveTrain.brakeMode(true);
+    	driveTrain.brakeMode(false);
     	System.err.println("RSF-teleopinit");
         if (autonomousCommand != null) autonomousCommand.cancel();
     }
