@@ -44,6 +44,7 @@ public class CommandShootBall extends Command
     {
         if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
         {
+            System.out.println("Shooting Shooter");
             ballShooter.setSolenoid(true);
         }
     }
@@ -60,7 +61,7 @@ public class CommandShootBall extends Command
     @Override
     protected void end()
     {
-        ballShooter.setSolenoid(false);
+        System.out.println("Ending Shooter");
     }
 
     /**
@@ -70,5 +71,6 @@ public class CommandShootBall extends Command
     protected void interrupted()
     {
 //        driveTrain.brakeMode(false);
+        ballShooter.setSolenoid(false);
     }
 }

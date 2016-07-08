@@ -11,8 +11,8 @@ public class CommandGShootAndReload extends CommandGroup
 {
     public CommandGShootAndReload()
     {
-        addSequential(new CommandShootBall());
-        addSequential(new WaitCommand(1));
+        addSequential(new CommandShootBall(), 1);
+//        addSequential(new WaitCommand(1));
         addSequential(new CommandReloadShooter());
     }
 }
