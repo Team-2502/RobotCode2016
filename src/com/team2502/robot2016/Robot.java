@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot
      * Adds controls to choose which goal the robot will head towards in
      * autonomous.
      */
-    public static final SendableChooser       autoGoalChooser    = new SendableChooser();
+//    public static final SendableChooser       autoGoalChooser    = new SendableChooser();
     /**
      * Adds controls to choose whether the robot will be running autonomous.
      */
@@ -79,10 +79,10 @@ public class Robot extends IterativeRobot
         autoDefenseChooser.addObject("Fifth Position", 5);
         SmartDashboard.putData("Position Selector", autoDefenseChooser);
 
-        autoGoalChooser.addDefault("Middle Goal", 1);
-        autoGoalChooser.addObject("Left Goal", 2);
-        autoGoalChooser.addObject("Right Goal", 3);
-        SmartDashboard.putData("Goal Selector", autoGoalChooser);
+//        autoGoalChooser.addDefault("Middle Goal", 1);
+//        autoGoalChooser.addObject("Left Goal", 2);
+//        autoGoalChooser.addObject("Right Goal", 3);
+//        SmartDashboard.putData("Goal Selector", autoGoalChooser);
 
         SmartDashboard.putData("Drive Train", driveTrain);
         SmartDashboard.putData("Shooter", ballShooter);
@@ -140,10 +140,10 @@ public class Robot extends IterativeRobot
         return (int) autoDefenseChooser.getSelected();
     }
 
-    public static int getGoal()
-    {
-        return (int) autoGoalChooser.getSelected();
-    }
+//    public static int getGoal()
+//    {
+//        return (int) autoGoalChooser.getSelected();
+//    }
 
     /**
      * This function is called once each time the robot enters Disabled mode.

@@ -18,11 +18,11 @@ public class DriveAfterDefense extends CommandGroup
 
         if(startingPosition == 4)
         {
-            turnAngle = -10;
+            turnAngle = -5;
             sensor = Sensor.FrontLong;
         } else if(startingPosition == 2 || startingPosition == 3)
         {
-            turnAngle = 90;
+            turnAngle = 10;
             // if (startingPosition == 3) {
             // extraTime = .2;
             // }
@@ -47,14 +47,14 @@ public class DriveAfterDefense extends CommandGroup
         addSequential(new RotateToAngle(turnAngle), 2);
 
         // Once turned, read side sensor until on front of tower
-        if(startingPosition == 4)
-        {
+//        if(startingPosition == 4)
+//        {
             addSequential(new DriveTime(1.2));
 
-        } else
-        {
+//        } else
+//        {
             addSequential(new DriveStraight(turnAngle, .63, sensor, RobotMap.SIDE_DISTANCE_SENSOR_TURN_LIMIT, true, extraTime));
-        }
+//        }
         // Once in front of tower, turn back to straight
         addSequential(new RotateToAngle(0), 2);
 

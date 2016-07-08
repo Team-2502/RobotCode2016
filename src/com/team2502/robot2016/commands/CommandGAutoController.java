@@ -15,14 +15,13 @@ public class CommandGAutoController extends CommandGroup
     public CommandGAutoController()
     {
         System.out.println("Start Position: " + Robot.getStartPosition());
-        System.out.println("Goal: " + Robot.getGoal());
 //        int position = Robot.getStartPosition();
-        int goal = Robot.getGoal();
         SubsystemSensors.ahrs.zeroYaw();
-        if(goal == 1)
+        int position = Robot.getStartPosition();
+        if(position == 3 || position == 4)
         {
             addSequential(new DriveAndShoot());
-        } else if(goal == 2 || goal == 3)
+        } else if(position == 2 || position == 5)
         {
             addSequential(new DriveSideGoal());
         }

@@ -32,6 +32,6 @@ public class DriveAndShoot extends CommandGroup
         addSequential(new DriveTowerNoShoot(Robot.getStartPosition()));
 
         addParallel(new DriveTime(1));
-        addSequential(new CommandGShootAndReload());
+//        addSequential(new CommandGShootAndReload());
     }
 }

@@ -35,7 +35,7 @@ public class DriveSideGoal extends CommandGroup
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
-        int adjustAngle = Robot.getGoal() == 2 ? 1 : -1;
+        int adjustAngle = Robot.getStartPosition() == 2 ? 1 : -1;
         if(adjustAngle > 0)
         {
             addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT));
@@ -47,6 +47,6 @@ public class DriveSideGoal extends CommandGroup
         addSequential(new RotateToAngle(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES));
         addParallel(new CommandActiveController(2));
         addSequential(new DriveStraight(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES, .65, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .4), 1.6);
-        addSequential(new CommandGShootAndReload());
+//        addSequential(new CommandGShootAndReload());
     }
 }

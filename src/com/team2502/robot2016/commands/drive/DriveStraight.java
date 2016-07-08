@@ -50,7 +50,7 @@ public class DriveStraight extends Command implements PIDOutput
     protected double              minTime            = 0;
     protected boolean             done               = false;
 
-    protected boolean             insideRange        = false;
+    protected boolean             insideRange        = true;
     protected int                 insideRangeCounter = 0;
 
     public DriveStraight(double angle, double speed, Sensor sensor, double sensorValue)
@@ -145,18 +145,18 @@ public class DriveStraight extends Command implements PIDOutput
         System.out.println("Goal: " + sensorLimit);
         System.out.println("Executing Function: " + sensors.getSensorDistance(sensor));
 
-        if(sensors.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS)
-        {
-            insideRangeCounter++;
-        } else
-        {
-            insideRangeCounter = 0;
-        }
-
-        if(insideRangeCounter > 2)
-        {
-            insideRange = true;
-        }
+//        if(sensors.getSensorDistance(sensor) < RobotMap.LONG_SENSOR_RANGE_LIMITS)
+//        {
+//            insideRangeCounter++;
+//        } else
+//        {
+//            insideRangeCounter = 0;
+//        }
+//
+//        if(insideRangeCounter > 2)
+//        {
+//            insideRange = true;
+//        }
 
         System.out.println("In Range: " + insideRange);
         if(insideRange)
@@ -172,7 +172,7 @@ public class DriveStraight extends Command implements PIDOutput
                 }
             } else
             {
-                if(Math.abs(sensors.getSensorDistance(sensor) - sensorLimit) < RobotMap.SENSOR_ZONE_OF_PRECISION)
+                if(Math.abs(sensors.getSensorDistance(sensor)) < sensorLimit)
                 {
                     counter++;
 
