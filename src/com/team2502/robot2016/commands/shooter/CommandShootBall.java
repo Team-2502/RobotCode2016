@@ -17,8 +17,6 @@ public class CommandShootBall extends Command
     private SubsystemBallHolder ballHolder  = Robot.ballHolder;
     private SubsystemSensors    sensors     = Robot.sensors;
     private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
-    private static boolean      run         = true,
-                                        stop = true, end = false;;
 
     public CommandShootBall()
     {
@@ -35,9 +33,6 @@ public class CommandShootBall extends Command
     @Override
     protected void initialize()
     {
-        run = true;
-        stop = true;
-        end = false;
         // Robot.driveTrain.brakeMode(true);
     }
 
@@ -47,54 +42,16 @@ public class CommandShootBall extends Command
     @Override
     protected void execute()
     {
-
-        // if (!ai.getActiveState()) {
-        // ai.setActiveState(true);
-        // Timer.delay(1.4);
-        // } else {
-        // }
-        System.out.println("ShootBall.execute()");
-        if(run)
+        if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
         {
-            System.out.println("ShootBall.execute() Run");
-
-            run = false;
-            if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
-            {
-                // ai.openPokers();
-//                driveTrain.brakeMode(true);
-                Timer.delay(.1);
-                if(Robot.inAuto)
-                {
-                    Timer.delay(.5);
-                }
-                // System.err.println("Shot");
-                ballShooter.setSolenoid(true);
-            }
+            ballShooter.setSolenoid(true);
         }
-//        driveTrain.brakeMode(false);
     }
 
     @Override
     protected boolean isFinished()
     {
-        // return s.shooterAllTheWayForward();
-        // if(stop)
-        // {
-        // checkEnd();
-        // }
-        // return end;
         return true;
-    }
-
-    public void checkEnd()
-    {
-        for(int i = 0; i < 20; ++i)
-        {
-            Scheduler.getInstance().run();
-            Timer.delay(0.05);
-        }
-        end = true;
     }
 
     /**
@@ -103,35 +60,7 @@ public class CommandShootBall extends Command
     @Override
     protected void end()
     {
-        System.out.println("ShootBall.end()");
-
-        // if(stop)
-        // {
-        // System.out.println("ShootBall.end() Run");
-        // stop = false;
-//        driveTrain.brakeMode(true);
-        Timer.delay(1);
-//        driveTrain.brakeMode(false);
-
-        // REVIEW NJL
-        // long time = System.currentTimeMillis();
-        // while(true)
-        // {
-        // Scheduler.getInstance().run();
-        // if(System.currentTimeMillis() - time >= 1000)
-        // {
-        // break;
-        // }
-        // for(int i = 0; i < 50; ++i)
-        // {}
-        // }
-
-        // for(int i = 0; i < 20; ++i)
-        // {
-        // Scheduler.getInstance().run();
-        // Timer.delay(0.05);
-        // }
-        // }
+        ballShooter.setSolenoid(false);
     }
 
     /**
