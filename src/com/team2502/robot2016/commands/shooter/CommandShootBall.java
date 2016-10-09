@@ -16,14 +16,15 @@ public class CommandShootBall extends Command
     private SubsystemShooter    ballShooter = Robot.ballShooter;
     private SubsystemBallHolder ballHolder  = Robot.ballHolder;
     private SubsystemSensors    sensors     = Robot.sensors;
-    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
+//    private SubsystemDriveTrain driveTrain  = Robot.driveTrain;
 
     public CommandShootBall()
     {
         requires(Robot.ballShooter);
-        requires(Robot.ballHolder);
-        requires(Robot.sensors);
-        requires(Robot.driveTrain);
+//        requires(Robot.sensors);
+//        requires(Robot.driveTrain);
+//        requires(Robot.ballHolder);
+//        If extra subsystems are added those commands will interrupt the reload process
     }
 
     /**
@@ -34,6 +35,11 @@ public class CommandShootBall extends Command
     protected void initialize()
     {
         // Robot.driveTrain.brakeMode(true);
+        if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
+        {
+            System.out.println("Shooting Shooter");
+            ballShooter.setSolenoid(true);
+        }
     }
 
     /**
@@ -42,11 +48,6 @@ public class CommandShootBall extends Command
     @Override
     protected void execute()
     {
-        if(sensors.getAngle() < 3 || sensors.getAngle() > 357 || !Robot.inAuto)
-        {
-            System.out.println("Shooting Shooter");
-            ballShooter.setSolenoid(true);
-        }
     }
 
     @Override

@@ -56,11 +56,12 @@ public class OI
         rollerButtonOut = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
 
         climbLowerButton = new JoystickButton(functionControlStick, 9);
-        climbRaiseButton = new JoystickButton(functionControlStick, 7);
+        climbRaiseButton = new JoystickButton(functionControlStick, 8);
         climbLeftButton = new JoystickButton(functionControlStick, 11);
         climbRightButton = new JoystickButton(functionControlStick, 12);
 
         shootButton = new JoystickButton(functionControlStick, 1);
+        //shootButton = new JoystickButton(driveLeftStick, 1);
 
         activeDown = new JoystickButton(functionControlStick, 2);
 

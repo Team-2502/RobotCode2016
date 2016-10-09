@@ -13,11 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class DriveSideGoal extends CommandGroup
-{
+public class DriveSideGoal extends CommandGroup {
 
-    public DriveSideGoal()
-    {
+    public DriveSideGoal() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         // addSequential(new Command2());
@@ -35,18 +33,17 @@ public class DriveSideGoal extends CommandGroup
         // a CommandGroup containing them would require both the chassis and the
         // arm.
 
+        // addSequential(new DelayTime(3));
         int adjustAngle = Robot.getStartPosition() == 2 ? 1 : -1;
-        if(adjustAngle > 0)
-        {
+        if(adjustAngle > 0) {
             addSequential(new DriveDefense(0, .85, Sensor.FrontLong, RobotMap.SIDE_GOAL_WALL_DISTANCE_LEFT));
-        } else
-        {
+        } else {
             addSequential(new DriveDefense(0, .85, Sensor.FrontShort, RobotMap.SIDE_GOAL_WALL_DISTANCE_RIGHT));
 
         }
         addSequential(new RotateToAngle(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES));
         addParallel(new CommandActiveController(2));
         addSequential(new DriveStraight(adjustAngle * RobotMap.SIDE_GOAL_ROTATE_DEGREES, .65, Sensor.FrontShort, RobotMap.TOWER_SENSOR_DISTANCE_LIMIT, .4), 1.6);
-//        addSequential(new CommandGShootAndReload());
+        // addSequential(new CommandGShootAndReload());
     }
 }

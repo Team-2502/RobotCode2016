@@ -39,6 +39,7 @@ public class SpinActive extends Command
     @Override
     protected void execute()
     {
+        System.out.println("Rolling Active");
         m_activeRoller.setActiveRoller(m_speed);
         if(test)
         {

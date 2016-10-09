@@ -21,12 +21,14 @@ public class CommandReloadShooter extends Command
      */
     @Override
     protected void initialize()
-    {}
+    {
+        System.out.println("Lowering Shooter");
+        bs.setSolenoid(false);
+    }
 
     @Override
     protected void execute()
     {
-        bs.setSolenoid(false);
     }
 
     @Override

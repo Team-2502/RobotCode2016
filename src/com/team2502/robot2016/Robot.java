@@ -2,6 +2,8 @@ package com.team2502.robot2016;
 
 import com.team2502.robot2016.commands.CommandGAutoController;
 import com.team2502.robot2016.commands.active.CommandActiveController;
+import com.team2502.robot2016.commands.autonomous.DelayAndDrive;
+import com.team2502.robot2016.commands.autonomous.DelayTime;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefense;
 import com.team2502.robot2016.commands.autonomous.DriveAfterDefenseTesting;
 import com.team2502.robot2016.commands.autonomous.DriveTime;
@@ -18,9 +20,11 @@ import com.team2502.robot2016.subsystems.SubsystemSensors.Sensor;
 import com.team2502.robot2016.subsystems.SubsystemShooter;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,8 +35,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot
-{
+public class Robot extends IterativeRobot {
     public static final SubsystemDriveTrain   driveTrain         = new SubsystemDriveTrain();
     public static final SubsystemShooter      ballShooter        = new SubsystemShooter();
     public static final SubsystemBallHolder   ballHolder         = new SubsystemBallHolder();
@@ -40,7 +43,9 @@ public class Robot extends IterativeRobot
     public static final SubsystemActiveFrame  activeFrame        = new SubsystemActiveFrame();
     public static final SubsystemClimber      climber            = new SubsystemClimber();
     public static final SubsystemSensors      sensors            = new SubsystemSensors();
-    
+
+    // Testing NetworkTables
+    NetworkTable                              visionTable;
 
     public static boolean                     inAuto             = false;
 
@@ -55,7 +60,8 @@ public class Robot extends IterativeRobot
      * Adds controls to choose which goal the robot will head towards in
      * autonomous.
      */
-//    public static final SendableChooser       autoGoalChooser    = new SendableChooser();
+    // public static final SendableChooser autoGoalChooser = new
+    // SendableChooser();
     /**
      * Adds controls to choose whether the robot will be running autonomous.
      */
@@ -66,30 +72,29 @@ public class Robot extends IterativeRobot
      * used for any initialization code.
      */
     @Override
-    public void robotInit()
-    {
+    public void robotInit() {
         System.out.println("Initializing Robot.");
         OI.getInstance();
         System.out.println("OI Initialized.");
         CameraServer.getInstance().startAutomaticCapture();
-
+        visionTable = NetworkTable.getTable("visionTable");
         autoDefenseChooser.addDefault("Second Position", 2);
         autoDefenseChooser.addObject("Third Position", 3);
         autoDefenseChooser.addObject("Fourth Position", 4);
         autoDefenseChooser.addObject("Fifth Position", 5);
         SmartDashboard.putData("Position Selector", autoDefenseChooser);
 
-//        autoGoalChooser.addDefault("Middle Goal", 1);
-//        autoGoalChooser.addObject("Left Goal", 2);
-//        autoGoalChooser.addObject("Right Goal", 3);
-//        SmartDashboard.putData("Goal Selector", autoGoalChooser);
+        // autoGoalChooser.addDefault("Middle Goal", 1);
+        // autoGoalChooser.addObject("Left Goal", 2);
+        // autoGoalChooser.addObject("Right Goal", 3);
+        // SmartDashboard.putData("Goal Selector", autoGoalChooser);
 
         SmartDashboard.putData("Drive Train", driveTrain);
         SmartDashboard.putData("Shooter", ballShooter);
         SmartDashboard.putData("Active", ballHolder);
         SmartDashboard.putData("Active Bar", activeRoller);
 
-        autoModeChooser.addDefault("Defense Only - forward time", new DriveTime(3));
+        autoModeChooser.addDefault("Defense Only - forward time", new DelayAndDrive());
         autoModeChooser.addObject("Full Auto", new CommandGAutoController());
         autoModeChooser.addObject("Spy Bot - forward time 1.5", new DriveTime(1.5));
         autoModeChooser.addObject("No Auto", null);
@@ -101,23 +106,19 @@ public class Robot extends IterativeRobot
         sensors.zeroGyro();
     }
 
-    private void testAutoParts(int startingPosition)
-    {
+    private void testAutoParts(int startingPosition) {
 
         SmartDashboard.putData("After Defense", new DriveAfterDefense(startingPosition));
 
         double turnAngle = 0;
         Sensor sensor = Sensor.Left;
 
-        if(startingPosition == 4)
-        {
+        if(startingPosition == 4) {
             turnAngle = -10;
             sensor = Sensor.FrontLong;
-        } else if(startingPosition == 2 || startingPosition == 3)
-        {
+        } else if(startingPosition == 2 || startingPosition == 3) {
             turnAngle = 90;
-        } else if(startingPosition == 5)
-        {
+        } else if(startingPosition == 5) {
             turnAngle = -90;
             sensor = Sensor.Right;
         }
@@ -135,15 +136,14 @@ public class Robot extends IterativeRobot
         SmartDashboard.putData("Drive After Defense", new DriveAfterDefenseTesting(startingPosition));
     }
 
-    public static int getStartPosition()
-    {
+    public static int getStartPosition() {
         return (int) autoDefenseChooser.getSelected();
     }
 
-//    public static int getGoal()
-//    {
-//        return (int) autoGoalChooser.getSelected();
-//    }
+    // public static int getGoal()
+    // {
+    // return (int) autoGoalChooser.getSelected();
+    // }
 
     /**
      * This function is called once each time the robot enters Disabled mode.
@@ -151,14 +151,12 @@ public class Robot extends IterativeRobot
      * the robot is disabled.
      */
     @Override
-    public void disabledInit()
-    {
+    public void disabledInit() {
         ballHolder.setBallHolder(false);
     }
 
     @Override
-    public void disabledPeriodic()
-    {
+    public void disabledPeriodic() {
         Scheduler.getInstance().run();
     }
 
@@ -174,8 +172,7 @@ public class Robot extends IterativeRobot
      * to the switch structure below with additional strings & commands.
      */
     @Override
-    public void autonomousInit()
-    {
+    public void autonomousInit() {
         sensors.zeroGyro();
         SubsystemSensors.ahrs.zeroYaw();
 
@@ -192,8 +189,7 @@ public class Robot extends IterativeRobot
         testAutoParts(startPosition);
         autonomousCommand = (Command) autoModeChooser.getSelected();
 
-        if(autonomousCommand != null)
-        {
+        if(autonomousCommand != null) {
             autonomousCommand.start();
         }
 
@@ -203,16 +199,17 @@ public class Robot extends IterativeRobot
      * This function is called periodically during autonomous
      */
     @Override
-    public void autonomousPeriodic()
-    {
+    public void autonomousPeriodic() {
+        // Timer autoTimer = new Timer();
+        // autoTimer.start();
+        // if(autoTimer.get()>3){
         Scheduler.getInstance().run();
         sensors.updateData();
         driveTrain.brakeMode(true);
     }
 
     @Override
-    public void teleopInit()
-    {
+    public void teleopInit() {
         inAuto = false;
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
@@ -228,23 +225,30 @@ public class Robot extends IterativeRobot
         System.err.println("RSF-teleopinit");
     }
 
+    int x = 0;
+    int y = 0;
+
     /**
      * This function is called periodically during operator control
      */
     @Override
-    public void teleopPeriodic()
-    {
+    public void teleopPeriodic() {
         Scheduler.getInstance().run();
         sensors.updateData();
         sensors.updateOtherSensors();
+
+        // Network table testing.
+        /*
+         * ++x; ++y; SmartDashboard.putInt("X_test", x);
+         * SmartDashboard.putInt("Y_test", y);
+         */
     }
 
     /**
      * This function is called periodically during test mode
      */
     @Override
-    public void testPeriodic()
-    {
+    public void testPeriodic() {
         LiveWindow.run();
     }
 }

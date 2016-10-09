@@ -67,7 +67,7 @@ public class CommandClimber extends Command
             case RIGHT:
                 return !OI.getInstance().getFunctionControlStick().getRawButton(12);
             case BOTH:
-                return !OI.getInstance().getFunctionControlStick().getRawButton(9) && !OI.getInstance().getFunctionControlStick().getRawButton(7);
+                return !OI.getInstance().getFunctionControlStick().getRawButton(9) && !OI.getInstance().getFunctionControlStick().getRawButton(8);
             default:
                 return true;
         }

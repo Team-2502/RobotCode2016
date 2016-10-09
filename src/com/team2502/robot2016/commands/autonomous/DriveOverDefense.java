@@ -9,11 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class DriveOverDefense extends CommandGroup
-{
+public class DriveOverDefense extends CommandGroup {
 
-    public DriveOverDefense()
-    {
+    public DriveOverDefense() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         // addSequential(new Command2());
