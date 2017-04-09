@@ -67,7 +67,7 @@ public class SpinActive extends Command
     @Override
     protected boolean isFinished()
     {
-        return m_flipped || !OI.getInstance().getFunctionControlStick().getRawButton(3) && !OI.getInstance().getFunctionControlStick().getRawButton(4) && !test;
+        return m_flipped || !OI.getInstance().getRightStick().getRawButton(3) && !OI.getInstance().getRightStick().getRawButton(2) && !test;
     }
 
     @Override

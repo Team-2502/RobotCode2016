@@ -5,7 +5,7 @@ import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 //import com.team2502.robot2016.commands.drive.TankDriveSix;
 import com.team2502.robot2016.commands.drive.TankDriveSix;
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;

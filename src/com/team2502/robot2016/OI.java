@@ -52,18 +52,21 @@ public class OI
         driveLeftStick = new Joystick(RobotMap.Joystick.LEFT_JOYSTICK);
         driveRightStick = new Joystick(RobotMap.Joystick.RIGHT_JOYSTICK);
 
-        rollerButtonIn = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_IN);
-        rollerButtonOut = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
+//        rollerButtonIn = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_IN);
+        rollerButtonIn = new JoystickButton(driveRightStick, 3);
+//        rollerButtonOut = new JoystickButton(functionControlStick, RobotMap.Joystick.Button.ROLLER_CONTROL_OUT);
+        rollerButtonOut = new JoystickButton(driveRightStick, 2);
 
         climbLowerButton = new JoystickButton(functionControlStick, 9);
         climbRaiseButton = new JoystickButton(functionControlStick, 8);
         climbLeftButton = new JoystickButton(functionControlStick, 11);
         climbRightButton = new JoystickButton(functionControlStick, 12);
 
-        shootButton = new JoystickButton(functionControlStick, 1);
-        //shootButton = new JoystickButton(driveLeftStick, 1);
+        //shootButton = new JoystickButton(functionControlStick, 1);
+        shootButton = new JoystickButton(driveLeftStick, 1);
 
-        activeDown = new JoystickButton(functionControlStick, 2);
+        //activeDown = new JoystickButton(functionControlStick, 2);
+        activeDown = new JoystickButton(driveRightStick, 4);
 
         pokerButton = new JoystickButton(functionControlStick, 6);
 

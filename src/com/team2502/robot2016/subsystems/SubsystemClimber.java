@@ -1,7 +1,7 @@
 package com.team2502.robot2016.subsystems;
 
 import com.team2502.robot2016.RobotMap;
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SubsystemClimber extends Subsystem

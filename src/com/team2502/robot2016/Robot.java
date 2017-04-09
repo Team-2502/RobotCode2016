@@ -36,13 +36,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-    public static final SubsystemDriveTrain   driveTrain         = new SubsystemDriveTrain();
-    public static final SubsystemShooter      ballShooter        = new SubsystemShooter();
-    public static final SubsystemBallHolder   ballHolder         = new SubsystemBallHolder();
-    public static final SubsystemActiveRoller activeRoller       = new SubsystemActiveRoller();
-    public static final SubsystemActiveFrame  activeFrame        = new SubsystemActiveFrame();
-    public static final SubsystemClimber      climber            = new SubsystemClimber();
-    public static final SubsystemSensors      sensors            = new SubsystemSensors();
+    public static SubsystemDriveTrain   driveTrain;         
+    public static SubsystemShooter      ballShooter;        
+    public static SubsystemBallHolder   ballHolder;         
+    public static SubsystemActiveRoller activeRoller;       
+    public static SubsystemActiveFrame  activeFrame;        
+    public static SubsystemClimber      climber;            
+    public static SubsystemSensors      sensors;            
 
     // Testing NetworkTables
     NetworkTable                              visionTable;
@@ -73,6 +73,13 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
+    	driveTrain = new SubsystemDriveTrain();
+    	ballShooter = new SubsystemShooter();
+    	ballHolder = new SubsystemBallHolder();
+    	activeRoller = new SubsystemActiveRoller();
+    	activeFrame = new SubsystemActiveFrame();
+    	climber = new SubsystemClimber();
+    	sensors = new SubsystemSensors(); 
         System.out.println("Initializing Robot.");
         OI.getInstance();
         System.out.println("OI Initialized.");
