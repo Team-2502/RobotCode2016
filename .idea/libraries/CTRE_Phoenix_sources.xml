@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="CTRE_Phoenix-sources">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/wpilib/user/java/lib/CTRE_Phoenix.jar!/" />
+      <root url="jar://$USER_HOME$/wpilib/user/java/lib/navx_frc-3.0.324.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/wpilib/user/java/lib/navx_frc-3.0.324.jar!/docs" />
+    </JAVADOC>
+    <NATIVE>
+      <root url="file://$USER_HOME$/wpilib/user/java/lib" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/wpilib/user/java/lib/CTRE_Phoenix-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

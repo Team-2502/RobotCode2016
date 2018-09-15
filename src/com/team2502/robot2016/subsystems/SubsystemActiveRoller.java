@@ -1,16 +1,16 @@
 package com.team2502.robot2016.subsystems;
 
 import com.team2502.robot2016.RobotMap;
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SubsystemActiveRoller extends Subsystem
 {
-    private final CANTalon rollerBar;
+    private final WPI_TalonSRX rollerBar;
 
     public SubsystemActiveRoller()
     {
-        rollerBar = new CANTalon(RobotMap.ACTIVE_ROLLER_BAR);
+        rollerBar = new WPI_TalonSRX(RobotMap.ACTIVE_ROLLER_BAR);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.team2502.robot2016.OI;
 import com.team2502.robot2016.RobotMap;
 //import com.team2502.robot2016.commands.drive.TankDriveSix;
 import com.team2502.robot2016.commands.drive.TankDriveSix;
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,13 +19,13 @@ public class SubsystemDriveTrain extends Subsystem
     private final RobotDrive simDrive;
     private final RobotDrive miniSimDrive;
 
-    private final CANTalon   leftSimOne;
-    private final CANTalon   leftSimTwo;
-    private final CANTalon   leftMiniSim;
+    private final WPI_TalonSRX   leftSimOne;
+    private final WPI_TalonSRX   leftSimTwo;
+    private final WPI_TalonSRX   leftMiniSim;
 
-    private final CANTalon   rightSimOne;
-    private final CANTalon   rightSimTwo;
-    private final CANTalon   rightMiniSim;
+    private final WPI_TalonSRX   rightSimOne;
+    private final WPI_TalonSRX   rightSimTwo;
+    private final WPI_TalonSRX   rightMiniSim;
 
     private final int        wheelBase         = 24;
     public double            rotateToAngleRate = 0;
@@ -48,14 +48,14 @@ public class SubsystemDriveTrain extends Subsystem
         // to
         // enable() - Enables the PID controller.
 
-        leftSimOne = new CANTalon(RobotMap.LEFT_MOTOR_SIM_ONE);
-        leftSimTwo = new CANTalon(RobotMap.LEFT_MOTOR_SIM_TWO);
-        leftMiniSim = new CANTalon(RobotMap.LEFT_MOTOR_MINI_SIM);
+        leftSimOne = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_SIM_ONE);
+        leftSimTwo = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_SIM_TWO);
+        leftMiniSim = new WPI_TalonSRX(RobotMap.LEFT_MOTOR_MINI_SIM);
 
         System.err.println("Left");
-        rightSimOne = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_ONE);
-        rightSimTwo = new CANTalon(RobotMap.RIGHT_MOTOR_SIM_TWO);
-        rightMiniSim = new CANTalon(RobotMap.RIGHT_MOTOR_MINI_SIM);
+        rightSimOne = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_SIM_ONE);
+        rightSimTwo = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_SIM_TWO);
+        rightMiniSim = new WPI_TalonSRX(RobotMap.RIGHT_MOTOR_MINI_SIM);
         System.err.println("Right");
 
         // Will need to make a custom RobotDrive for all 6 motors
@@ -123,14 +123,6 @@ public class SubsystemDriveTrain extends Subsystem
 
     public void brakeMode(boolean on)
     {
-        on = false;
-        leftSimOne.enableBrakeMode(on);
-        leftSimTwo.enableBrakeMode(on);
-        leftMiniSim.enableBrakeMode(on);
-
-        rightSimOne.enableBrakeMode(on);
-        rightSimTwo.enableBrakeMode(on);
-        rightMiniSim.enableBrakeMode(on);
     }
 
     public void driveAlongRadius(double speed, double radius)
